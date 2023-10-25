@@ -1,3 +1,5 @@
+from StationFaitsDAO import StationFaitsDAO
+
 class StationFaits():
     def __init__(self, id, id_temps, velos_dispos, meca_dispo, elec_dispo, retour_velo ):
         self.id=id
