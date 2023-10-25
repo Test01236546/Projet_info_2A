@@ -3,7 +3,7 @@ from geopy.distance import geodesic
 
 def trouver_station_proche(lat, lon):
     # Faire une requête à l'API
-    url = "https://velib-metropole-opendata.smoove.pro/opendata/Velib_Metropole/station_information.json"
+    url = "https://opendata.paris.fr/api/explore/v2.1/catalog/datasets/velib-disponibilite-en-temps-reel/exports/json?lang=fr&timezone=Europe%2FBerlin"
     response = requests.get(url)
 
     if response.status_code == 200:
@@ -14,11 +14,12 @@ def trouver_station_proche(lat, lon):
         station_proche = None
         distance_min = float('inf')
 
-        for station in stations:
-            station_lat = station["latitude"]
-            station_lon = station["longitude"]
-            coords_station = (float(station_lat), float(station_lon))
-
+        for station in data["results"]:
+            station_fonc = station["is_installed"] 
+            
+            lon = station["coordonnees_geo"]["lon"]
+            lat = station["coordonnees_geo"]["lat"]
+            coordinates_list.append((lat, lon))
             # Calculer la distance entre les coordonnées
             distance = geodesic((lat, lon), coords_station).meters
 
