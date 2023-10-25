@@ -3,7 +3,7 @@ from geopy.distance import geodesic
 
 def trouver_station_proche(lat, lon):
     # Faire une requête à l'API
-    url = "https://velib-metropole-opendata.smoove.pro/opendata/Velib_Metropole/station_information.json"
+    url = "https://opendata.paris.fr/api/explore/v2.1/catalog/datasets/velib-disponibilite-en-temps-reel/exports/json?lang=fr&timezone=Europe%2FBerlin"
     response = requests.get(url)
 
     if response.status_code == 200:
