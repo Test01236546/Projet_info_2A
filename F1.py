@@ -14,7 +14,7 @@ def trouver_station_proche(lat, lon):
         station_proche = None
         distance_min = float('inf')
 
-        for station in res["results"]:
+        for station in data["results"]:
             station_fonc = station["is_installed"] 
             
             lon = station["coordonnees_geo"]["lon"]
