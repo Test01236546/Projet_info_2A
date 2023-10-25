@@ -15,11 +15,11 @@ class StationAPI():
         self.connection = None
 
     def get_station_la_plus_proche(self, adresse: str):
-        return self.station.get_station_la_plus_proche(adresse)
+        return dao_station_la_plus_proche
 
     def get_station_la_moins_frequentee(self, date_debut, date_fin):
         # Récupération des données de la base de données
-
+        return dao.least_frequented_station
         cursor = self.connection.cursor()
         cursor.execute("SELECT name FROM stations WHERE date_update BETWEEN ? AND ? ORDER BY available_bikes DESC", (date_debut, date_fin))
         data = cursor.fetchone()
