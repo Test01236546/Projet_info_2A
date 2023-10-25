@@ -1,4 +1,4 @@
-"""
+""" Version 1
 import requests
 import pandas as pd
 import json
@@ -30,7 +30,7 @@ try:
 except requests.exceptions.RequestException as e:
     print("Erreur lors de la requête à l'API :", e)
 """
-"""
+"""Version 2
 import urllib.request
 import json
 import pandas as pd
