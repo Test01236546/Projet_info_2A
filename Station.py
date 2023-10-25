@@ -11,5 +11,9 @@ class Station():
         self.borne_paiement=borne_paiement
         self.nb_bornettes=nb_bornettes
 
+    def __str__(self):
+        return f"Station(id={self.id}, nom_station={self.nom_station}, capacite={self.capacite}, ...)"
+
+
     
 
