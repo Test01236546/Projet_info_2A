@@ -1,7 +1,4 @@
-import numpy a np
-#test charles bis bis
 from fastapi import FastAPI
-
 
 # On instancie le webservice
 app = FastAPI()
@@ -14,3 +11,4 @@ async def root():
 # Lancement de l'application sur le le port 80
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=80)
+    
