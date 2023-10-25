@@ -14,11 +14,12 @@ def trouver_station_proche(lat, lon):
         station_proche = None
         distance_min = float('inf')
 
-        for station in stations:
-            station_lat = station["latitude"]
-            station_lon = station["longitude"]
-            coords_station = (float(station_lat), float(station_lon))
-
+        for station in res["results"]:
+            station_fonc = station["is_installed"] 
+            
+            lon = station["coordonnees_geo"]["lon"]
+            lat = station["coordonnees_geo"]["lat"]
+            coordinates_list.append((lat, lon))
             # Calculer la distance entre les coordonnées
             distance = geodesic((lat, lon), coords_station).meters
 
