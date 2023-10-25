@@ -1,16 +1,24 @@
 from abc import ABC, abstractmethod
 
-class DAO(ABC):
-    def __init__(self):
+# il faudait faire raise error si les class fille n'ont pas les méthodes
+
+class StationDAO(ABC):
+    @abstractmethod
+    def create(self, station):
         pass
 
-    def create(self):
+    @abstractmethod
+    def read(self, id):
         pass
-    def read (self):
+
+    @abstractmethod
+    def update(self, station):
         pass
-    def update (self):
+
+    @abstractmethod
+    def delete(self, station):
         pass
-    def delete (self):
-        pass
-    def insert (self):
+
+    @abstractmethod
+    def insert(self, station):
         pass
