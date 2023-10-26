@@ -1,37 +1,37 @@
 import requests
 from geopy.distance import geodesic
+import json
 
 def trouver_station_proche(lat, lon):
     # Faire une requête à l'API
+    null=None # car dans la base de donnée response 
     url = "https://opendata.paris.fr/api/explore/v2.1/catalog/datasets/velib-disponibilite-en-temps-reel/exports/json?lang=fr&timezone=Europe%2FBerlin"
     response = requests.get(url)
+    
 
     if response.status_code == 200:
-        data = response.json()
-        stations = data["data"]["stations"]
-
-        # Initialiser les variables pour la station la plus proche
-        station_proche = None
-        distance_min = float('inf')
-
-        for station in data["results"]:
-            station_fonc = station["is_installed"] 
+        stations_data = json.loads(response.text)
+        
+        
+        # Filtre les stations qui sont installées et ouvertes à la location et qui ont au moins 1 vélo dispo.
+        stations_utilisables = [station for station in stations_data if station["is_installed"] == "OUI" and station["is_renting"] == "OUI" and station["numdocksavailable"] >= 1]
+        
+        #verification qu'il y au moins une station utilisable
+        if tations_utilisables:
             
-            lon = station["coordonnees_geo"]["lon"]
-            lat = station["coordonnees_geo"]["lat"]
-            coordinates_list.append((lat, lon))
-            # Calculer la distance entre les coordonnées
-            distance = geodesic((lat, lon), coords_station).meters
+            # Calcule la distance entre la position et chaque station.
+            distances = []
+            for station in stations_utilisables:
+                distance = geopy.distance.distance((lon, lat), station["coordonnees_geo"]).km
+                distances.append((distance, station["name"]))
 
-            # Vérifier si la station a au moins un vélo disponible
-            if station["num_bikes_available"] > 0 and distance < distance_min:
-                distance_min = distance
-                station_proche = station
+            # Renvoie la station avec la distance la plus courte.
 
-        if station_proche:
-            return station_proche["name"]
+            return min(distances, key=lambda x: x[0])[1]
+    
         else:
             return "Aucune station avec un vélo disponible à proximité."
+        
     else:
         return "Erreur lors de la requête à l'API."
 
