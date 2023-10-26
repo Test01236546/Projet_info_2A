@@ -20,5 +20,5 @@ class StationDAO(ABC):
         pass
 
     @abstractmethod
-    def insert(self, station):
+    def injest(self, station):
         pass
