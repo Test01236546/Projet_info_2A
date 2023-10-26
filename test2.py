@@ -1,5 +1,6 @@
 import requests
 import psycopg2
+import pandas as pd
 
 # Récupérez les données de l'API
 response = requests.get(
@@ -17,12 +18,19 @@ cur = conn.cursor()
 # Créez la table
 cur.execute("""
 CREATE TABLE stations (
-  id integer,
   name text,
-  status text,
-  bike_stands integer,
-  available_bike_stands integer,
-  available_bikes integer
+  stationcode integer,
+  ebike integer,
+  mechanical integer,
+  coordonnees_geo list,
+  duedate date,
+  numbikesavailable integer,
+  numdocksavailable integer,
+  capacity integer,
+  is_renting text,
+  is_installed text,
+  nom_arrondissement_communes text,
+  is_returning text                   
 );
 """)
 
