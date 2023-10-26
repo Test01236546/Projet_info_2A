@@ -5,6 +5,8 @@ from pydantic import BaseModel
 from Station import Station
 import uvicorn
 from Service import Service
+from datetime import datetime
+
 
 app=FastAPI()
 # Classe API
@@ -64,9 +66,29 @@ def get_most_frequented_arrondissement(start_date: str, end_date: str):
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0")
 
-from service import Service
-
-
 if __name__ == "__main__":
     service = Service()
     service.ingest()
+
+
+
+
+
+def get_position_from_address(address):
+    # Récupération des données de l'API
+    url = "https://api-adresse.data.gouv.fr/search/?q={}".format(address)
+    response = requests.get(url)
+    if response.status_code == 200:
+        data = response.json()
+    else:
+        raise Exception("Erreur lors de la récupération des données de l'API Adresse")
+
+    # Récupération de la position géographique
+    position = data["features"][0]["geometry"]["coordinates"]
+    return position
+
+
+if __name__ == "__main__":
+    address = "12 Rue de Rivoli, Paris"
+    position = get_position_from_address(address)
+    print(position)
