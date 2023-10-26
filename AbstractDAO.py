@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 
-# il faudait faire raise error si les class fille n'ont pas les méthodes rt
+# il faudait faire raise error si les class fille n'ont pas les méthodes rtt
 
 class StationDAO(ABC):
     @abstractmethod
