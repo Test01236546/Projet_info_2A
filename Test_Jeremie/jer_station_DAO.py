@@ -1,7 +1,7 @@
 # from datetime import date
 
 
-class StationDAO:
+class jer_stationDAO:
     def __init__(self):
         self.stations = []
 
