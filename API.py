@@ -4,7 +4,7 @@ import requests
 from pydantic import BaseModel
 from Station import Station
 import uvicorn
-
+from Service import Service
 
 app=FastAPI()
 # Classe API
@@ -63,3 +63,10 @@ def get_most_frequented_arrondissement(start_date: str, end_date: str):
 
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0")
+
+from service import Service
+
+
+if __name__ == "__main__":
+    service = Service()
+    service.ingest()
