@@ -11,3 +11,7 @@ for station in stations_data:
 
 
 print(stations_data)
+###################### test 2
+import requests
+url = "https://opendata.paris.fr/api/explore/v2.1/catalog/datasets/velib-disponibilite-en-temps-reel/exports/json?lang=fr&timezone=Europe%2FBerlin"
+response = requests.get(url)
