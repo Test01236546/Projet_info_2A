@@ -69,8 +69,8 @@ def get_stations():
     return Station().get_stations()
 
 @app.get("/stations/closest")
-def get_closest_station(lat,lon):
-    return F.Fonctionnalites().F1(lat, lon)
+def get_closest_station(adresse):
+    return F.Fonctionnalites().F1(adresse)
 
 @app.get("/stations/least_frequented")
 def get_least_frequented_station(start_date: str, end_date: str):
