@@ -1,5 +1,5 @@
 #il faut modifier les listes (instructions SQL)
-#modifier injest
+#modifier injes
 
 import sqlite3
 from datetime import date
