@@ -5,20 +5,20 @@ from abc import ABC, abstractmethod
 class StationDAO(ABC):
     @abstractmethod
     def create(self, station):
-        pass
+        raise NotImplementedError
 
     @abstractmethod
     def read(self, id):
-        pass
+        raise NotImplementedError
 
     @abstractmethod
     def update(self, station):
-        pass
+        raise NotImplementedError
 
     @abstractmethod
     def delete(self, station):
-        pass
+        raise NotImplementedError
 
     @abstractmethod
     def injest(self, station):
-        pass
+        raise NotImplementedError

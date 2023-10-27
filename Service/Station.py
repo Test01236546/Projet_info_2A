@@ -3,7 +3,7 @@ class Station():
         self.id=id
         self.nom_station=nom_station
         self.capacite=capacite
-        self.coordonnees_station=coordonnees_station
+        self.coordonnees_station=coordonnes_station
         self.nom_commune=nom_commune
         self.en_fonctionnement=en_fonctionnement
         self.date_deb=date_deb
