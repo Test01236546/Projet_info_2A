@@ -93,3 +93,5 @@ station_frequentation = df.groupby('stationcode')['numbikesavailable'].sum()
 station_moins_frequente = station_frequentation.idxmin()
 
 print("La station la moins fréquentée est :", station_moins_frequente)
+
+# code sql 
