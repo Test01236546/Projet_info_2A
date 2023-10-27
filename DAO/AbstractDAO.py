@@ -19,6 +19,6 @@ class StationDAO(ABC):
     def delete(self, station):
         raise NotImplementedError
 
-    @abstractmethod
-    def injest(self, station):
-        raise NotImplementedError
+    # @abstractmethod
+    # def injest(self, station):
+    #     raise NotImplementedError
