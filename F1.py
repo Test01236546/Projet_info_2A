@@ -3,20 +3,20 @@ from geopy.distance import geodesic
 import geopy
 #import json
 
- def get_coordinates_from_address(address):
-        # Faire une requête à l'API Etalab
-        url = f"https://api-adresse.data.gouv.fr/search/?q={address}&limit=1"
-        response = requests.get(url)
+def get_coordinates_from_address(address):
+    # Faire une requête à l'API Etalab
+    url = f"https://api-adresse.data.gouv.fr/search/?q={address}&limit=1"
+    response = requests.get(url)
 
-        if response.status_code == 200:
-            data = response.json()
-            if data['features']:
-                lon, lat = data['features'][0]['geometry']['coordinates']
-                return lat, lon
-            else:
-                return None, None
+    if response.status_code == 200:
+        data = response.json()
+        if data['features']:
+            lon, lat = data['features'][0]['geometry']['coordinates']
+            return lat, lon
         else:
             return None, None
+    else:
+        return None, None
 
 def trouver_station_proche(lat, lon):
     # Faire une requête à l'API
