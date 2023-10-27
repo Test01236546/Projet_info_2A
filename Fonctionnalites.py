@@ -11,7 +11,7 @@ class Fonctionnalites():
         def get_coordinates_from_address(address):
             # Faire une requête à l'API Etalab
             url = f"https://api-adresse.data.gouv.fr/search/?q={address}&limit=1"
-            response = requests.get(url)
+            response = r.get(url)
 
             if response.status_code == 200:
                 data = response.json()
@@ -29,7 +29,7 @@ class Fonctionnalites():
             # Faire une requête à l'API
             null = None
             url = "https://opendata.paris.fr/api/explore/v2.1/catalog/datasets/velib-disponibilite-en-temps-reel/exports/json?lang=fr&timezone=Europe%2FBerlin"
-            response = requests.get(url)
+            response = r.get(url)
 
             if response.status_code == 200:
                 stations_data = response.json()
