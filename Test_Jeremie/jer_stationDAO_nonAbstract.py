@@ -1,5 +1,6 @@
 import sqlite3
 from datetime import date
+from Test_Jeremie.jer_station import jer_station as js
 
 class jer_stationDAO:
     def __init__(self, db_path):
@@ -43,6 +44,10 @@ class jer_stationDAO:
         return station
 
     def update(self, id, new_data):
+        if not isinstance(new_data, jer_station):
+            print("L'objet fourni n'est pas une instance de la classe Station")
+            return
+    
         self.cur.execute("""
         UPDATE stations SET nom_station=?, capacite=?, coordonnees_station=?, 
         nom_commune=?, en_fonctionnement=?, date_deb=?, date_fin=?, 
@@ -61,4 +66,20 @@ class jer_stationDAO:
     def injest(self, station):
         self.create(station)
 
-# Jer= jer_stationDAO_np df
+
+StationDAO_Jer= jer_stationDAO("Test_Jeremie/test.sql")
+Station_Jer = jer_station("station.id", "station.nom_station", "station.capacite", "station.coordonnees_station", 
+            "station.nom_commune", "station.en_fonctionnement", "station.date_deb", "station.date_fin", 
+            "station.borne_paiement", "station.nb_bornettes")
+
+StationDAO_Jer.create(Station_Jer)
+StationDAO_Jer.read('station.id')
+
+# On essaye d'update
+Station_Jer_UPDATED = jer_station("station.id","station.nom_station_UPDATED", "station.capacite_UPDATED", "station.coordonnees_station_UPDATED", 
+            "station.nom_commune_UPDATED", "station.en_fonctionnement_UPDATED", "station.date_deb_UPDATED", "station.date_fin_UPDATED", 
+            "station.borne_paiement_UPDATED", "station.nb_bornettes_UPDATED")
+StationDAO_Jer.create(Station_Jer_UPDATED)
+StationDAO_Jer.read('station.id')
+StationDAO_Jer.update('staion.id', Station_Jer_UPDATED)
+
