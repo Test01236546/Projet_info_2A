@@ -98,6 +98,6 @@ def get_position_from_address(address):
     else:
         raise Exception("Erreur lors de la récupération des données de l'API Adresse")
 
-if __name__ == "__main__":
-    position = get_position_from_address(address)
-    print(position)
+#if __name__ == "__main__":
+#    position = get_position_from_address(address)
+#    print(position)
