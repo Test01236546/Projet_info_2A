@@ -3,6 +3,21 @@ from geopy.distance import geodesic
 import geopy
 #import json
 
+ def get_coordinates_from_address(address):
+        # Faire une requête à l'API Etalab
+        url = f"https://api-adresse.data.gouv.fr/search/?q={address}&limit=1"
+        response = requests.get(url)
+
+        if response.status_code == 200:
+            data = response.json()
+            if data['features']:
+                lon, lat = data['features'][0]['geometry']['coordinates']
+                return lat, lon
+            else:
+                return None, None
+        else:
+            return None, None
+
 def trouver_station_proche(lat, lon):
     # Faire une requête à l'API
     null=None # car dans la base de donnée response 
@@ -24,8 +39,8 @@ def trouver_station_proche(lat, lon):
             distances = []
             for station in stations_utilisables:
                 distance = geopy.distance.distance((lon, lat), (station["coordonnees_geo"]["lon"],station["coordonnees_geo"]["lat"])).km
-                distances.append((distance, station))
-#["name"]
+                distances.append((distance, station["name"]))
+#station["name"] a remplacer à la place de station
             # Renvoie la station avec la distance la plus courte.
 
             return min(distances, key=lambda x: x[0])[1]
@@ -42,3 +57,13 @@ longitude = 2.271145564431678
 
 nom_station_proche = trouver_station_proche(latitude, longitude)
 print(f"La station la plus proche est : {nom_station_proche}")
+
+# Utilisation des fonctions
+address = "30, rue de Sèvres, 75007"
+lat, lon = get_coordinates_from_address(address)
+
+if lat is not None and lon is not None:
+    station = trouver_station_proche(lat, lon)
+    print(f"La station Vélib la plus proche de l'adresse est : {station}")
+else:
+    print("Impossible de trouver les coordonnées de l'adresse.")
