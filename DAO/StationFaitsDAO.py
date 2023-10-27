@@ -10,4 +10,20 @@ class StationFaitsDAO(AbstractDAO):
         self.elec_dispo=elec_dispo
         self.retour_dispo=retour_dispo
         
+
+    def create(self, station):
+        pass
+
+    def read(self, id):
+        pass
+
+    def update(self, station):
+        pass
+
+    def delete(self, station):
+        pass
+
+
+
+    
     
