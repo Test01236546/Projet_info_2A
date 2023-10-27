@@ -1,36 +1,36 @@
 import sqlite3
 from datetime import date
-from Test_Jeremie.jer_station import jer_station
-from Station import Station
+from jer_station import jer_station
+# from Station import Station
 
-DB_PATH = "Test_Jeremie/test.sql"
+DB_PATH = "Test_Jeremie/test1.sql"
 
-class jer_stationDAO:
+class Jer_stationDAO:
     def __init__(self):
         self.conn = sqlite3.connect(DB_PATH)        #on peut aussi mettre un argument path dans le __init__ f
         self.cur = self.conn.cursor()
         self.create_table()
 
-    def create_table(self):
-        self.cur.execute("""
-        CREATE TABLE IF NOT EXISTS stations (
-            id TEXT PRIMARY KEY,
-            nom_station TEXT,
-            capacite INTEGER,
-            coordonnees_station TEXT,
-            nom_commune TEXT,
-            en_fonctionnement BOOLEAN,
-            date_deb DATE,
-            date_fin DATE,
-            borne_paiement BOOLEAN,
-            nb_bornettes INTEGER
-        )
-        """)
-        self.conn.commit()
+    # def create_table(self):
+    #     self.cur.execute("""
+    #     CREATE TABLE IF NOT EXISTS stations (
+    #         id TEXT PRIMARY KEY,
+    #         nom_station TEXT,
+    #         capacite INTEGER,
+    #         coordonnees_station TEXT,
+    #         nom_commune TEXT,
+    #         en_fonctionnement BOOLEAN,
+    #         date_deb DATE,
+    #         date_fin DATE,
+    #         borne_paiement BOOLEAN,
+    #         nb_bornettes INTEGER
+    #     )
+    #     """)
+    #     self.conn.commit()
 
 
     
-    def create(self, station: Station):
+    def create(self, station):
         self.cur.execute("""
         INSERT INTO stations VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         """, (station.id, station.nom_station, station.capacite, station.coordonnees_station, 
@@ -48,7 +48,7 @@ class jer_stationDAO:
             print("Station non trouvée")
         return station
 
-    def update(self, id, new_data: Station):
+    def update(self, id, new_data):
         # if not isinstance(new_data, jer_station):
         #     print("L'objet fourni n'est pas une instance de la classe Station")
         #     return

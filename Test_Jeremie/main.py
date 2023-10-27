@@ -1,10 +1,10 @@
-from jer_station_DAO import jer_stationDAO
+from jer_stationDAO import Jer_stationDAO
 from jer_station import jer_station
-
+from BDD import classBDD #modifier car pb d'encapsulation
 
 if __name__ == "__main__":
     
-    StationDAO_Jer= jer_stationDAO()
+    StationDAO_Jer= Jer_stationDAO()
     Station_Jer = jer_station("station.id_1", "station.nom_station", "station.capacite", "station.coordonnees_station", 
                 "station.nom_commune", "station.en_fonctionnement", "station.date_deb", "station.date_fin", 
                 "station.borne_paiement", "station.nb_bornettes")

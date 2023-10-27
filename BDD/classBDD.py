@@ -2,15 +2,15 @@
 import sqlite3
 from datetime import date
 #test
-DB_PATH = "Test_Jeremie/test.sql"
+BDD_PATH = "Test_Jeremie/test1.sql"
 
 class BDD_Manager:
-    def __init__(self):
-        self.conn = sqlite3.connect(DB_PATH)
+    def __init__(self,path):
+        self.conn = sqlite3.connect(path)
         self.cur = self.conn.cursor()
-        self.create_table()
+        self.create_stations_table()
         
-    def create_table(self):
+    def create_stations_table(self):
         self.cur.execute("""
         CREATE TABLE IF NOT EXISTS stations (
             id TEXT PRIMARY KEY,
@@ -30,7 +30,7 @@ class BDD_Manager:
     def close(self):
         self.conn.close()
 
-db_manager = BDD_Manager("ma_base_de_donnees.sqlite")
+db_manager = BDD_Manager(BDD_PATH)
 db_manager.create_stations_table()
 db_manager.close()
 
