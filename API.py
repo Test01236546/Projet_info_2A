@@ -7,17 +7,34 @@ import uvicorn
 from Service import Service
 from datetime import datetime
 
+import Fonctionnalites as F
+
 
 app=FastAPI()
 # Classe API
 class StationAPI():
     def __init__(self):
         super().__init__()
-        self.station = Station()
+        #self.station = Station()
         self.connection = None
 
-    def get_station_la_plus_proche(self, adresse: str):
-        return dao_station_la_plus_proche
+    def station_plus_proche(self, adresse:
+        # Récupération des données de l'API
+        url = "https://api-adresse.data.gouv.fr/search/?q={}".format(adresse)
+        response = requests.get(url)
+        if response.status_code == 200:
+            data = response.json()
+            if len(data["features"]) == 1:
+                position = (data["features"][0]["geometry"]["coordinates"][0], data["features"][0]["geometry"]["coordinates"][1])
+                    # Appeler la méthode F1() de la classe Fonctionnalites()
+                station_proche = F.F1(latitude, longitude)
+
+                return station_proche
+            else:
+                raise Exception("L'adresse donnée n'est pas valide")
+        else:
+            raise Exception("Erreur lors de la récupération des données de l'API Adresse")
+
 
     def get_station_la_moins_frequentee(self, date_debut, date_fin):
         # Récupération des données de la base de données
@@ -52,8 +69,8 @@ def get_stations():
     return Station().get_stations()
 
 @app.get("/stations/closest")
-def get_closest_station(latitude: float, longitude: float):
-    return Station().get_closest_station(latitude, longitude)
+def get_closest_station(lon,lat):
+    return StationAPI().station_plus_proche(adresse=)
 
 @app.get("/stations/least_frequented")
 def get_least_frequented_station(start_date: str, end_date: str):
