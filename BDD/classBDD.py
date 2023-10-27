@@ -33,3 +33,6 @@ class BDD_Manager:
 db_manager = BDD_Manager("ma_base_de_donnees.sqlite")
 db_manager.create_stations_table()
 db_manager.close()
+
+#question : on a trois table, est ce qu'il ne faut pas passer en argument le nom de la table dans create table pour pouvoir en créer
+#d'autres ? ou faut il creer deux autre fonnctions create table ?
