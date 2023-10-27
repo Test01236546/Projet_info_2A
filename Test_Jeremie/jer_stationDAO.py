@@ -7,7 +7,7 @@ DB_PATH = "Test_Jeremie/test.sql"
 
 class jer_stationDAO:
     def __init__(self):
-        self.conn = sqlite3.connect(DB_PATH)        #on peut aussi mettre un argument path dans le __init__
+        self.conn = sqlite3.connect(DB_PATH)        #on peut aussi mettre un argument path dans le __init__ f
         self.cur = self.conn.cursor()
         self.create_table()
 
