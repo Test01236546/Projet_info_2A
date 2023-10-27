@@ -7,10 +7,8 @@ class Fonctionnalites():
         pass
     
     
-    def F1(self,lon, lat):
+    def F1(self,lat,lon):
        # Faire une requête à l'API
-        lon = float(lon)
-        lat = float(lat)
         null=None # car dans la base de donnée response 
         url = "https://opendata.paris.fr/api/explore/v2.1/catalog/datasets/velib-disponibilite-en-temps-reel/exports/json?lang=fr&timezone=Europe%2FBerlin"
         response = r.get(url)
@@ -21,7 +19,7 @@ class Fonctionnalites():
         
         
         # Filtre les stations qui sont installées et ouvertes à la location et qui ont au moins 1 vélo dispo.
-            stations_utilisables = [station for station in stations_data if station["is_installed"] == "OUI" and station["is_renting"] == "OUI" and station["numdocksavailable"] >= 1]
+            stations_utilisables = [station for station in stations_data if station["is_installed"] == "OUI" and station["is_renting"] == "OUI" and station["numbikesavailable"] >= 1]
 
         #verification qu'il y au moins une station utilisable
             if stations_utilisables:
