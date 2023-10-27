@@ -1,3 +1,7 @@
+import requests as r 
+from geopy.distance import geodesic
+import geopy
+
 class Fonctionnalites():
     def __init__(self):
         pass
@@ -9,7 +13,7 @@ class Fonctionnalites():
         lat = float(lat)
         null=None # car dans la base de donnée response 
         url = "https://opendata.paris.fr/api/explore/v2.1/catalog/datasets/velib-disponibilite-en-temps-reel/exports/json?lang=fr&timezone=Europe%2FBerlin"
-        response = requests.get(url)
+        response = r.get(url)
     
 
         if response.status_code == 200:

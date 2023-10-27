@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 
-import requests
+import requests as r 
 from pydantic import BaseModel
 from Station import Station
 import uvicorn
@@ -18,10 +18,10 @@ class StationAPI():
         #self.station = Station()
         self.connection = None
 
-    def station_plus_proche(self, adresse:
+    def station_plus_proche(self, adresse):
         # Récupération des données de l'API
         url = "https://api-adresse.data.gouv.fr/search/?q={}".format(adresse)
-        response = requests.get(url)
+        response = r.get(url)
         if response.status_code == 200:
             data = response.json()
             if len(data["features"]) == 1:
@@ -70,7 +70,7 @@ def get_stations():
 
 @app.get("/stations/closest")
 def get_closest_station(lon,lat):
-    return StationAPI().station_plus_proche(adresse=)
+    return F.Fonctionnalites().F1(lat, lon)
 
 @app.get("/stations/least_frequented")
 def get_least_frequented_station(start_date: str, end_date: str):
