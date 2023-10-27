@@ -2,13 +2,12 @@ from fastapi import FastAPI
 
 import requests as r 
 from pydantic import BaseModel
-from Station import Station
+from Service.Station import Station
 import uvicorn
-from Service import Service
+from Service.Service import Service
 from datetime import datetime
-
-import Fonctionnalites as F
-
+import Service.Fonctionnalites as F
+from geopy.geocoders import Nominatim 
 
 app=FastAPI()
 # Classe API
@@ -26,8 +25,8 @@ class StationAPI():
             data = response.json()
             if len(data["features"]) == 1:
                 position = (data["features"][0]["geometry"]["coordinates"][0], data["features"][0]["geometry"]["coordinates"][1])
-                    # Appeler la méthode F1() de la classe Fonctionnalites()
-                station_proche = F.F1(latitude, longitude)
+                # Appeler la méthode F1() de la classe Fonctionnalites()
+                station_proche = F.Fonctionnalites().F1(lat, lon)
 
                 return station_proche
             else:
@@ -69,8 +68,8 @@ def get_stations():
     return Station().get_stations()
 
 @app.get("/stations/closest")
-def get_closest_station(lat,lon):
-    return F.Fonctionnalites().F1(lat, lon)
+def get_closest_station(latitude, longitude):
+    return F.Fonctionnalites().F1(latitude, longitude)
 
 @app.get("/stations/least_frequented")
 def get_least_frequented_station(start_date: str, end_date: str):
