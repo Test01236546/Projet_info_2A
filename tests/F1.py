@@ -1,4 +1,4 @@
-import requests
+import requests as r
 from geopy.distance import geodesic
 import geopy
 #import json
@@ -6,7 +6,7 @@ import geopy
 def get_coordinates_from_address(address):
     # Faire une requête à l'API Etalab
     url = f"https://api-adresse.data.gouv.fr/search/?q={address}&limit=1"
-    response = requests.get(url)
+    response = r.get(url)
 
     if response.status_code == 200:
         data = response.json()
@@ -23,8 +23,9 @@ def trouver_station_proche(lat, lon):
     if lat is not None and lon is not None:
         # Faire une requête à l'API
         null=None # car dans la base de donnée response 
-        url = "https://opendata.paris.fr/api/explore/v2.1/catalog/datasets/velib-disponibilite-en-temps-reel/exports/json?lang=fr&timezone=Europe%2FBerlin"
-        response = requests.get(url)
+        #url = "https://opendata.paris.fr/api/explore/v2.1/catalog/datasets/velib-disponibilite-en-temps-reel/exports/json?lang=fr&timezone=Europe%2FBerlin"
+        url =  "https://opendata.paris.fr/api/explore/v2.1/catalog/datasets/velib-disponibilite-en-temps-reel/records?limit=-1&timezone=Europe%2Fberlin"
+        response = r.get(url)
     
 
         if response.status_code == 200:
@@ -59,17 +60,17 @@ def trouver_station_proche(lat, lon):
 latitude = 48.8182338426597
 longitude = 2.271145564431678
 
-nom_station_proche = trouver_station_proche(latitude, longitude)
-print(f"La station la plus proche est : {nom_station_proche}")
+#nom_station_proche = trouver_station_proche(latitude, longitude)
+#print(f"La station la plus proche est : {nom_station_proche}")
 
 # Utilisation des fonctions
 address = "30, rue de Sèvres, 75007"
-station = trouver_station_proche(get_coordinates_from_address(address))
-print(f"La station Vélib la plus proche de l'adresse est : {station}")
-#lat, lon = get_coordinates_from_address(address)
+#station = trouver_station_proche(get_coordinates_from_address(address))
+#print(f"La station Vélib la plus proche de l'adresse est : {station}")
+lat, lon = get_coordinates_from_address(address)
 
-#if lat is not None and lon is not None:
-#    station = trouver_station_proche(lat, lon)
-#    print(f"La station Vélib la plus proche de l'adresse est : {station}")
-#else:
-#    print("Impossible de trouver les coordonnées de l'adresse.")
+if lat is not None and lon is not None:
+    station = trouver_station_proche(lat, lon)
+    print(f"La station Vélib la plus proche de l'adresse est : {station}")
+else:
+    print("Impossible de trouver les coordonnées de l'adresse.")
