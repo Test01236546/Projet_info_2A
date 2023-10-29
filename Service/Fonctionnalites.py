@@ -32,7 +32,8 @@ class Fonctionnalites():
             response = r.get(url)
 
             if response.status_code == 200:
-                stations_data = response.json()
+                response_json = response.json()
+                stations_data= response_json["results"]
         
                 # Filtre les stations qui sont installées et ouvertes à la location et qui ont au moins 1 vélo dispo.
                 stations_utilisables = [station for station in stations_data if station["is_installed"] == "OUI" and station["is_renting"] == "OUI" and station["numbikesavailable"] >= 1]
