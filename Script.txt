@@ -1,1 +1,3 @@
-https://opendata.paris.fr/api/explore/v2.1/catalog/datasets/velib-disponibilite-en-temps-reel/exports/json?lang=fr&timezone=Europe%2FBerlin
+DRIVER={SQL Server};SERVER=localhost;DATABASE=velib;UID=sa;PWD=password
+
+CREATE TABLE stations (id INT IDENTITY(1,1), name VARCHAR(255), arrondissement INT, date_update DATETIME)

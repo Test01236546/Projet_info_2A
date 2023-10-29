@@ -1,4 +1,4 @@
-from AbstractDAO import DAO
+from AbstractDAO import AbstractDAO
 
 class StationFaitsDAO(AbstractDAO):
     def __init__(self, id, id_temps, id_temps_fin, velos_dispo, meca_dispo, elec_dispo, retour_dispo):

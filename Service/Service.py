@@ -48,6 +48,6 @@ class Service ():
         self.connection.close()
 
 
-if __name__ == "__main__":
-    service = Service()
-    service.ingest()
+#if __name__ == "__main__":
+#    service = Service()
+#    service.ingest()

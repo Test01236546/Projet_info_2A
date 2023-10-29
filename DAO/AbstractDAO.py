@@ -2,7 +2,7 @@ from abc import ABC, abstractmethod
 
 # il faudait faire raise error si les class fille n'ont pas les méthodes rtt
 
-class StationDAO(ABC):
+class AbstractDAO(ABC):
     @abstractmethod
     def create(self, station):
         raise NotImplementedError

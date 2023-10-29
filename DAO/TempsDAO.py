@@ -1,4 +1,4 @@
-from AbstractDAO import DAO
+from AbstractDAO import AbstractDAO
 
 class TempsDAO(DAO): 
     def __init__(self, id_temps):

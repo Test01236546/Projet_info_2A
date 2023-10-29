@@ -1,4 +1,4 @@
-from StationFaitsDAO import StationFaitsDAO
+from DAO.StationFaitsDAO import StationFaitsDAO
 
 class StationFaits():
     def __init__(self, id, id_temps, velos_dispos, meca_dispo, elec_dispo, retour_velo ):
