@@ -30,11 +30,14 @@ def trouver_station_proche(lat, lon):
     
 
         if response.status_code == 200:
-            stations_data = response.json()
+            response_json = response.json()
+            print(response_json)
+            stations_data= response_json["results"]
+            print(stations_data)
 
         
             # Filtre les stations qui sont installées et ouvertes à la location et qui ont au moins 1 vélo dispo.
-            stations_utilisables = [station for station in stations_data['results'] if station["is_installed"] == "OUI" and station["is_renting"] == "OUI" and station["numbikesavailable"] >= 1]
+            stations_utilisables = [station for station in stations_data if station["is_installed"] == "OUI" and station["is_renting"] == "OUI" and station["numbikesavailable"] >= 1]
             
             #verification qu'il y au moins une station utilisable
             if stations_utilisables:
