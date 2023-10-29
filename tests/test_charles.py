@@ -5,7 +5,8 @@ url =  "https://opendata.paris.fr/api/explore/v2.1/catalog/datasets/velib-dispon
 response = r.get(url)
 if response.status_code == 200:
     data = response.json()
-    print(data)
+    data_bis=data["results"]
+    print(data_bis)
 else:
     print("Erreur lors de la requête à l'API.")
     

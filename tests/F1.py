@@ -31,14 +31,14 @@ def trouver_station_proche(lat, lon):
 
         if response.status_code == 200:
             response_json = response.json()
-            print(response_json)
+            #print(response_json)
             stations_data= response_json["results"]
-            print(stations_data)
+            #print(stations_data)
 
         
             # Filtre les stations qui sont installées et ouvertes à la location et qui ont au moins 1 vélo dispo.
             stations_utilisables = [station for station in stations_data if station["is_installed"] == "OUI" and station["is_renting"] == "OUI" and station["numbikesavailable"] >= 1]
-            
+            print(stations_utilisables)
             #verification qu'il y au moins une station utilisable
             if stations_utilisables:
             
@@ -46,7 +46,7 @@ def trouver_station_proche(lat, lon):
                 distances = []
                 for station in stations_utilisables:
                     distance = geopy.distance.distance((lon, lat), (station["coordonnees_geo"]["lon"],station["coordonnees_geo"]["lat"])).km
-                    distances.append((distance, station["name"]))
+                    distances.append((distance, station))
 #station["name"] a remplacer à la place de station
             # Renvoie la station avec la distance la plus courte.
 
