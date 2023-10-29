@@ -71,6 +71,9 @@ import urllib.request
 import json
 import pandas as pd
 
+##############################################requete 1######################################################
+
+
 # Faire une requête à l'API pour obtenir les données de fréquentation
 api_url = 'https://opendata.paris.fr/api/explore/v2.1/catalog/datasets/velib-disponibilite-en-temps-reel'
 
@@ -94,4 +97,44 @@ station_moins_frequente = station_frequentation.idxmin()
 
 print("La station la moins fréquentée est :", station_moins_frequente)
 
-# code sql 
+
+
+
+
+
+
+############################################## requete 2 code chatgpt (requete sql validé par charles)############################
+import sqlite3
+
+# Connexion à la base de données
+conn = sqlite3.connect('votre_base_de_donnees.db')  # Remplacez avec le nom de votre base de données
+
+# Création d'un curseur pour exécuter les requêtes
+cursor = conn.cursor()
+
+# Requête SQL pour obtenir la station la moins fréquentée à partir de date_debut et date_fin les dates fournies par l'utilisateur
+query = '''
+    SELECT s.nom_station
+    FROM StationFaits sf
+    JOIN station s ON sf.id_station = s.id_station
+    WHERE sf.date_fait_deb >= 'date_debut' AND sf.date_fait_fin <= 'date_fin'
+    GROUP BY s.nom_station
+    ORDER BY SUM(sf.frequence) ASC
+    LIMIT 1;
+'''
+
+# Exécution de la requête
+cursor.execute(query)
+
+# Récupération du résultat
+result = cursor.fetchone()
+
+# Fermeture de la connexion à la base de données
+cursor.close()
+conn.close()
+
+# Affichage du résultat
+if result:
+    print(f"La station la moins fréquentée est : {result[0]}")
+else:
+    print("Aucun résultat trouvé.")

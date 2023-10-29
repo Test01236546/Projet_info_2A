@@ -2,6 +2,8 @@ import urllib.request
 import json
 import pandas as pd
 
+
+##############################################requete 1######################################################
 # Faire une requête à l'API pour obtenir les données de fréquentation
 start_date = '2023-10-25T00:00:00Z'
 end_date = '2023-10-25T23:59:59Z'
@@ -62,3 +64,40 @@ station_frequentation = station_frequentation.asfreq('H', fill_value=0)
 # Afficher les résultats
 print("L'arrondissement le plus fréquenté sur la période est :", arrondissement_plus_frequente)
 print(station_frequentation)
+
+
+#################requete2 chat gpt charles##################################################
+import sqlite3
+
+# Connexion à la base de données
+conn = sqlite3.connect('votre_base_de_donnees.db')
+cursor = conn.cursor()
+
+# Remplacez les valeurs de debut_timestamp et fin_timestamp par vos propres timestamps
+debut_timestamp = '2023-10-29T00:00:00+01:00'
+fin_timestamp = '2023-10-30T00:00:00+01:00'
+
+# Exécution de la requête SQL
+cursor.execute("""
+    SELECT COUNT(cf.id_commune_ou_arr) as freq, coa.nom_commune_ou_arr
+    FROM CommuneOuArr as coa
+    JOIN StationFaits as sf ON coa.id_commune_ou_arr = sf.id_commune_ou_arr
+    JOIN Temps as t ON sf.id_temps = t.id_temps
+    WHERE t.timestamp >= ? AND t.timestamp <= ?
+    GROUP BY coa.nom_commune_ou_arr
+    ORDER BY freq DESC
+    LIMIT 1;
+""", (debut_timestamp, fin_timestamp))
+
+# Récupération du résultat
+resultat = cursor.fetchone()
+
+# Fermeture de la connexion à la base de données
+conn.close()
+
+# Affichage du résultat
+if resultat:
+    freq, nom_commune_ou_arr = resultat
+    print(f"L'arrondissement le plus fréquenté est {nom_commune_ou_arr} avec une fréquence de {freq} utilisations.")
+else:
+    print("Aucun résultat trouvé.")
