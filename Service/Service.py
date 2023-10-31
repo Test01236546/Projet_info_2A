@@ -3,7 +3,7 @@ import pyodbc
 from datetime import datetime
 import os
 import sys
-sys.path.append('C:\\Users\\blyau\\Documents\\GitHub\\Projet_info_2A\\DAO\\StationDAO.py')
+sys.path.append('../DAO/StationDAO')
 import DAO.StationDAO as dao
 
 
