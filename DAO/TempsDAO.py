@@ -1,10 +1,10 @@
 from AbstractDAO import AbstractDAO
-
-class TempsDAO(DAO): 
+from abc import abstractmethod
+class TempsDAO(AbstractDAO): 
     def __init__(self, id_temps):
         self.id_temps=id_temps
         
-       def create(self, station):
+    def create(self, station):
         pass
 
     @abstractmethod

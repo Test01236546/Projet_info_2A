@@ -12,7 +12,7 @@ class BDD_Manager:
         
     def create_stations_table(self):
         self.cur.execute("""
-        CREATE TABLE IF NOT EXISTS stations (
+        CREATE TABLE IF NOT EXISTS Station (
             id TEXT PRIMARY KEY,
             nom_station TEXT,
             capacite INTEGER,
@@ -22,7 +22,36 @@ class BDD_Manager:
             date_deb DATE,
             date_fin DATE,
             borne_paiement BOOLEAN,
-            nb_bornettes INTEGER
+            frequence INT
+            
+        )
+        """)
+        self.cur.execute("""
+        CREATE TABLE IF NOT EXISTS Temps (
+            id_temps TIMESTAMP PRIMARY KEY,
+            date TEXT,
+            annee INT,
+            mois INT,
+            jour INT            
+        )
+        """)
+        self.cur.execute("""
+        CREATE TABLE IF NOT EXISTS StationFaits (
+            id_station TEXT PRIMARY KEY,
+            nb_bornettes INT,
+            velo_dispo INT,
+            meca_dispo INT,
+            elec_dispo INT,
+            retour_velo BOOL,
+            id_temps TIMESTAMP,
+            id_temps_fin TIMESTAMP,
+            id_commune TEXT            
+        )
+        """)
+        self.cur.execute("""
+        CREATE TABLE IF NOT EXISTS Commune (
+            id_commune TEXT PRIMARY KEY,
+            nom_commune TEXT            
         )
         """)
         self.conn.commit()

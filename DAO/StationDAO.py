@@ -1,8 +1,9 @@
 #il faut modifier les listes (instructions SQL)
-#modifier injes
+#modifier injest
 
 import sqlite3
 from datetime import date
+import sys
 
 DB_PATH_BDD = "BDD/BDD.sql"
 
@@ -12,22 +13,22 @@ class StationDAO:
         self.cur = self.conn.cursor()
         self.create_table()
 
-    def create_table(self):
-        self.cur.execute("""
-        CREATE TABLE IF NOT EXISTS stations (
-            id TEXT PRIMARY KEY,
-            nom_station TEXT,
-            capacite INTEGER,
-            coordonnees_station TEXT,
-            nom_commune TEXT,
-            en_fonctionnement BOOLEAN,
-            date_deb DATE,
-            date_fin DATE,
-            borne_paiement BOOLEAN,
-            nb_bornettes INTEGER
-        )
-        """)
-        self.conn.commit()
+    # def create_table(self):
+    #     self.cur.execute("""
+    #     CREATE TABLE IF NOT EXISTS stations (
+    #         id TEXT PRIMARY KEY,
+    #         nom_station TEXT,
+    #         capacite INTEGER,
+    #         coordonnees_station TEXT,
+    #         nom_commune TEXT,
+    #         en_fonctionnement BOOLEAN,
+    #         date_deb DATE,
+    #         date_fin DATE,
+    #         borne_paiement BOOLEAN,
+    #         nb_bornettes INTEGER
+    #     )
+    #     """)
+    #     self.conn.commit()
 
     def create(self, station):
         self.cur.execute("""
@@ -63,4 +64,3 @@ class StationDAO:
         self.conn.commit()
         print("Station supprimée")
 
-    

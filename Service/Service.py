@@ -1,53 +1,82 @@
 import requests
 import pyodbc
 from datetime import datetime
+import os
+import sys
+sys.path.append('C:\\Users\\blyau\\Documents\\GitHub\\Projet_info_2A\\DAO\\StationDAO.py')
+import DAO.StationDAO as dao
+
+
+
 
 class Service ():
-    def __init__(self,id_stationfaits, id_station, id_temps):
-        self.id_stationfaits=id_stationfaits
-        self.id_station=id_station
-        self.id_temps=id_temps
-        self.connection = pyodbc.connect("DRIVER={SQL Server};SERVER=localhost;DATABASE=velib;UID=sa;PWD=password")
-
-    def ingest(self):
-        # Récupération des données de l'API
-        url = "https://opendata.paris.fr/explore/dataset/velib-disponibilite-en-temps-reel/download/?format=json"&"timezone=Europe/Paris"
+    def __init__(self,):
+        #self.id_stationfaits=id_stationfaits
+        #self.id_station=id_station
+        #self.id_temps=id_temps
+        #self.connection = pyodbc.connect("DRIVER={SQL Server};SERVER=localhost;DATABASE=velib;UID=sa;PWD=password")
+        pass
+    
+    def ingest():
+    # Obtenir les données de l'API Vélib
+        url = "https://opendata.paris.fr/api/explore/v2.1/catalog/datasets/velib-disponibilite-en-temps-reel/records?limit=-1&timezone=Europe%2Fberlin"
         response = requests.get(url)
         if response.status_code == 200:
             data = response.json()
         else:
-            raise Exception("Erreur lors de la récupération des données de l'API OpenData Paris")
+            print("Erreur lors de la requête à l'API Vélib.")
+            return
 
-        # Récupération de la date de la dernière mise à jour de la base de données
-        cursor = self.connection.cursor()
-        cursor.execute("SELECT MAX(date_update) AS date_update FROM stations")
-        last_update = cursor.fetchone()[0]
-        cursor.close()
+    # Ouvrir les bases de données
+        with open("Station.sql", "r") as f:
+            sql_station = f.read()
+        with open("StationFaits.sql", "r") as f:
+            sql_stationFaits = f.read()
+        with open("Commune.sql", "r") as f:
+            sql_commune = f.read()
+        with open("Temps.sql", "r") as f:
+            sql_temps = f.read()
+        conn_station = sqlite3.connect("stations.db")
+        conn_stationFaits = sqlite3.connect("stationFaits.db")
+        conn_commune = sqlite3.connect("commune.db")
+        conn_temps = sqlite3.connect("temps.db")
+        conn_station.executescript(sql_station)
+        conn_stationFaits.executescript(sql_stationFaits)
+        conn_commune.executescript(sql_commune)
+        conn_temps.executescript(sql_temps)
+        cur_station = conn_station.cursor()
+        cur_stationFaits = conn_stationFaits.cursor()
+        cur_commune = conn_commune.cursor()
+        cur_temps = conn_temps.cursor()
 
-        # Insertion des nouvelles données dans la base de données
-        for station in data:
-            # Vérification que la station n'est pas déjà présente dans la base de données
-            cursor = self.connection.cursor()
-            cursor.execute("SELECT COUNT(*) AS nb FROM stations WHERE name = ?", (station["name"],))
-            count = cursor.fetchone()[0]
-            cursor.close()
+    # Mettre à jour les bases de données
+        for station in data['results']:
+        # Vérifier si la station existe déjà dans la base de données stations
+            cur_station.execute("SELECT * FROM stations WHERE id=?", (station['id'],))
+            station_exists = cur_station.fetchone()
 
-            # Insertion de la nouvelle station dans la base de données si elle n'y est pas encore
-            if count == 0:
-                cursor = self.connection.cursor()
-                cursor.execute("INSERT INTO stations (name, arrondissement, date_update) VALUES (?, ?, ?)", (station["name"], station["arrondissement"], datetime.utcfromtimestamp(station["last_update"])))
-                cursor.close()
-
-            # Mise à jour de la date de mise à jour de la station si elle est déjà présente dans la base de données
+        # Si la station n'existe pas, la créer
+            if not station_exists:
+                self.create_station(station)
             else:
-                cursor = self.connection.cursor()
-                cursor.execute("UPDATE stations SET date_update = ? WHERE name = ?", (datetime.utcfromtimestamp(station["last_update"]), station["name"]))
-                cursor.close()
+            # Si la station existe, la mettre à jour
+                self.update_station(station)
 
-        # Fermeture de la connexion à la base de données
-        self.connection.close()
+        # Mettre à jour l'état de la station
+            self.update_etat_station(station)
+
+        conn_station.commit()
+        conn_stationFaits.commit()
+        conn_commune.commit()
+        conn_temps.commit()
+        conn_station.close()
+        conn_stationFaits.close()
+        conn_commune.close()
+        conn_temps.close()
 
 
 #if __name__ == "__main__":
 #    service = Service()
 #    service.ingest()
+
+
