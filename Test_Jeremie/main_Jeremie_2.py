@@ -3,7 +3,7 @@ from Test_Jeremie.jer_station import Jer_station
 import sys
 # sys.path.append('BDD/classBDD.py')
 # import time
-# from Service import Station as St
+# from Service import station as St
 # from DAO import stationDAO as stDAO
 # from BDD import classBDD as cBDD
 

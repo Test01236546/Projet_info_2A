@@ -31,20 +31,22 @@ class BDD_Manager:
             date TEXT,
             annee INT,
             mois INT,
-            jour INT            
+            jour INT,
+            heure INT,
+            min INT            
         )
         """)
         self.cur.execute("""
         CREATE TABLE IF NOT EXISTS StationFaits (
             id_station TEXT PRIMARY KEY,
             nb_bornettes INT,
-            velo_dispo INT,
+            velos_dispos INT,
             meca_dispo INT,
             elec_dispo INT,
             retour_velo BOOL,
-            id_temps TIMESTAMP,
-            id_temps_fin TIMESTAMP,
-            id_commune TEXT            
+            frequence INT,
+            date_fait_deb TIMESTAMP,
+            date_fait_fin TIMESTAMP            
         )
         """)
         self.cur.execute("""

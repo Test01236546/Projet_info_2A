@@ -6,33 +6,34 @@ class CommuneDAO:
         self.conn = sqlite3.connect(path)
         self.cur = self.conn.cursor()
 
-    def create(self):
-        self.db_manager.cur.execute("""
+    def create(self,commune):
+        self.cur.execute("""
         INSERT INTO Commune (id, nom) VALUES (?, ?)
         """, (commune.id, commune.nom))
-        self.db_manager.conn.commit()
+        self.conn.commit()
         print("Commune créée")
 
     def read(self, id):
-        self.db_manager.cur.execute("SELECT * FROM Commune WHERE id=?", (id,))
-        commune_data = self.db_manager.cur.fetchone()
+        self.cur.execute("SELECT * FROM Commune WHERE id=?", (id,))
+        commune = self.cur.fetchone()
         if commune_data:
-            print("Commune trouvée:", commune_data)
-            return Commune(*commune_data)
+            print("Commune trouvée:", commune)
+            return commune
+            # return Commune(*commune_data) si on ne manipulait pas déja des communes
         else:
             print("Commune non trouvée")
             return None
 
     def update(self, id, new_data):
-        self.db_manager.cur.execute(f"""
-        UPDATE {self.TABLE_NAME} SET nom=?, population=? WHERE id=?
-        """, (new_data.nom, new_data.population, id))
-        self.db_manager.conn.commit()
+        self.cur.execute("""
+        UPDATE Commune SET nom=? WHERE id=?
+        """, (new_data.nom, id))
+        self.conn.commit()
         print("Commune mise à jour")
 
     def delete(self, id):
-        self.db_manager.cur.execute(f"DELETE FROM {self.TABLE_NAME} WHERE id=?", (id,))
-        self.db_manager.conn.commit()
+        self.cur.execute("DELETE FROM Commune WHERE id=?", (id,))
+        self.conn.commit()
         print("Commune supprimée")
 
 

@@ -3,22 +3,36 @@
 # import sys
 # sys.path.append('BDD/classBDD.py')
 # import time
-from Service import Station as St
+from Service import station as St
 from DAO import stationDAO as stDAO
 from BDD import classBDD as cBDD
 
 
-if __name__ == "__main_Jeremie__":
+if __name__ == "__main__":
     BDD_PATH = "Test_Jeremie/test1.sql"
     db_manager = cBDD.BDD_Manager(BDD_PATH)
-    db_manager.create_stations_table()
+    # db_manager.create_stations_table() #pas besoin
     Instance_StationDAO = stDAO.StationDAO(BDD_PATH)
     Instance_Station = St.Station("station.id_1", "station.nom_station", "station.capacite", "station.coordonnees_station", 
                "station.nom_commune", "station.en_fonctionnement", "station.date_deb", "station.date_fin", 
                "station.borne_paiement", "station.nb_bornettes")
-    Instance_StationDAO.read("station.id")
+    # Instance_StationDAO.read("station.id")
+    Instance_StationDAO.delete("station.id_1")
     Instance_StationDAO.create(Instance_Station)
     Instance_StationDAO.read("station.id_1")
+    Instance_Station_UPDATE = St.Station("station.id_1", "station.nom_station_UPDATE", "station.capacite", "station.coordonnees_station", 
+               "station.nom_commune", "station.en_fonctionnement", "station.date_deb", "station.date_fin", 
+               "station.borne_paiement", "station.nb_bornettes")
+    Instance_StationDAO.update1("station.id_1",Instance_Station_UPDATE)
+    Instance_StationDAO.update2("station.id_1",Instance_Station_UPDATE)
+    Instance_StationDAO.read("station.id_1")
+    Instance_StationDAO.cur.execute("PRAGMA table_info(Station)")
+    result = Instance_StationDAO.cur.execute("PRAGMA table_info(Station)").fetchall()
+    print(result)
+    for row in result:
+        print(row)
+
+
 
 
 #TEST LOCAUX    
