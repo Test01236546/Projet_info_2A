@@ -5,13 +5,12 @@ import sqlite3
 from datetime import date
 import sys
 
-DB_PATH_BDD = "BDD/BDD.sql"
 
 class StationDAO:
-    def __init__(self):
-        self.conn = sqlite3.connect(DB_PATH_BDD)
+    def __init__(self,path):
+        self.conn = sqlite3.connect(path)
         self.cur = self.conn.cursor()
-        self.create_table()
+        # self.create_table()
 
     # def create_table(self):
     #     self.cur.execute("""

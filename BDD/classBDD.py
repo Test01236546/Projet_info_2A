@@ -2,7 +2,6 @@
 import sqlite3
 from datetime import date
 #test
-BDD_PATH = "Test_Jeremie/test1.sql"
 
 class BDD_Manager:
     def __init__(self,path):
@@ -59,9 +58,9 @@ class BDD_Manager:
     def close(self):
         self.conn.close()
 
-db_manager = BDD_Manager(BDD_PATH)
-db_manager.create_stations_table()
-db_manager.close()
+# db_manager = BDD_Manager(BDD_PATH)
+# db_manager.create_stations_table()
+# db_manager.close()
 
 #question : on a trois table, est ce qu'il ne faut pas passer en argument le nom de la table dans create table pour pouvoir en créer
 #d'autres ? ou faut il creer deux autre fonnctions create table ?

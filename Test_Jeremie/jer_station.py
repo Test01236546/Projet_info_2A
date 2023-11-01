@@ -1,6 +1,6 @@
 # from datetime import date
 
-class jer_station:
+class Jer_station:
     def __init__(self, id, nom_station, capacite, coordonnees_station, nom_commune, 
                  en_fonctionnement, date_deb, date_fin, borne_paiement, nb_bornettes):
         self.id = id
