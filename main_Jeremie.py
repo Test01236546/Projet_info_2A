@@ -3,17 +3,17 @@
 # import sys
 # sys.path.append('BDD/classBDD.py')
 # import time
-from Service import Station
-from DAO import stationDAO
-from BDD import classBDD
+from Service import Station as St
+from DAO import stationDAO as stDAO
+from BDD import classBDD as cBDD
 
 
 if __name__ == "__main_Jeremie__":
     BDD_PATH = "Test_Jeremie/test1.sql"
-    db_manager = BDD_Manager(BDD_PATH)
+    db_manager = cBDD.BDD_Manager(BDD_PATH)
     db_manager.create_stations_table()
-    Instance_StationDAO = StationDAO(BDD_PATH)
-    Instance_Station = Station("station.id_1", "station.nom_station", "station.capacite", "station.coordonnees_station", 
+    Instance_StationDAO = stDAO.StationDAO(BDD_PATH)
+    Instance_Station = St.Station("station.id_1", "station.nom_station", "station.capacite", "station.coordonnees_station", 
                "station.nom_commune", "station.en_fonctionnement", "station.date_deb", "station.date_fin", 
                "station.borne_paiement", "station.nb_bornettes")
     Instance_StationDAO.read("station.id")

@@ -1,7 +1,7 @@
 
 import sqlite3
 from datetime import date
-#test
+#On set up une BDD avec plusieurs tables
 
 class BDD_Manager:
     def __init__(self,path):

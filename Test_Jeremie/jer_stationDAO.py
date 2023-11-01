@@ -1,6 +1,6 @@
 import sqlite3
 from datetime import date
-from jer_station import jer_station
+# from jer_station import jer_station
 # from Station import Station
 
 DB_PATH = "Test_Jeremie/test1.sql"
