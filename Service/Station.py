@@ -1,10 +1,10 @@
 class Station():
-    def __init__(self,id, nom_station, capacite, coordonnees_station, nom_commune, en_fonctionnement, date_deb, date_fin, borne_paiement, nb_bornettes):
+    def __init__(self,id, nom_station, capacite, coordonnees_station, id_commune, en_fonctionnement, date_deb, date_fin, borne_paiement, nb_bornettes):
         self.id=id
         self.nom_station=nom_station
         self.capacite=capacite
         self.coordonnees_station=coordonnees_station
-        self.nom_commune=nom_commune
+        self.id_commune=id_commune
         self.en_fonctionnement=en_fonctionnement
         self.date_deb=date_deb
         self.date_fin=date_fin

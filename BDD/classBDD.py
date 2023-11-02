@@ -16,7 +16,7 @@ class BDD_Manager:
             nom_station TEXT,
             capacite INTEGER,
             coordonnees_station TEXT,
-            nom_commune TEXT,
+            id_commune TEXT,
             en_fonctionnement BOOLEAN,
             date_deb DATE,
             date_fin DATE,

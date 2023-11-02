@@ -12,7 +12,7 @@ class StationDAO:
         self.cur.execute("""
         INSERT INTO Station VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         """, (station.id, station.nom_station, station.capacite, station.coordonnees_station, 
-              station.nom_commune, station.en_fonctionnement, station.date_deb, station.date_fin, 
+              station.id_commune, station.en_fonctionnement, station.date_deb, station.date_fin, 
               station.borne_paiement, station.nb_bornettes,))
         self.conn.commit()
         print(f"Station créée : {station.id}")
@@ -30,10 +30,10 @@ class StationDAO:
     def update(self, id, new_data):
         self.cur.execute("""
         UPDATE Station SET nom_station=?, capacite=?, coordonnees_station=?, 
-        nom_commune=?, en_fonctionnement=?, date_deb=?, date_fin=?, 
+        id_commune=?, en_fonctionnement=?, date_deb=?, date_fin=?, 
         borne_paiement=?, nb_bornettes=? WHERE id=?
         """, (new_data.nom_station, new_data.capacite, new_data.coordonnees_station, 
-              new_data.nom_commune, new_data.en_fonctionnement, new_data.date_deb, 
+              new_data.id_commune, new_data.en_fonctionnement, new_data.date_deb, 
               new_data.date_fin, new_data.borne_paiement, new_data.nb_bornettes, id))
         self.conn.commit()
         print(f"Station {id} mise à jour")
