@@ -15,7 +15,7 @@ class StationDAO:
               station.nom_commune, station.en_fonctionnement, station.date_deb, station.date_fin, 
               station.borne_paiement, station.nb_bornettes,))
         self.conn.commit()
-        print("Station créée")
+        print(f"Station créée : {station.id}")
 
     def read(self, id):
         self.cur.execute("SELECT * FROM Station WHERE id=?", (id,))
@@ -36,14 +36,14 @@ class StationDAO:
               new_data.nom_commune, new_data.en_fonctionnement, new_data.date_deb, 
               new_data.date_fin, new_data.borne_paiement, new_data.nb_bornettes, id))
         self.conn.commit()
-        print("Station mise à jour")
+        print(f"Station {id} mise à jour")
     
 
 
     def delete(self, id):
         self.cur.execute("DELETE FROM Station WHERE id=?", (id,))
         self.conn.commit()
-        print("Station supprimée")
+        print(f"Station {id} supprimée")
 
 
 # def update2(self, id, new_data):

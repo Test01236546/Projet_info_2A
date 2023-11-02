@@ -1,0 +1,2 @@
+
+BDD_PATH = "BDD/BDD.sql"

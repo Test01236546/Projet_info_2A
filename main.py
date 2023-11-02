@@ -1,5 +1,6 @@
-from api import StationAPI, app 
+from API import StationAPI, app 
 from fastapi import FastAPI
+
 
 import requests as r 
 from pydantic import BaseModel

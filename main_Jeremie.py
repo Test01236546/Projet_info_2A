@@ -18,12 +18,12 @@ from BDD import classBDD as cBDD
 
 
 if __name__ == "__main__":
-    BDD_PATH = "Test_Jeremie/test1.sql"
-    db_manager = cBDD.BDD_Manager(BDD_PATH)
+    BDD_PATH_TEST = "Test_Jeremie/test1.sql"
+    db_manager = cBDD.BDD_Manager(BDD_PATH_TEST)
     # db_manager.create_stations_table() #pas besoin
     
     #StationDAO
-    Instance_StationDAO = stDAO.StationDAO(BDD_PATH)
+    Instance_StationDAO = stDAO.StationDAO(BDD_PATH_TEST)
     Instance_Station = st.Station("station.id_1", "station.nom_station", "station.capacite", "station.coordonnees_station", 
                "station.nom_commune", "station.en_fonctionnement", "station.date_deb", "station.date_fin", 
                "station.borne_paiement","nb_bornettes")
@@ -43,7 +43,7 @@ if __name__ == "__main__":
         print(row)
     
     #CommuneDAO
-    Instance_CommuneDAO = cmDAO.CommuneDAO(BDD_PATH)
+    Instance_CommuneDAO = cmDAO.CommuneDAO(BDD_PATH_TEST)
     Instance_Commune = cm.Commune(97232,"Lamentin")
     Instance_CommuneDAO.read(97232)
     Instance_CommuneDAO.create(Instance_Commune)
@@ -52,7 +52,7 @@ if __name__ == "__main__":
     Instance_CommuneDAO.update(97232,Instance_Commune_UPDATED)
     
     #TempsDAO
-    Instance_TempsDAO = tpDAO.TempsDAO(BDD_PATH)
+    Instance_TempsDAO = tpDAO.TempsDAO(BDD_PATH_TEST)
     Instance_Temps = tp.Temps("id_temps_1", "date_1", "annee_1", "mois_1", "jour_1", "heure_1", "minute_1")
     Instance_TempsDAO.read("id_temps_1")
     Instance_TempsDAO.create(Instance_Temps)
@@ -61,7 +61,7 @@ if __name__ == "__main__":
     Instance_TempsDAO.update("id_temps_1",Instance_Temps_UPDATED)
 
     #StationFaitsDAO
-    Instance_StationFaitsDAO = stfDAO.StationFaitsDAO(BDD_PATH)
+    Instance_StationFaitsDAO = stfDAO.StationFaitsDAO(BDD_PATH_TEST)
     Instance_StationFait = stf.StationFaits("id", "nb_bornettes", "velos_dispos", 
               "meca_dispo", "elec_dispo", "retour_velo", 
               "frequence", "date_fait_deb", "date_fait_fin")
