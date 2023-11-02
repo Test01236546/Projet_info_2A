@@ -69,6 +69,49 @@ print(station_frequentation)
 #################requete2 chat gpt charles##################################################
 import sqlite3
 
+
+
+import sqlite3
+
+def trouver_arrondissement_plus_frequent(date_debut, date_fin):
+    # Connexion à la base de données
+    conn = sqlite3.connect('votre_base_de_donnees.db')
+    cursor = conn.cursor()
+    
+    # Requête SQL pour récupérer l'arrondissement le plus fréquenté
+    query = """
+        SELECT id_commune_ou_arr, SUM(total_freq_par_station) as total_freq_par_com_ou_arr
+        FROM (
+            SELECT Station.id_station, SUM(frequence) as total_freq_par_station
+            FROM StationFaits
+            JOIN Station ON StationFaits.id_station = Station.id_station
+            WHERE date_fait_deb >= ? AND date_fait_fin <= ?
+            GROUP BY Station.id_station
+        ) as StationFreq
+        JOIN CommuneOuArr ON StationFreq.id_station = CommuneOuArr.id_station
+        GROUP BY id_commune_ou_arr
+        ORDER BY total_freq_par_com_ou_arr DESC
+        LIMIT 1
+    """
+    cursor.execute(query, (date_debut, date_fin))
+    
+    # Récupérer le résultat de la requête
+    arrondissement_plus_frequente = cursor.fetchone()[0]
+    
+    # Fermer la connexion à la base de données
+    conn.close()
+    
+    return arrondissement_plus_frequente
+
+# Utilisation de la fonction
+date_debut = '2023-10-29T00:00:00'
+date_fin = '2023-10-30T00:00:00'
+arrondissement_plus_frequent = trouver_arrondissement_plus_frequent(date_debut, date_fin)
+print(f"L'arrondissement le plus fréquenté entre {date_debut} et {date_fin} est : {arrondissement_plus_frequent}")
+
+
+
+
 # Connexion à la base de données
 conn = sqlite3.connect('votre_base_de_donnees.db')
 cursor = conn.cursor()

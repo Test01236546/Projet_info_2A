@@ -104,6 +104,47 @@ print("La station la moins fréquentée est :", station_moins_frequente)
 
 
 ############################################## requete 2 code chatgpt (requete sql validé par charles)############################
+
+import sqlite3
+
+def trouver_station_moins_frequente(date_debut, date_fin):
+    # Connexion à la base de données
+    conn = sqlite3.connect('votre_base_de_donnees.db')
+    cursor = conn.cursor()
+    
+    # Requête SQL pour récupérer le nom de la station avec le moins de fréquence
+    query = """
+        SELECT nom_station
+        FROM StationFaits
+        JOIN Station ON StationFaits.id_station = Station.id_station
+        WHERE date_fait_deb >= ? AND date_fait_fin <= ?
+        GROUP BY StationFaits.id_station
+        ORDER BY SUM(frequence)
+        LIMIT 1
+    """
+    cursor.execute(query, (date_debut, date_fin))
+    
+    # Récupérer le résultat de la requête
+    nom_station = cursor.fetchone()[0]
+    
+    # Fermer la connexion à la base de données
+    conn.close()
+    
+    return nom_station
+
+# Utilisation de la fonction
+date_debut = '2023-10-29T00:00:00'
+date_fin = '2023-10-30T00:00:00'
+nom_station_moins_frequente = trouver_station_moins_frequente(date_debut, date_fin)
+print(f"La station la moins fréquentée entre {date_debut} et {date_fin} est : {nom_station_moins_frequente}")
+
+
+##################################### requete finale ##############################
+
+
+
+
+
 import sqlite3
 
 # Connexion à la base de données
@@ -138,3 +179,5 @@ if result:
     print(f"La station la moins fréquentée est : {result[0]}")
 else:
     print("Aucun résultat trouvé.")
+    
+    
