@@ -4,7 +4,7 @@ from datetime import datetime
 import os
 import sys
 sys.path.append('../DAO/StationDAO')
-import DAO.StationDAO as dao
+import DAO.stationDAO as dao 
 
 
 
