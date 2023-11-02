@@ -21,7 +21,7 @@ class BDD_Manager:
             date_deb DATE,
             date_fin DATE,
             borne_paiement BOOLEAN,
-            frequence INT
+            nb_bornettes INT
             
         )
         """)
@@ -33,7 +33,7 @@ class BDD_Manager:
             mois INT,
             jour INT,
             heure INT,
-            min INT            
+            minute INT            
         )
         """)
         self.cur.execute("""
