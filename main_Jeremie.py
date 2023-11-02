@@ -3,6 +3,8 @@
 # import sys
 # sys.path.append('BDD/classBDD.py')
 # import time
+import requests
+
 from Service import station as st
 from Service import commune as cm
 from Service import temps as tp
@@ -74,8 +76,17 @@ if __name__ == "__main__":
     Instance_StationFaitsDAO.update("id",Instance_StationFait_UPDATED)
 
 
+url = "https://opendata.paris.fr/api/explore/v2.1/catalog/datasets/velib-disponibilite-en-temps-reel/records?limit=-1&timezone=Europe%2Fberlin"
+response = requests.get(url)
+data = response.json()
+cles = list(data.keys())
+print(cles)
 
-
+results = data['results']
+type(results)
+results[54]
+cles_results = list(results.keys()) 
+print(cles_results)       
 
 
 #TEST LOCAUX    

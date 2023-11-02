@@ -3,13 +3,18 @@ import pyodbc
 from datetime import datetime
 import os
 import sys
-sys.path.append('../DAO/StationDAO')
-import DAO.stationDAO as dao 
+from BDD.constantes import BDD_PATH
+# sys.path.append('../DAO/StationDAO')
+
+from DAO import stationDAO as stDAO
+from DAO import communeDAO as cmDAO
+from DAO import tempsDAO as tpDAO
+from DAO import stationFaitsDAO as stfDAO 
 
 
 
 
-class Service ():
+class Jer_Service ():
     def __init__(self):
         #self.id_stationfaits=id_stationfaits
         #self.id_station=id_station
@@ -28,26 +33,13 @@ class Service ():
             return
 
     # Ouvrir les bases de données
-        with open("Station.sql", "r") as f:
-            sql_station = f.read()
-        with open("StationFaits.sql", "r") as f:
-            sql_stationFaits = f.read()
-        with open("Commune.sql", "r") as f:
-            sql_commune = f.read()
-        with open("Temps.sql", "r") as f:
-            sql_temps = f.read()
-        conn_station = sqlite3.connect("stations.db")
-        conn_stationFaits = sqlite3.connect("stationFaits.db")
-        conn_commune = sqlite3.connect("commune.db")
-        conn_temps = sqlite3.connect("temps.db")
-        conn_station.executescript(sql_station)
-        conn_stationFaits.executescript(sql_stationFaits)
-        conn_commune.executescript(sql_commune)
-        conn_temps.executescript(sql_temps)
-        cur_station = conn_station.cursor()
-        cur_stationFaits = conn_stationFaits.cursor()
-        cur_commune = conn_commune.cursor()
-        cur_temps = conn_temps.cursor()
+        Instance_StationDAO = stDAO.StationDAO(BDD_PATH)
+        Instance_CommuneDAO = cmDAO.CommuneDAO(BDD_PATH)
+        Instance_TempsDAO = tpDAO.TempsDAO(BDD_PATH)
+        Instance_StationFaitsDAO = stfDAO.StationFaitsDAO(BDD_PATH)
+
+    #data a deux clés (total et results), results est une liste de dictionnaires dons les keys-values sont des infos sur la station
+    #ON VA VECTORISER LES CLACULS AVEC UN APPLY, on fait un create2 qui créé directement la station(resp le reste) puis la met dans la table
 
     # Mettre à jour les bases de données
         for station in data['results']:
@@ -65,14 +57,7 @@ class Service ():
         # Mettre à jour l'état de la station
             self.update_etat_station(station)
 
-        conn_station.commit()
-        conn_stationFaits.commit()
-        conn_commune.commit()
-        conn_temps.commit()
-        conn_station.close()
-        conn_stationFaits.close()
-        conn_commune.close()
-        conn_temps.close()
+        
 
 
 #if __name__ == "__main__":
