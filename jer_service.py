@@ -38,9 +38,13 @@ class Jer_Service ():
         Instance_TempsDAO = tpDAO.TempsDAO(BDD_PATH)
         Instance_StationFaitsDAO = stfDAO.StationFaitsDAO(BDD_PATH)
 
+
     #data a deux clés (total et results), results est une liste de dictionnaires dons les keys-values sont des infos sur la station
     #ON VA VECTORISER LES CLACULS AVEC UN APPLY, on fait un create2 qui créé directement la station(resp le reste) puis la met dans la table
-
+        list(map(lambda station_dict: Instance_StationDAO.create2(station_dict), data['results']))
+        list(map(lambda station_dict: Instance_CommuneDAO.create2(station_dict), data['results']))
+        list(map(lambda station_dict: Instance_TempsDAO.create2(station_dict), data['results']))
+        list(map(lambda station_dict: Instance_StationFaitsDAO.create2(station_dict), data['results']))
 
     # Mettre à jour les bases de données
         for station in data['results']:

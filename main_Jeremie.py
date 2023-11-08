@@ -5,15 +5,15 @@
 # import time
 import requests
 
-from Service import station as st
+from Service import Station as st
 from Service import commune as cm
-from Service import temps as tp
-from Service import stationFaits as stf
+from Service import Temps as tp
+from Service import StationFaits as stf
 
-from DAO import stationDAO as stDAO
+from DAO import StationDAO as stDAO
 from DAO import communeDAO as cmDAO
-from DAO import tempsDAO as tpDAO
-from DAO import stationFaitsDAO as stfDAO
+from DAO import TempsDAO as tpDAO
+from DAO import StationFaitsDAO as stfDAO
 
 from BDD import classBDD as cBDD
 
@@ -88,6 +88,26 @@ results[54]
 cles_results = list(results.keys()) 
 print(cles_results)       
 
+
+
+# Ouvrir les bases de données
+    Instance_StationDAO = stDAO.StationDAO(BDD_PATH_TEST)
+    Instance_CommuneDAO = cmDAO.CommuneDAO(BDD_PATH_TEST)
+    Instance_TempsDAO = tpDAO.TempsDAO(BDD_PATH_TEST)
+    Instance_StationFaitsDAO = stfDAO.StationFaitsDAO(BDD_PATH_TEST)
+
+
+#data a deux clés (total et results), results est une liste de dictionnaires dons les keys-values sont des infos sur la station
+#ON VA VECTORISER LES CLACULS AVEC UN APPLY, on fait un create2 qui créé directement la station(resp le reste) puis la met dans la table
+    list(map(lambda station_dict: Instance_StationDAO.create2(station_dict), data['results']))
+    list(map(lambda station_dict: Instance_CommuneDAO.create2(station_dict), data['results']))
+    list(map(lambda station_dict: Instance_TempsDAO.create2(station_dict), data['results']))
+    list(map(lambda station_dict: Instance_StationFaitsDAO.create2(station_dict), data['results']))
+
+dict_statio_test = results[0]
+dict_statio_test['stationcode']
+Instance_Station
+Instance_StationDAO.create2(dict_statio_test)
 
 #TEST LOCAUX    
 #    StationDAO_Jer= Jer_stationDAO()

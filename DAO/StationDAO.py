@@ -33,8 +33,8 @@ class StationDAO:
         self.conn.commit()
         print(f"Station créée : {station.id}")
 
-    def create2(self,dict):         #on pourrait prendre deux liste (nom attributs de StationFaits, nom clées du dict station et matcher)
-        Station_to_add=st.Station(dict['stationcode'],dict['name'],dict['capacity'],dict['coordonnees_geo'],dict['code_insee_commune'],dict['is_renting'],dict['duedate'],f"date_deb {dict['stationcode']}",f"borne_paiement {dict['stationcode']}",dict['capacity'])
+    def create2(self,dictionnaire):         #on pourrait prendre deux liste (nom attributs de StationFaits, nom clées du dictionnaire station et matcher)
+        Station_to_add=st.Station(dictionnaire['stationcode'],dictionnaire['name'],dictionnaire['capacity'],dictionnaire['coordonnees_geo'],dictionnaire['code_insee_commune'],dictionnaire['is_renting'],dictionnaire['duedate'],f"date_deb {dictionnaire['stationcode']}",f"borne_paiement {dictionnaire['stationcode']}",dictionnaire['capacity'])
         self.cur.execute("""
         INSERT INTO Station VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         """, (Station_to_add.id, Station_to_add.nom_station, Station_to_add.capacite, Station_to_add.coordonnees_station, 
