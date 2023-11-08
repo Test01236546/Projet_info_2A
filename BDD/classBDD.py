@@ -4,12 +4,28 @@ from datetime import date
 #On set up une BDD avec plusieurs tables
 
 class BDD_Manager:
+    """
+    Crée la classe BDD_Manager qui permet de créer la base de données
+    """
     def __init__(self,path):
+        """
+        Initialise un gestionnaire de base de données SQLite pour gérer les données des stations de vélos.
+        
+        Args:
+            path (str): Le chemin du fichier de base de données SQLite.
+        """
         self.conn = sqlite3.connect(path)
         self.cur = self.conn.cursor()
         self.create_stations_table()
         
     def create_stations_table(self):
+        """
+        Crée les tables Station, Temps, StationFaits et Commune dans la base de données si elles n'existent pas déjà.
+        La table Station stocke des informations fixes sur les stations de vélos.
+        La table Temps stocke des informations sur les dates.
+        La table StationFaits stocke des informations variables sur les stations de vélos.
+        La table Commune stocke des informations sur les emplacements des stations de vélos.
+        """
         self.cur.execute("""
         CREATE TABLE IF NOT EXISTS Station (
             id TEXT PRIMARY KEY,
@@ -58,6 +74,9 @@ class BDD_Manager:
         self.conn.commit()
     
     def close(self):
+        """
+        Ferme la connexion à la base de données.
+        """
         self.conn.close()
 
 # db_manager = BDD_Manager(BDD_PATH)
