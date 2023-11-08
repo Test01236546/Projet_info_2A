@@ -10,7 +10,16 @@ import DAO.stationDAO as dao
 
 
 class Service ():
+    """
+    Crée la classe Service qui permet de mettre à jour la base de données
+    """
     def __init__(self):
+        """
+        Initialise un objet Service pour l'ingestion de données depuis l'API Vélib'.
+
+        Note:
+            Cette classe est destinée à être utilisée pour l'ingestion de données depuis l'API Vélib'.
+        """
         #self.id_stationfaits=id_stationfaits
         #self.id_station=id_station
         #self.id_temps=id_temps
@@ -18,6 +27,21 @@ class Service ():
         pass
     
     def ingest():
+        """
+        Ingestion des données depuis l'API Vélib' et mise à jour des bases de données locales.
+
+        Cette méthode effectue les opérations suivantes :
+        1. Récupère les données depuis l'API Vélib'.
+        2. Ouvre les bases de données locales pour les stations, les faits de station, les communes et le temps.
+        3. Met à jour les bases de données locales en ajoutant ou mettant à jour les stations.
+        4. Met à jour l'état des stations.
+        5. Commit les modifications dans les bases de données locales.
+        6. Ferme les connexions aux bases de données locales.
+
+        Note:
+            Les fichiers "Station.sql", "StationFaits.sql", "Commune.sql", et "Temps.sql" doivent être présents 
+            et contenir les scripts SQL pour créer les tables correspondantes dans les bases de données locales.
+        """
     # Obtenir les données de l'API Vélib
         url = "https://opendata.paris.fr/api/explore/v2.1/catalog/datasets/velib-disponibilite-en-temps-reel/records?limit=-1&timezone=Europe%2Fberlin"
         response = requests.get(url)
