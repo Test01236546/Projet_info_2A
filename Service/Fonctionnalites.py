@@ -5,10 +5,21 @@ import sqlite3 #pour F2 et F3
 
 class Fonctionnalites():
     def __init__(self):
+        """
+        Initialise un objet Fonctionnalites pour effectuer différentes tâches.
+
+        Note:
+            Cette classe n'a pas besoin d'initialisation spécifique, car toutes ses méthodes sont des méthodes statiques.
+        """
         pass
     
     def recup_stations(self):
-        """Récupère tous les noms de stations Vélib' Métropole."""
+        """
+        Récupère tous les noms de stations Vélib' Métropole depuis l'API de données ouvertes de Paris.
+
+        Returns:
+            list: Une liste de noms de stations Vélib'.
+        """
 
     # Récupération des données de l'API
         url = "https://opendata.paris.fr/api/explore/v2.1/catalog/datasets/velib-disponibilite-en-temps-reel/records?limit=-1&timezone=Europe%2Fberlin"  # Modifier le paramètre limit selon vos besoins
@@ -28,6 +39,15 @@ class Fonctionnalites():
 
 
     def F1(self,address):
+        """
+        Retourne le nom de la station Vélib' la plus proche d'une adresse donnée.
+
+        Args:
+            address (str): L'adresse pour laquelle vous souhaitez trouver la station la plus proche.
+
+        Returns:
+            str: Le nom de la station Vélib' la plus proche de l'adresse donnée.
+        """
         def get_coordinates_from_address(address):
             # Faire une requête à l'API Etalab
             url = f"https://api-adresse.data.gouv.fr/search/?q={address}&limit=1"
@@ -85,7 +105,16 @@ class Fonctionnalites():
 
 
     def F2(self,date_debut, date_fin):
+        """
+        Retourne le nom de la station Vélib' ayant le moins de fréquence d'utilisation dans une plage de dates donnée.
 
+        Args:
+            date_debut (str): La date de début de la plage.
+            date_fin (str): La date de fin de la plage.
+
+        Returns:
+            str: Le nom de la station Vélib' avec le moins de fréquence d'utilisation dans la plage de dates.
+        """
         # Connexion à la base de données
         conn = sqlite3.connect('votre_base_de_donnees.db')
         cursor = conn.cursor()
@@ -112,7 +141,16 @@ class Fonctionnalites():
     
     
     def F3(self,date_debut, date_fin):
-        
+        """
+        Retourne l'arrondissement ou la commune la plus fréquentée par les utilisateurs de Vélib' dans une plage de dates donnée.
+
+        Args:
+            date_debut (str): La date de début de la plage.
+            date_fin (str): La date de fin de la plage.
+
+        Returns:
+            str: L'arrondissement ou la commune la plus fréquentée par les utilisateurs de Vélib'.
+        """
         # Connexion à la base de données
         conn = sqlite3.connect('votre_base_de_donnees.db')
         cursor = conn.cursor()
