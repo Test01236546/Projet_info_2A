@@ -23,9 +23,7 @@ class Station():
         Returns:
             str: Informations d'une station Vélib'
         """
-        return f"Station(id={self.id}, nom_station={self.nom_station}, capacite={self.capacite}, coordonnees_station ={self.coordonnees_station},
-        id_commune={self.id_commune}, en_fonctionnement ={self.en_fonctionnement}, date_deb={self.date_deb}, date_fin={self.date_fin},
-        borne_paiement={self.borne_paiement}, nb_bornettes={self.nb_bornettes})"
+        return f"Station(id={self.id}, nom_station={self.nom_station}, capacite={self.capacite}, coordonnees_station ={self.coordonnees_station},id_commune={self.id_commune}, en_fonctionnement ={self.en_fonctionnement}, date_deb={self.date_deb}, date_fin={self.date_fin},borne_paiement={self.borne_paiement}, nb_bornettes={self.nb_bornettes})"
 
 
     

@@ -1,4 +1,5 @@
 import sqlite3
+import Service.StationFaits as stf
 
 class StationFaitsDAO:
     """
@@ -30,6 +31,15 @@ class StationFaitsDAO:
               station_faits.frequence, station_faits.date_fait_deb, station_faits.date_fait_fin))
         self.conn.commit()
         print("StationFaits créé")
+
+    def create2(self,dict):         #on pourrait prendre deux liste (nom attributs de StationFaits, nom clées du dict station et matcher)
+        StationFaits_to_add=stf.StationFaits(dict['stationcode'],dict['capacity'],dict['numbikesavailable'],dict['mechanical'],dict['ebike'],dict['is_returning'],f"frequence {dict['stationcode']}",dict['duedate'],f"date_fait_deb {dict['stationcode']}")
+        self.cur.execute(f"""
+        INSERT INTO {self.TABLE_NAME} VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+        """, (StationFaits_to_add.id_station, StationFaits_to_add.nb_bornettes, StationFaits_to_add.velos_dispos, 
+              StationFaits_to_add.meca_dispo, StationFaits_to_add.elec_dispo, StationFaits_to_add.retour_velo, 
+              StationFaits_to_add.frequence, StationFaits_to_add.date_fait_deb, StationFaits_to_add.date_fait_fin))
+        self.conn.commit()
 
     def read(self, id_station):
         """

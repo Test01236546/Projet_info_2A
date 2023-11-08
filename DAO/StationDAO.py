@@ -1,6 +1,7 @@
 import sqlite3
 from datetime import date
 import sys
+import Service.Station as st
 
 
 class StationDAO:
@@ -31,6 +32,16 @@ class StationDAO:
               station.borne_paiement, station.nb_bornettes,))
         self.conn.commit()
         print(f"Station créée : {station.id}")
+
+    def create2(self,dict):         #on pourrait prendre deux liste (nom attributs de StationFaits, nom clées du dict station et matcher)
+        Station_to_add=st.Station(dict['stationcode'],dict['name'],dict['capacity'],dict['coordonnees_geo'],dict['code_insee_commune'],dict['is_renting'],dict['duedate'],f"date_deb {dict['stationcode']}",f"borne_paiement {dict['stationcode']}",dict['capacity'])
+        self.cur.execute("""
+        INSERT INTO Station VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        """, (Station_to_add.id, Station_to_add.nom_station, Station_to_add.capacite, Station_to_add.coordonnees_station, 
+              Station_to_add.id_commune, Station_to_add.en_fonctionnement, Station_to_add.date_deb, Station_to_add.date_fin, 
+              Station_to_add.borne_paiement, Station_to_add.nb_bornettes,))
+        self.conn.commit()
+
 
     def read(self, id):
         """

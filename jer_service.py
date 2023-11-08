@@ -6,10 +6,10 @@ import sys
 from BDD.constantes import BDD_PATH
 # sys.path.append('../DAO/StationDAO')
 
-from DAO import stationDAO as stDAO
+from DAO import StationDAO as stDAO
 from DAO import communeDAO as cmDAO
-from DAO import tempsDAO as tpDAO
-from DAO import stationFaitsDAO as stfDAO 
+from DAO import TempsDAO as tpDAO
+from DAO import StationFaitsDAO as stfDAO 
 
 
 
@@ -41,6 +41,7 @@ class Jer_Service ():
     #data a deux clés (total et results), results est une liste de dictionnaires dons les keys-values sont des infos sur la station
     #ON VA VECTORISER LES CLACULS AVEC UN APPLY, on fait un create2 qui créé directement la station(resp le reste) puis la met dans la table
 
+
     # Mettre à jour les bases de données
         for station in data['results']:
         # Vérifier si la station existe déjà dans la base de données stations
@@ -58,6 +59,16 @@ class Jer_Service ():
             self.update_etat_station(station)
 
         
+
+#TESTS
+data['total_count']
+type(data['results'])       #c'est une liste
+data['results'][0]  
+"""
+>>> {'stationcode': '16107', 'name': 'Benjamin Godard - Victor Hugo', 'is_installed': 'OUI', 'capacity': 35, 'numdocksavailable': 26,
+ 'numbikesavailable': 9, 'mechanical': 3, 'ebike': 6, 'is_renting': 'OUI', 'is_returning': 'OUI', 'duedate': '2023-11-08T14:43:03+01:00',
+   'coordonnees_geo': {'lon': 2.275725, 'lat': 48.865983}, 'nom_arrondissement_communes': 'Paris', 'code_insee_commune': None}
+"""       
 
 
 #if __name__ == "__main__":
