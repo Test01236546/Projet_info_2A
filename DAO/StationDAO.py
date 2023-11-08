@@ -4,11 +4,26 @@ import sys
 
 
 class StationDAO:
+    """
+    Crée la classe StationDAO qui permet de mettre à jour la table Station dans la base de données
+    """
     def __init__(self,path):
+        """
+        Initialise un objet d'accès aux données (DAO) pour la table 'Station' dans une base de données SQLite.
+
+        Args:
+            path (str): Le chemin du fichier de base de données SQLite.
+        """
         self.conn = sqlite3.connect(path)
         self.cur = self.conn.cursor()
 
     def create(self, station):
+        """
+        Crée un enregistrement de station dans la base de données.
+
+        Args:
+            station (Station): L'objet Station à insérer dans la base de données.
+        """
         self.cur.execute("""
         INSERT INTO Station VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         """, (station.id, station.nom_station, station.capacite, station.coordonnees_station, 
@@ -18,6 +33,15 @@ class StationDAO:
         print(f"Station créée : {station.id}")
 
     def read(self, id):
+        """
+        Recherche une station dans la base de données en fonction de son identifiant.
+
+        Args:
+            id (str): L'identifiant de la station à rechercher.
+
+        Returns:
+            tuple or None: Un tuple contenant les données de la station trouvée (id, nom_station, capacite, coordonnees_station, id_commune, en_fonctionnement, date_deb, date_fin, borne_paiement, nb_bornettes) ou None si la station n'a pas été trouvée.
+        """
         self.cur.execute("SELECT * FROM Station WHERE id=?", (id,))
         station = self.cur.fetchone()
         if station:
@@ -28,6 +52,16 @@ class StationDAO:
             return None
 
     def update(self, id, new_data):
+        """
+        Met à jour les informations d'une station dans la base de données.
+
+        Args:
+            id (str): L'identifiant de la station à mettre à jour.
+            new_data (Station): L'objet Station contenant les nouvelles données.
+
+        Note:
+            Cette méthode met à jour toutes les colonnes de la table Station en fonction des données fournies.
+        """
         self.cur.execute("""
         UPDATE Station SET nom_station=?, capacite=?, coordonnees_station=?, 
         id_commune=?, en_fonctionnement=?, date_deb=?, date_fin=?, 
@@ -41,6 +75,12 @@ class StationDAO:
 
 
     def delete(self, id):
+        """
+        Supprime une station de la base de données en fonction de son identifiant.
+
+        Args:
+            id (str): L'identifiant de la station à supprimer.
+        """
         self.cur.execute("DELETE FROM Station WHERE id=?", (id,))
         self.conn.commit()
         print(f"Station {id} supprimée")
