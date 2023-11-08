@@ -1,4 +1,5 @@
 import sqlite3
+from Service.commune import Commune as c
 
 class CommuneDAO:
     """
@@ -27,6 +28,9 @@ class CommuneDAO:
         """, (commune.id_commune, commune.nom_commune))
         self.conn.commit()
         print("Commune créée")
+
+    def create2(self,dict):
+        Commune_to_add = 
 
     def read(self, id_commune):
         """

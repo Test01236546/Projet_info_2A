@@ -41,9 +41,15 @@ class TempsDAO:
         day = timestamp.day
         hour = timestamp.hour
         minute = timestamp.minute
-        second = timestamp.second
 
-        Temps_to_add = tp.Temps()
+        Temps_to_add = tp.Temps(dict['stationcode'],timestamp,year,month,day,hour,minute)
+
+        self.cur.execute(f"""
+        INSERT INTO {self.TABLE_NAME} VALUES (?, ?, ?, ?, ?, ?, ?)
+        """, (Temps_to_add.id_Temps_to_add, Temps_to_add.date, Temps_to_add.annee, Temps_to_add.mois, Temps_to_add.jour, Temps_to_add.heure, Temps_to_add.minute))
+        self.conn.commit()
+
+
         
 
     def read(self, id_temps):
