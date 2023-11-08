@@ -1,5 +1,7 @@
 
 import sqlite3
+import Service.Temps as tp
+from datetime import datetime
 
 class TempsDAO:
     """
@@ -29,6 +31,20 @@ class TempsDAO:
         """, (temps.id_temps, temps.date, temps.annee, temps.mois, temps.jour, temps.heure, temps.minute))
         self.conn.commit()
         print("Temps créé")
+
+    def create2(self,dict):
+        date_string = dict['duedate']
+        timestamp = datetime.fromisoformat(date_string)
+
+        year = timestamp.year
+        month = timestamp.month
+        day = timestamp.day
+        hour = timestamp.hour
+        minute = timestamp.minute
+        second = timestamp.second
+
+        Temps_to_add = tp.Temps()
+        
 
     def read(self, id_temps):
         """
