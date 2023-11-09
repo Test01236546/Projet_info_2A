@@ -116,7 +116,7 @@ class Fonctionnalites():
             str: Le nom de la station Vélib' avec le moins de fréquence d'utilisation dans la plage de dates.
         """
         # Connexion à la base de données
-        conn = sqlite3.connect('votre_base_de_donnees.db')
+        conn = sqlite3.connect("BDD/BDD.sql")
         cursor = conn.cursor()
     
         # Requête SQL pour récupérer le nom de la station avec le moins de fréquence
@@ -152,7 +152,7 @@ class Fonctionnalites():
             str: L'arrondissement ou la commune la plus fréquentée par les utilisateurs de Vélib'.
         """
         # Connexion à la base de données
-        conn = sqlite3.connect('votre_base_de_donnees.db')
+        conn = sqlite3.connect("BDD/BDD.sql")
         cursor = conn.cursor()
     
         # Requête SQL pour récupérer l'arrondissement le plus fréquenté
