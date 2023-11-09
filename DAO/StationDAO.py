@@ -2,7 +2,7 @@ import sqlite3
 from datetime import date
 import sys
 import Service.Station as st
-
+import json
 
 class StationDAO:
     """
@@ -34,7 +34,9 @@ class StationDAO:
         print(f"Station créée : {station.id}")
 
     def create2(self,dictionnaire):         #on pourrait prendre deux liste (nom attributs de StationFaits, nom clées du dictionnaire station et matcher)
-        Station_to_add=st.Station(dictionnaire['stationcode'],dictionnaire['name'],dictionnaire['capacity'],dictionnaire['coordonnees_geo'],dictionnaire['code_insee_commune'],dictionnaire['is_renting'],dictionnaire['duedate'],f"date_deb {dictionnaire['stationcode']}",f"borne_paiement {dictionnaire['stationcode']}",dictionnaire['capacity'])
+        
+        Station_to_add=st.Station(dictionnaire['stationcode'],dictionnaire['name'],dictionnaire['capacity'],json.dumps(dictionnaire['coordonnees_geo']),dictionnaire['code_insee_commune'],dictionnaire['is_renting'],dictionnaire['duedate'],f"date_deb {dictionnaire['stationcode']}",f"borne_paiement {dictionnaire['stationcode']}",dictionnaire['capacity'])
+        # return Station_to_add
         self.cur.execute("""
         INSERT INTO Station VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         """, (Station_to_add.id, Station_to_add.nom_station, Station_to_add.capacite, Station_to_add.coordonnees_station, 
