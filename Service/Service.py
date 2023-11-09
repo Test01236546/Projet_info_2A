@@ -1,13 +1,18 @@
 import requests
-import pyodbc
-from datetime import datetime
-import os
-import sys
-sys.path.append('../DAO/StationDAO')
-import DAO.stationDAO as dao 
+import json
+from BDD.constantes import BDD_PATH
 
+from Service import Station as st
+from Service import commune as cm
+from Service import Temps as tp
+from Service import StationFaits as stf
 
+from DAO import StationDAO as stDAO
+from DAO import communeDAO as cmDAO
+from DAO import TempsDAO as tpDAO
+from DAO import StationFaitsDAO as stfDAO
 
+from BDD import classBDD as cBDD
 
 class Service ():
     """
@@ -42,7 +47,7 @@ class Service ():
             Les fichiers "Station.sql", "StationFaits.sql", "Commune.sql", et "Temps.sql" doivent être présents 
             et contenir les scripts SQL pour créer les tables correspondantes dans les bases de données locales.
         """
-    # Obtenir les données de l'API Vélib
+        
         url = "https://opendata.paris.fr/api/explore/v2.1/catalog/datasets/velib-disponibilite-en-temps-reel/records?limit=-1&timezone=Europe%2Fberlin"
         response = requests.get(url)
         if response.status_code == 200:
@@ -50,53 +55,21 @@ class Service ():
         else:
             print("Erreur lors de la requête à l'API Vélib.")
             return
+        
+        Instance_StationDAO = stDAO.StationDAO(BDD_PATH)
+        Instance_CommuneDAO = cmDAO.CommuneDAO(BDD_PATH)
+        Instance_TempsDAO = tpDAO.TempsDAO(BDD_PATH)
+        Instance_StationFaitsDAO = stfDAO.StationFaitsDAO(BDD_PATH)
 
-    # Ouvrir les bases de données
-        with open("Station.sql", "r") as f:
-            sql_station = f.read()
-        with open("StationFaits.sql", "r") as f:
-            sql_stationFaits = f.read()
-        with open("Commune.sql", "r") as f:
-            sql_commune = f.read()
-        with open("Temps.sql", "r") as f:
-            sql_temps = f.read()
-        conn_station = sqlite3.connect("stations.db")
-        conn_stationFaits = sqlite3.connect("stationFaits.db")
-        conn_commune = sqlite3.connect("commune.db")
-        conn_temps = sqlite3.connect("temps.db")
-        conn_station.executescript(sql_station)
-        conn_stationFaits.executescript(sql_stationFaits)
-        conn_commune.executescript(sql_commune)
-        conn_temps.executescript(sql_temps)
-        cur_station = conn_station.cursor()
-        cur_stationFaits = conn_stationFaits.cursor()
-        cur_commune = conn_commune.cursor()
-        cur_temps = conn_temps.cursor()
+        list(map(lambda station_dict: Instance_StationDAO.create2(station_dict), data['results']))
+        list(map(lambda station_dict: Instance_CommuneDAO.create2(station_dict), data['results']))
+        list(map(lambda station_dict: Instance_TempsDAO.create2(station_dict), data['results']))
+        list(map(lambda station_dict: Instance_StationFaitsDAO.create2(station_dict), data['results']))
 
-    # Mettre à jour les bases de données
-        for station in data['results']:
-        # Vérifier si la station existe déjà dans la base de données stations
-            cur_station.execute("SELECT * FROM stations WHERE id=?", (station['id'],))
-            station_exists = cur_station.fetchone()
 
-        # Si la station n'existe pas, la créer
-            if not station_exists:
-                self.create_station(station)
-            else:
-            # Si la station existe, la mettre à jour
-                self.update_station(station)
+        
+        
 
-        # Mettre à jour l'état de la station
-            self.update_etat_station(station)
-
-        conn_station.commit()
-        conn_stationFaits.commit()
-        conn_commune.commit()
-        conn_temps.commit()
-        conn_station.close()
-        conn_stationFaits.close()
-        conn_commune.close()
-        conn_temps.close()
 
 
 #if __name__ == "__main__":
