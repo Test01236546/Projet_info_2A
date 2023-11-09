@@ -41,26 +41,13 @@ class Jer_Service ():
 
     #data a deux clés (total et results), results est une liste de dictionnaires dons les keys-values sont des infos sur la station
     #ON VA VECTORISER LES CLACULS AVEC UN APPLY, on fait un create2 qui créé directement la station(resp le reste) puis la met dans la table
+    #Peut être faire results = data['results'] et s'en servir après
         list(map(lambda station_dict: Instance_StationDAO.create2(station_dict), data['results']))
         list(map(lambda station_dict: Instance_CommuneDAO.create2(station_dict), data['results']))
         list(map(lambda station_dict: Instance_TempsDAO.create2(station_dict), data['results']))
         list(map(lambda station_dict: Instance_StationFaitsDAO.create2(station_dict), data['results']))
 
-    # Mettre à jour les bases de données
-        for station in data['results']:
-        # Vérifier si la station existe déjà dans la base de données stations
-            cur_station.execute("SELECT * FROM stations WHERE id=?", (station['id'],))
-            station_exists = cur_station.fetchone()
-
-        # Si la station n'existe pas, la créer
-            if not station_exists:
-                self.create_station(station)
-            else:
-            # Si la station existe, la mettre à jour
-                self.update_station(station)
-
-        # Mettre à jour l'état de la station
-            self.update_etat_station(station)
+    
 
         
 

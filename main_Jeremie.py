@@ -100,10 +100,10 @@ if __name__ == "__main__":
 
     #data a deux clés (total et results), results est une liste de dictionnaires dons les keys-values sont des infos sur la station
     #ON VA VECTORISER LES CLACULS AVEC UN APPLY, on fait un create2 qui créé directement la station(resp le reste) puis la met dans la table
-    # list(map(lambda station_dict: Instance_StationDAO.create2(station_dict), data['results']))
-    # list(map(lambda station_dict: Instance_CommuneDAO.create2(station_dict), data['results']))
-    # list(map(lambda station_dict: Instance_TempsDAO.create2(station_dict), data['results']))
-    # list(map(lambda station_dict: Instance_StationFaitsDAO.create2(station_dict), data['results']))
+    list(map(lambda station_dict: Instance_StationDAO.create2(station_dict), data['results']))
+    list(map(lambda station_dict: Instance_CommuneDAO.create2(station_dict), data['results']))
+    list(map(lambda station_dict: Instance_TempsDAO.create2(station_dict), data['results']))
+    list(map(lambda station_dict: Instance_StationFaitsDAO.create2(station_dict), data['results']))
 
     dict_statio_test = results[0]
     # dict_statio_test['stationcode']
@@ -115,6 +115,8 @@ if __name__ == "__main__":
     Instance_StationDAO.read('14106')
     Instance_StationDAO.delete('14106')
     
+    Instance_CommuneDAO.read(None)
+
     #test2
     list(map(lambda station_dict: Instance_StationDAO.create2(station_dict), data['results']))
 
