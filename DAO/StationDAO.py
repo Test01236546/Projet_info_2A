@@ -1,7 +1,7 @@
 import sqlite3
 from datetime import date
 import sys
-import Service.Station as st
+import Service.station as st
 import json
 
 class StationDAO:
