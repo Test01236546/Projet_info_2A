@@ -23,7 +23,7 @@ from BDD import classBDD as cBDD
 if __name__ == "__main__":
     BDD_PATH_TEST = "Test_Jeremie/test1.sql"
     db_manager = cBDD.BDD_Manager(BDD_PATH_TEST)
-    # db_manager.create_stations_table() #pas besoin
+    # db_manager.create_stations_table() #pas besoin keke
     
     # #StationDAO
     # Instance_StationDAO = stDAO.StationDAO(BDD_PATH_TEST)
@@ -93,9 +93,9 @@ if __name__ == "__main__":
 
     # Ouvrir les bases de données
     Instance_StationDAO = stDAO.StationDAO(BDD_PATH_TEST)
-    # Instance_CommuneDAO = cmDAO.CommuneDAO(BDD_PATH_TEST)
-    # Instance_TempsDAO = tpDAO.TempsDAO(BDD_PATH_TEST)
-    # Instance_StationFaitsDAO = stfDAO.StationFaitsDAO(BDD_PATH_TEST)
+    Instance_CommuneDAO = cmDAO.CommuneDAO(BDD_PATH_TEST)
+    Instance_TempsDAO = tpDAO.TempsDAO(BDD_PATH_TEST)
+    Instance_StationFaitsDAO = stfDAO.StationFaitsDAO(BDD_PATH_TEST)
 
 
     #data a deux clés (total et results), results est une liste de dictionnaires dons les keys-values sont des infos sur la station
@@ -112,7 +112,8 @@ if __name__ == "__main__":
     Instance_StationDAO.create2(dict_statio_test)
     dict_statio_test
     dict_statio_test['stationcode']
-    Instance_StationDAO.read('19033')
+    Instance_StationDAO.read('14106')
+    Instance_StationDAO.delete('14106')
     
     #test2
     list(map(lambda station_dict: Instance_StationDAO.create2(station_dict), data['results']))
