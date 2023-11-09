@@ -114,7 +114,7 @@ if __name__ == "__main__":
     dict_statio_test['stationcode']
     Instance_StationDAO.read('19033')
     
-    #test
+    #test2
     list(map(lambda station_dict: Instance_StationDAO.create2(station_dict), data['results']))
 
     # Verifier_Station_create2 = Instance_StationDAO.create2(dict_statio_test)
