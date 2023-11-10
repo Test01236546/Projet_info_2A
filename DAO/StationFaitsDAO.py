@@ -129,35 +129,30 @@ class StationFaitsDAO:
         self.conn.commit()
         print("StationFaits supprimé")
 
-    def close(self):
-        """
-        Ferme la connexion à la base de données.
-        """
-
-        self.conn.close()
 
     def upsert2(self, dictionnaire):
 
         # Construction de la requête pour vérifier l'existence de l'élément
-        self.cur.execute("SELECT * FROM StationFaits WHERE id_station=?", (dict['stationcode'],))
+        self.cur.execute("SELECT * FROM StationFaits WHERE id_station=?", (dictionnaire['stationcode'],))
         existing_record = self.cur.fetchone()
+        
+        StationFaits_to_upsert = stf.StationFaits(
+            dictionnaire['stationcode'],
+            dictionnaire['capacity'],
+            dictionnaire['numbikesavailable'],
+            dictionnaire['mechanical'],
+            dictionnaire['ebike'],
+            dictionnaire['is_returning'],
+            "frequence pas encore update",
+            dictionnaire['duedate'],
+            "date_fait_fin pas encore update "
+        )
 
         if existing_record:
             # Si l'enregistrement existe, créer une instance de StationFaits avec les données existantes
             former_StationFaits = stf.StationFaits(*existing_record)
 
                 # Création d'une instance de StationFaits
-            StationFaits_to_upsert = stf.StationFaits(
-                dictionnaire['stationcode'],
-                dictionnaire['capacity'],
-                dictionnaire['numbikesavailable'],
-                dictionnaire['mechanical'],
-                dictionnaire['ebike'],
-                dictionnaire['is_returning'],
-                "frequence pas encore update",
-                dictionnaire['duedate'],
-                f"date_fait_fin {dictionnaire['stationcode']}"
-            )
 
 
 
@@ -172,7 +167,7 @@ class StationFaitsDAO:
                 StationFaits_to_upsert.elec_dispo,
                 StationFaits_to_upsert.retour_velo,
                 StationFaits_to_upsert.calcul_frequence(former_StationFaits),
-                StationFaits_to_upsert.date_fait_deb,
+                former_StationFaits.date_fait_fin,
                 StationFaits_to_upsert.date_fait_fin,
                 StationFaits_to_upsert.id_station
             ))
@@ -194,3 +189,10 @@ class StationFaitsDAO:
 
         self.conn.commit()
         print(f"StationFaits pour la station {StationFaits_to_upsert.id_station} mise à jour ou insérée")
+    
+    def close(self):
+        """
+        Ferme la connexion à la base de données.
+        """
+
+        self.conn.close()

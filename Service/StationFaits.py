@@ -14,7 +14,7 @@ class StationFaits():
         self.date_fait_deb=date_fait_deb
         self.date_fait_fin=date_fait_fin
 
-    def calcul_frequence(self,former_StationFaits : StationFaits):
+    def calcul_frequence(self,former_StationFaits):
         return round(abs(self.meca_dispo+self.elec_dispo-(former_StationFaits.meca_dispo + former_StationFaits.elec_dispo)))
 
 
