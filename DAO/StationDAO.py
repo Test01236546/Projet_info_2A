@@ -139,6 +139,64 @@ class StationDAO:
         self.conn.commit()
         print(f"Station {id} supprimée")
 
+    def close(self):
+        """
+        Ferme la connexion à la base de données.
+        """
+        self.conn.close()
+
+    def upsert2(self, dictionnaire):
+        # Création d'une instance de Station
+        Station_to_upsert = Station(
+            dictionnaire['stationcode'],
+            dictionnaire['name'],
+            dictionnaire['capacity'],
+            json.dumps(dictionnaire['coordonnees_geo']),
+            dictionnaire['code_insee_commune'],
+            dictionnaire['is_renting'],
+            dictionnaire['duedate'],
+            f"date_deb {dictionnaire['stationcode']}",
+            f"borne_paiement {dictionnaire['stationcode']}",
+            dictionnaire['capacity']
+        )
+
+        # Tentative de mise à jour
+        self.cur.execute("""
+        UPDATE Station SET nom_station=?, capacite=?, coordonnees_station=?, id_commune=?,
+        en_fonctionnement=?, date_deb=?, date_fin=?, borne_paiement=?, nb_bornettes=? WHERE id=?
+        """, (
+            Station_to_upsert.nom_station,
+            Station_to_upsert.capacite,
+            Station_to_upsert.coordonnees_station,
+            Station_to_upsert.id_commune,
+            Station_to_upsert.en_fonctionnement,
+            Station_to_upsert.date_deb,
+            Station_to_upsert.date_fin,
+            Station_to_upsert.borne_paiement,
+            Station_to_upsert.nb_bornettes,
+            Station_to_upsert.id
+        ))
+
+        # Vérification et insertion si nécessaire
+        if self.cur.rowcount == 0:
+            self.cur.execute("""
+            INSERT INTO Station VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            """, (
+                Station_to_upsert.id,
+                Station_to_upsert.nom_station,
+                Station_to_upsert.capacite,
+                Station_to_upsert.coordonnees_station,
+                Station_to_upsert.id_commune,
+                Station_to_upsert.en_fonctionnement,
+                Station_to_upsert.date_deb,
+                Station_to_upsert.date_fin,
+                Station_to_upsert.borne_paiement,
+                Station_to_upsert.nb_bornettes
+            ))
+
+        self.conn.commit()
+        print(f"Station {Station_to_upsert.id} mise à jour ou insérée")
+
 
 # def update2(self, id, new_data):
 #     self.cur.execute("""

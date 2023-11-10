@@ -85,6 +85,51 @@ class TempsDAO:
         self.conn.commit()
         print("Temps mis à jour")
 
+
+    def update2(self, dictionnaire):
+        """
+        Met à jour les informations de temps dans la base de données en utilisant les données fournies dans un dictionnaire.
+
+        Args:
+            dictionnaire (dict): Un dictionnaire contenant les nouvelles données de temps.
+        """
+        # Extraction de la date et de l'heure à partir de la chaîne ISO
+        date_string = dictionnaire['duedate']
+        timestamp = datetime.fromisoformat(date_string)
+
+        year = timestamp.year
+        month = timestamp.month
+        day = timestamp.day
+        hour = timestamp.hour
+        minute = timestamp.minute
+
+        # Création d'une instance de Temps avec les données mises à jour
+        Temps_to_update = tp.Temps(
+            dictionnaire['id_temps'],
+            timestamp,
+            year,
+            month,
+            day,
+            hour,
+            minute
+        )
+
+        # Mise à jour de l'enregistrement dans la base de données
+        self.cur.execute(f"""
+        UPDATE {self.TABLE_NAME} SET date=?, annee=?, mois=?, jour=?, heure=?, minute=? WHERE id_temps=?
+        """, (
+            Temps_to_update.date,
+            Temps_to_update.annee,
+            Temps_to_update.mois,
+            Temps_to_update.jour,
+            Temps_to_update.heure,
+            Temps_to_update.minute,
+            Temps_to_update.id_temps
+        ))
+        self.conn.commit()
+        print(f"Temps pour l'identifiant {Temps_to_update.id_temps} mis à jour")
+
+
     def delete(self, id_temps):
         """
         Supprime un enregistrement de temps de la base de données en fonction de son identifiant.
@@ -101,3 +146,55 @@ class TempsDAO:
         Ferme la connexion à la base de données.
         """
         self.conn.close()
+
+    def upsert2(self, dictionnaire):
+        # Traitement de la date
+        date_string = dictionnaire['duedate']
+        timestamp = datetime.fromisoformat(date_string)
+        year = timestamp.year
+        month = timestamp.month
+        day = timestamp.day
+        hour = timestamp.hour
+        minute = timestamp.minute
+
+        # Création d'une instance de Temps
+        Temps_to_upsert = Temps(
+            dictionnaire['stationcode'],
+            timestamp,
+            year,
+            month,
+            day,
+            hour,
+            minute
+        )
+
+        # Tentative de mise à jour
+        self.cur.execute(f"""
+        UPDATE {self.TABLE_NAME} SET date=?, annee=?, mois=?, jour=?, heure=?, minute=? WHERE id_temps=?
+        """, (
+            Temps_to_upsert.date,
+            Temps_to_upsert.annee,
+            Temps_to_upsert.mois,
+            Temps_to_upsert.jour,
+            Temps_to_upsert.heure,
+            Temps_to_upsert.minute,
+            Temps_to_upsert.id_temps
+        ))
+
+        # Vérification et insertion si nécessaire
+        if self.cur.rowcount == 0:
+            self.cur.execute(f"""
+            INSERT INTO {self.TABLE_NAME} VALUES (?, ?, ?, ?, ?, ?, ?)
+            """, (
+                Temps_to_upsert.id_temps,
+                Temps_to_upsert.date,
+                Temps_to_upsert.annee,
+                Temps_to_upsert.mois,
+                Temps_to_upsert.jour,
+                Temps_to_upsert.heure,
+                Temps_to_upsert.minute
+            ))
+
+        self.conn.commit()
+        print(f"Temps pour l'identifiant {Temps_to_upsert.id_temps} mis à jour ou inséré")
+

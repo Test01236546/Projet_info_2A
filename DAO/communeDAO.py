@@ -57,6 +57,7 @@ class CommuneDAO:
         else:
             print("Commune non trouvée")
             return None
+        
 
     def update(self, id_commune, new_data):
         """
@@ -74,6 +75,25 @@ class CommuneDAO:
         """, (new_data.nom_commune, id_commune))
         self.conn.commit()
         print("Commune mise à jour")
+    
+    
+    def update2(self, dictionnaire):
+        """
+        Met à jour les informations d'une commune dans la base de données en utilisant les données fournies dans un dictionnaire.
+
+        Args:
+            dictionnaire (dict): Un dictionnaire contenant les nouvelles données de la commune.
+        """
+        # Supposons que les clés du dictionnaire correspondent aux attributs de l'objet Commune
+        Commune_to_update = cm.Commune(dictionnaire['code_insee_commune'],dictionnaire['name'])
+
+        # Mise à jour de l'enregistrement dans la base de données
+        self.cur.execute("""
+        UPDATE Commune SET nom_commune=? WHERE id_commune=?
+        """, (Commune_to_update.nom_commune, Commune_to_update.id_commune))
+        self.conn.commit()
+        print(f"Commune {Commune_to_update.id_commune} mise à jour")
+
 
     def delete(self, id_commune):
         """
@@ -85,5 +105,46 @@ class CommuneDAO:
         self.cur.execute("DELETE FROM Commune WHERE id_commune=?", (id_commune,))
         self.conn.commit()
         print("Commune supprimée")
+
+    def close(self):
+        """
+        Ferme la connexion à la base de données.
+        """
+        self.conn.close()
+
+    def upsert2(self, dictionnaire):
+        """
+        Met à jour une commune si elle existe, sinon insère une nouvelle commune en utilisant un dictionnaire.
+
+        Args:
+            dictionnaire (dict): Un dictionnaire contenant les données de la commune.
+        """
+        # Création d'une instance de Commune avec les données du dictionnaire
+        Commune_to_upsert = Commune(
+            dictionnaire['code_insee_commune'],
+            dictionnaire['nom_commune']
+        )
+
+        # Tentative de mise à jour
+        self.cur.execute("""
+        UPDATE Commune SET nom_commune=? WHERE id_commune=?
+        """, (
+            Commune_to_upsert.nom_commune,
+            Commune_to_upsert.id_commune
+        ))
+
+        # Vérification si la mise à jour a affecté des lignes
+        if self.cur.rowcount == 0:
+            # Aucune ligne mise à jour, donc insertion
+            self.cur.execute("""
+            INSERT INTO Commune VALUES (?, ?)
+            """, (
+                Commune_to_upsert.id_commune,
+                Commune_to_upsert.nom_commune
+            ))
+
+        self.conn.commit()
+        print(f"Commune pour l'identifiant {Commune_to_upsert.id_commune} mise à jour ou insérée")
+
 
 

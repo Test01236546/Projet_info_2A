@@ -80,6 +80,44 @@ class StationFaitsDAO:
         self.conn.commit()
         print("StationFaits mis à jour")
 
+    def update2(self, dictionnaire):
+        """
+        Met à jour les informations des faits de station dans la base de données en utilisant les données fournies dans un dictionnaire.
+
+        Args:
+            dictionnaire (dict): Un dictionnaire contenant les nouvelles données des faits de station.
+        """
+        # Création d'une instance de StationFaits avec les données mises à jour
+        StationFaits_to_update = stf.StationFaits(
+            dictionnaire['stationcode'],
+            dictionnaire['capacity'],
+            dictionnaire['numbikesavailable'],
+            dictionnaire['mechanical'],
+            dictionnaire['ebike'],
+            dictionnaire['is_returning'],
+            f"frequence {dictionnaire['stationcode']}",
+            dictionnaire['duedate'],
+            f"date_fait_deb {dictionnaire['stationcode']}"
+        )
+
+        # Mise à jour de l'enregistrement dans la base de données
+        self.cur.execute(f"""
+        UPDATE {self.TABLE_NAME} SET nb_bornettes=?, velos_dispos=?, meca_dispo=?, elec_dispo=?, 
+        retour_velo=?, frequence=?, date_fait_deb=?, date_fait_fin=? WHERE id_station=?
+        """, (
+            StationFaits_to_update.nb_bornettes,
+            StationFaits_to_update.velos_dispos,
+            StationFaits_to_update.meca_dispo,
+            StationFaits_to_update.elec_dispo,
+            StationFaits_to_update.retour_velo,
+            StationFaits_to_update.frequence,
+            StationFaits_to_update.date_fait_deb,
+            StationFaits_to_update.date_fait_fin,
+            StationFaits_to_update.id_station
+        ))
+        self.conn.commit()
+        print(f"StationFaits pour la station {StationFaits_to_update.id_station} mis à jour")
+
     def delete(self, id_station):
         """
         Supprime les faits de station de la base de données en fonction de l'identifiant de la station.
@@ -97,3 +135,52 @@ class StationFaitsDAO:
         """
 
         self.conn.close()
+
+    def upsert2(self, dictionnaire):
+        # Création d'une instance de StationFaits
+        StationFaits_to_upsert = StationFaits(
+            dictionnaire['stationcode'],
+            dictionnaire['capacity'],
+            dictionnaire['numbikesavailable'],
+            dictionnaire['mechanical'],
+            dictionnaire['ebike'],
+            dictionnaire['is_returning'],
+            f"frequence {dictionnaire['stationcode']}",
+            dictionnaire['duedate'],
+            f"date_fait_deb {dictionnaire['stationcode']}"
+        )
+
+        # Tentative de mise à jour
+        self.cur.execute(f"""
+        UPDATE {self.TABLE_NAME} SET nb_bornettes=?, velos_dispos=?, meca_dispo=?, elec_dispo=?,
+        retour_velo=?, frequence=?, date_fait_deb=?, date_fait_fin=? WHERE id_station=?
+        """, (
+            StationFaits_to_upsert.nb_bornettes,
+            StationFaits_to_upsert.velos_dispos,
+            StationFaits_to_upsert.meca_dispo,
+            StationFaits_to_upsert.elec_dispo,
+            StationFaits_to_upsert.retour_velo,
+            StationFaits_to_upsert.frequence,
+            StationFaits_to_upsert.date_fait_deb,
+            StationFaits_to_upsert.date_fait_fin,
+            StationFaits_to_upsert.id_station
+        ))
+
+        # Vérification et insertion si nécessaire
+        if self.cur.rowcount == 0:
+            self.cur.execute(f"""
+            INSERT INTO {self.TABLE_NAME} VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+            """, (
+                StationFaits_to_upsert.id_station,
+                StationFaits_to_upsert.nb_bornettes,
+                StationFaits_to_upsert.velos_dispos,
+                StationFaits_to_upsert.meca_dispo,
+                StationFaits_to_upsert.elec_dispo,
+                StationFaits_to_upsert.retour_velo,
+                StationFaits_to_upsert.frequence,
+                StationFaits_to_upsert.date_fait_deb,
+                StationFaits_to_upsert.date_fait_fin
+            ))
+
+        self.conn.commit()
+        print(f"StationFaits pour la station {StationFaits_to_upsert.id_station} mise à jour ou insérée")
