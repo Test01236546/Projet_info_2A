@@ -63,6 +63,47 @@ class StationDAO:
         else:
             print("Station non trouvée")
             return None
+    
+    def update2(self, dictionnaire):
+        """
+        Met à jour les informations d'une station dans la base de données en utilisant les données fournies dans un dictionnaire.
+
+        Args:
+            dictionnaire (dict): Un dictionnaire contenant les nouvelles données de la station.
+        """
+        # Création d'une instance de Station avec les données mises à jour
+        Station_to_update = st.Station(
+            dictionnaire['stationcode'],
+            dictionnaire['name'],
+            dictionnaire['capacity'],
+            json.dumps(dictionnaire['coordonnees_geo']),
+            dictionnaire['code_insee_commune'],
+            dictionnaire['is_renting'],
+            dictionnaire['duedate'],
+            f"date_deb {dictionnaire['stationcode']}",
+            f"borne_paiement {dictionnaire['stationcode']}",
+            dictionnaire['capacity']
+        )
+
+        # Mise à jour de l'enregistrement dans la base de données
+        self.cur.execute("""
+        UPDATE Station SET nom_station=?, capacite=?, coordonnees_station=?, 
+        id_commune=?, en_fonctionnement=?, date_deb=?, date_fin=?, 
+        borne_paiement=?, nb_bornettes=? WHERE id=?
+        """, (
+            Station_to_update.nom_station,
+            Station_to_update.capacite,
+            Station_to_update.coordonnees_station,
+            Station_to_update.id_commune,
+            Station_to_update.en_fonctionnement,
+            Station_to_update.date_deb,
+            Station_to_update.date_fin,
+            Station_to_update.borne_paiement,
+            Station_to_update.nb_bornettes,
+            Station_to_update.id
+        ))
+        self.conn.commit()
+        print(f"Station {Station_to_update.id} mise à jour")
 
     def update(self, id, new_data):
         """

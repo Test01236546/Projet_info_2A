@@ -2,11 +2,11 @@ from fastapi import FastAPI
 
 import requests as r 
 from pydantic import BaseModel
-from Service.station import Station
+from Service.Station import Station
 import uvicorn
-from Service.service import Service
+from Service.Service import Service
 from datetime import datetime
-import Service.fonctionnalites as F
+import Service.Fonctionnalites as F
 from geopy.geocoders import Nominatim 
 
 app=FastAPI()
