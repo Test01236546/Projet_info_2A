@@ -158,7 +158,7 @@ class TempsDAO:
         minute = timestamp.minute
 
         # Création d'une instance de Temps
-        Temps_to_upsert = Temps(
+        Temps_to_upsert = tp.Temps(
             dictionnaire['stationcode'],
             timestamp,
             year,

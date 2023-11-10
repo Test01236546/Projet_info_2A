@@ -24,6 +24,7 @@ if __name__ == "__main__":
     BDD_PATH_TEST = "Test_Jeremie/test1.sql"
     db_manager = cBDD.BDD_Manager(BDD_PATH_TEST)
     # db_manager.create_stations_table() #pas besoin keke
+    # db_manager.close()
     
     # #StationDAO
     # Instance_StationDAO = stDAO.StationDAO(BDD_PATH_TEST)
@@ -104,6 +105,11 @@ if __name__ == "__main__":
     list(map(lambda station_dict: Instance_CommuneDAO.create2(station_dict), data['results']))
     list(map(lambda station_dict: Instance_TempsDAO.create2(station_dict), data['results']))
     list(map(lambda station_dict: Instance_StationFaitsDAO.create2(station_dict), data['results']))
+
+    list(map(lambda station_dict: Instance_StationDAO.upsert2(station_dict), data['results']))
+    list(map(lambda station_dict: Instance_CommuneDAO.upsert2(station_dict), data['results']))
+    list(map(lambda station_dict: Instance_TempsDAO.upsert2(station_dict), data['results']))
+    list(map(lambda station_dict: Instance_StationFaitsDAO.upsert2(station_dict), data['results']))
 
     dict_statio_test = results[0]
     # dict_statio_test['stationcode']

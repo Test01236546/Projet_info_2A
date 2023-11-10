@@ -120,9 +120,9 @@ class CommuneDAO:
             dictionnaire (dict): Un dictionnaire contenant les données de la commune.
         """
         # Création d'une instance de Commune avec les données du dictionnaire
-        Commune_to_upsert = Commune(
+        Commune_to_upsert = cm.Commune(
             dictionnaire['code_insee_commune'],
-            dictionnaire['nom_commune']
+            dictionnaire['nom_arrondissement_communes']
         )
 
         # Tentative de mise à jour

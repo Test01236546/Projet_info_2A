@@ -137,37 +137,47 @@ class StationFaitsDAO:
         self.conn.close()
 
     def upsert2(self, dictionnaire):
-        # Création d'une instance de StationFaits
-        StationFaits_to_upsert = StationFaits(
-            dictionnaire['stationcode'],
-            dictionnaire['capacity'],
-            dictionnaire['numbikesavailable'],
-            dictionnaire['mechanical'],
-            dictionnaire['ebike'],
-            dictionnaire['is_returning'],
-            f"frequence {dictionnaire['stationcode']}",
-            dictionnaire['duedate'],
-            f"date_fait_deb {dictionnaire['stationcode']}"
-        )
 
-        # Tentative de mise à jour
-        self.cur.execute(f"""
-        UPDATE {self.TABLE_NAME} SET nb_bornettes=?, velos_dispos=?, meca_dispo=?, elec_dispo=?,
-        retour_velo=?, frequence=?, date_fait_deb=?, date_fait_fin=? WHERE id_station=?
-        """, (
-            StationFaits_to_upsert.nb_bornettes,
-            StationFaits_to_upsert.velos_dispos,
-            StationFaits_to_upsert.meca_dispo,
-            StationFaits_to_upsert.elec_dispo,
-            StationFaits_to_upsert.retour_velo,
-            StationFaits_to_upsert.frequence,
-            StationFaits_to_upsert.date_fait_deb,
-            StationFaits_to_upsert.date_fait_fin,
-            StationFaits_to_upsert.id_station
-        ))
+        # Construction de la requête pour vérifier l'existence de l'élément
+        self.cur.execute("SELECT * FROM StationFaits WHERE id_station=?", (dict['stationcode'],))
+        existing_record = self.cur.fetchone()
 
-        # Vérification et insertion si nécessaire
-        if self.cur.rowcount == 0:
+        if existing_record:
+            # Si l'enregistrement existe, créer une instance de StationFaits avec les données existantes
+            former_StationFaits = stf.StationFaits(*existing_record)
+
+                # Création d'une instance de StationFaits
+            StationFaits_to_upsert = stf.StationFaits(
+                dictionnaire['stationcode'],
+                dictionnaire['capacity'],
+                dictionnaire['numbikesavailable'],
+                dictionnaire['mechanical'],
+                dictionnaire['ebike'],
+                dictionnaire['is_returning'],
+                "frequence pas encore update",
+                dictionnaire['duedate'],
+                f"date_fait_fin {dictionnaire['stationcode']}"
+            )
+
+
+
+            # Tentative de mise à jour
+            self.cur.execute(f"""
+            UPDATE {self.TABLE_NAME} SET nb_bornettes=?, velos_dispos=?, meca_dispo=?, elec_dispo=?,
+            retour_velo=?, frequence=?, date_fait_deb=?, date_fait_fin=? WHERE id_station=?
+            """, (
+                StationFaits_to_upsert.nb_bornettes,
+                StationFaits_to_upsert.velos_dispos,
+                StationFaits_to_upsert.meca_dispo,
+                StationFaits_to_upsert.elec_dispo,
+                StationFaits_to_upsert.retour_velo,
+                StationFaits_to_upsert.calcul_frequence(former_StationFaits),
+                StationFaits_to_upsert.date_fait_deb,
+                StationFaits_to_upsert.date_fait_fin,
+                StationFaits_to_upsert.id_station
+            ))
+            
+        else : 
             self.cur.execute(f"""
             INSERT INTO {self.TABLE_NAME} VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
             """, (
@@ -177,7 +187,7 @@ class StationFaitsDAO:
                 StationFaits_to_upsert.meca_dispo,
                 StationFaits_to_upsert.elec_dispo,
                 StationFaits_to_upsert.retour_velo,
-                StationFaits_to_upsert.frequence,
+                0,
                 StationFaits_to_upsert.date_fait_deb,
                 StationFaits_to_upsert.date_fait_fin
             ))

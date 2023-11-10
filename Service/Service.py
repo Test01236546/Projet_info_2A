@@ -2,17 +2,17 @@ import requests
 import json
 from BDD.constantes import BDD_PATH
 
-from Service import Station as st
-from Service import commune as cm
-from Service import Temps as tp
-from Service import StationFaits as stf
+# from Service import Station as st
+# from Service import commune as cm
+# from Service import Temps as tp
+# from Service import StationFaits as stf
 
 from DAO import StationDAO as stDAO
 from DAO import communeDAO as cmDAO
 from DAO import TempsDAO as tpDAO
 from DAO import StationFaitsDAO as stfDAO
 
-from BDD import classBDD as cBDD
+# from BDD import classBDD as cBDD
 
 class Service ():
     """
@@ -66,10 +66,10 @@ class Service ():
         # Instance_TempsDAO = tpDAO.TempsDAO(BDD_PATH)
         # Instance_StationFaitsDAO = stfDAO.StationFaitsDAO(BDD_PATH)
 
-        list(map(lambda station_dict: self.Instance_StationDAO.create2(station_dict), data['results']))
-        list(map(lambda station_dict: self.Instance_CommuneDAO.create2(station_dict), data['results']))
-        list(map(lambda station_dict: self.Instance_TempsDAO.create2(station_dict), data['results']))
-        list(map(lambda station_dict: self.Instance_StationFaitsDAO.create2(station_dict), data['results']))
+        list(map(lambda station_dict: self.Instance_StationDAO.upsert2(station_dict), data['results']))
+        list(map(lambda station_dict: self.Instance_CommuneDAO.upsert2(station_dict), data['results']))
+        list(map(lambda station_dict: self.Instance_TempsDAO.upsert2(station_dict), data['results']))
+        list(map(lambda station_dict: self.Instance_StationFaitsDAO.upsert2(station_dict), data['results']))
 
 
         

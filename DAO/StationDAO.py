@@ -147,7 +147,7 @@ class StationDAO:
 
     def upsert2(self, dictionnaire):
         # Création d'une instance de Station
-        Station_to_upsert = Station(
+        Station_to_upsert = st.Station(
             dictionnaire['stationcode'],
             dictionnaire['name'],
             dictionnaire['capacity'],

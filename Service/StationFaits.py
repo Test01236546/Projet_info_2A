@@ -14,6 +14,11 @@ class StationFaits():
         self.date_fait_deb=date_fait_deb
         self.date_fait_fin=date_fait_fin
 
+    def calcul_frequence(self,former_StationFaits : StationFaits):
+        return round(abs(self.meca_dispo+self.elec_dispo-(former_StationFaits.meca_dispo + former_StationFaits.elec_dispo)))
+
+
+
     def __str__(self):
         """
         Renvoie une représentation sous forme de chaîne de caractères de l'objet StationFaits.
