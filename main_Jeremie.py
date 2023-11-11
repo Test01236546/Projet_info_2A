@@ -16,7 +16,7 @@ from DAO import communeDAO as cmDAO
 from DAO import TempsDAO as tpDAO
 from DAO import StationFaitsDAO as stfDAO
 
-from fo
+from Service.fonctions_intermédiaires import no_print_map,no_print_map2
 
 from BDD import classBDD as cBDD
 

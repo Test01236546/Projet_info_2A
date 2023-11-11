@@ -191,7 +191,7 @@ class TempsDAO:
             ))
 
         self.conn.commit()
-        print(f"Temps pour l'identifiant {Temps_to_upsert.id_temps} mis à jour ou inséré")
+        # print(f"Temps pour l'identifiant {Temps_to_upsert.id_temps} mis à jour ou inséré")
 
     def close(self):
         """

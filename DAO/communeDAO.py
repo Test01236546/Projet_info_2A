@@ -106,11 +106,6 @@ class CommuneDAO:
         self.conn.commit()
         print("Commune supprimée")
 
-    def close(self):
-        """
-        Ferme la connexion à la base de données.
-        """
-        self.conn.close()
 
     def upsert2(self, dictionnaire):
         """
@@ -144,7 +139,12 @@ class CommuneDAO:
             ))
 
         self.conn.commit()
-        print(f"Commune pour l'identifiant {Commune_to_upsert.id_commune} mise à jour ou insérée")
+        # print(f"Commune pour l'identifiant {Commune_to_upsert.id_commune} mise à jour ou insérée")
 
 
+    def close(self):
+        """
+        Ferme la connexion à la base de données.
+        """
+        self.conn.close()
 

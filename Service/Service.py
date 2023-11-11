@@ -12,6 +12,8 @@ from DAO import communeDAO as cmDAO
 from DAO import TempsDAO as tpDAO
 from DAO import StationFaitsDAO as stfDAO
 
+from Service.fonctions_intermédiaires import no_print_map,no_print_map2
+
 # from BDD import classBDD as cBDD
 
 class Service ():
@@ -66,10 +68,10 @@ class Service ():
         # Instance_TempsDAO = tpDAO.TempsDAO(BDD_PATH)
         # Instance_StationFaitsDAO = stfDAO.StationFaitsDAO(BDD_PATH)
 
-        list(map(lambda station_dict: self.Instance_StationDAO.upsert2(station_dict), data['results']))
-        list(map(lambda station_dict: self.Instance_CommuneDAO.upsert2(station_dict), data['results']))
-        list(map(lambda station_dict: self.Instance_TempsDAO.upsert2(station_dict), data['results']))
-        list(map(lambda station_dict: self.Instance_StationFaitsDAO.upsert2(station_dict), data['results']))
+        no_print_map2(map(lambda station_dict: self.Instance_StationDAO.upsert2(station_dict), data['results']))
+        no_print_map2(map(lambda station_dict: self.Instance_CommuneDAO.upsert2(station_dict), data['results']))
+        no_print_map2(map(lambda station_dict: self.Instance_TempsDAO.upsert2(station_dict), data['results']))
+        no_print_map2(map(lambda station_dict: self.Instance_StationFaitsDAO.upsert2(station_dict), data['results']))
 
 
         

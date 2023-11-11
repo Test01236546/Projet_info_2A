@@ -189,7 +189,7 @@ class StationFaitsDAO:
             ))
 
         self.conn.commit()
-        print(f"StationFaits pour la station {StationFaits_to_upsert.id_station} mise à jour ou insérée")
+        # print(f"StationFaits pour la station {StationFaits_to_upsert.id_station} mise à jour ou insérée")
     
     def close(self):
         """
