@@ -116,6 +116,7 @@ if __name__ == "__main__":
     map(lambda station_dict: Instance_TempsDAO.upsert2(station_dict), data['results'])
     map(lambda station_dict: Instance_StationFaitsDAO.upsert2(station_dict), data['results'])
 
+
     dict_statio_test = results[0]
     # dict_statio_test['stationcode']
     # Instance_Station
@@ -123,7 +124,7 @@ if __name__ == "__main__":
     Instance_StationDAO.create2(dict_statio_test)
     dict_statio_test
     dict_statio_test['stationcode']
-    Instance_StationDAO.read('14106')
+    Instance_StationDAO.read('31104')
     Instance_StationDAO.delete('14106')
     
     Instance_CommuneDAO.read(None)
