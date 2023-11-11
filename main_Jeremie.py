@@ -16,6 +16,8 @@ from DAO import communeDAO as cmDAO
 from DAO import TempsDAO as tpDAO
 from DAO import StationFaitsDAO as stfDAO
 
+from fo
+
 from BDD import classBDD as cBDD
 
 
@@ -98,6 +100,17 @@ if __name__ == "__main__":
     Instance_TempsDAO = tpDAO.TempsDAO(BDD_PATH_TEST)
     Instance_StationFaitsDAO = stfDAO.StationFaitsDAO(BDD_PATH_TEST)
 
+    
+    no_print_map(map(lambda station_dict: Instance_StationDAO.upsert2(station_dict), data['results']))
+    no_print_map(map(lambda station_dict: Instance_CommuneDAO.upsert2(station_dict), data['results']))
+    no_print_map(map(lambda station_dict: Instance_TempsDAO.upsert2(station_dict), data['results']))
+    no_print_map(map(lambda station_dict: Instance_StationFaitsDAO.upsert2(station_dict), data['results']))
+
+    no_print_map2(map(lambda station_dict: Instance_StationDAO.upsert2(station_dict), data['results']))
+    no_print_map2(map(lambda station_dict: Instance_CommuneDAO.upsert2(station_dict), data['results']))
+    no_print_map2(map(lambda station_dict: Instance_TempsDAO.upsert2(station_dict), data['results']))
+    no_print_map2(map(lambda station_dict: Instance_StationFaitsDAO.upsert2(station_dict), data['results']))
+
 
     #data a deux clés (total et results), results est une liste de dictionnaires dons les keys-values sont des infos sur la station
     #ON VA VECTORISER LES CLACULS AVEC UN APPLY, on fait un create2 qui créé directement la station(resp le reste) puis la met dans la table
@@ -111,10 +124,6 @@ if __name__ == "__main__":
     list(map(lambda station_dict: Instance_TempsDAO.upsert2(station_dict), data['results']))
     list(map(lambda station_dict: Instance_StationFaitsDAO.upsert2(station_dict), data['results']))
 
-    map(lambda station_dict: Instance_StationDAO.upsert2(station_dict), data['results'])
-    map(lambda station_dict: Instance_CommuneDAO.upsert2(station_dict), data['results'])
-    map(lambda station_dict: Instance_TempsDAO.upsert2(station_dict), data['results'])
-    map(lambda station_dict: Instance_StationFaitsDAO.upsert2(station_dict), data['results'])
 
 
     dict_statio_test = results[0]
