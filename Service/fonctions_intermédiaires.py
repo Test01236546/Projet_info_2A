@@ -1,5 +1,5 @@
 import time
-
+import sqlite3
 
 #Regarder la complexité de ces deux fonctions
 
@@ -19,3 +19,36 @@ def periodic(Instance_service,duration, pause):
         Instance_service.ingest()
         time.sleep(pause)
 
+def voir_ids_disponibles(db_path, nombre_ids):
+    # Ouvrir la connexion à la base de données
+    conn = sqlite3.connect(db_path)
+    cursor = conn.cursor()
+
+    # Exécuter la requête pour obtenir les 'id'
+    query = "SELECT id FROM Station LIMIT ?"
+    cursor.execute(query, (nombre_ids,))
+
+    # Récupérer les résultats
+    ids = cursor.fetchall()
+
+    # Fermer la connexion
+    conn.close()
+
+    return ids
+
+def compter_ids(db_path, table_name,primary_key):
+    # Ouvrir la connexion à la base de données
+    conn = sqlite3.connect(db_path)
+    cursor = conn.cursor()
+
+    # Exécuter la requête pour compter les 'id'
+    query = f"SELECT COUNT({primary_key}) FROM {table_name}"
+    cursor.execute(query)
+
+    # Récupérer le résultat
+    nombre_ids = cursor.fetchone()[0]
+
+    # Fermer la connexion
+    conn.close()
+
+    return nombre_ids

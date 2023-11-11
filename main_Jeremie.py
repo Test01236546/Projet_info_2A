@@ -16,7 +16,9 @@ from DAO import communeDAO as cmDAO
 from DAO import TempsDAO as tpDAO
 from DAO import StationFaitsDAO as stfDAO
 
-from Service.fonctions_intermédiaires import no_print_map,no_print_map2
+from Service import fonctions_intermédiaires as fi
+
+from BDD.constantes import BDD_PATH
 
 from BDD import classBDD as cBDD
 
@@ -101,15 +103,15 @@ if __name__ == "__main__":
     Instance_StationFaitsDAO = stfDAO.StationFaitsDAO(BDD_PATH_TEST)
 
     
-    no_print_map(map(lambda station_dict: Instance_StationDAO.upsert2(station_dict), data['results']))
-    no_print_map(map(lambda station_dict: Instance_CommuneDAO.upsert2(station_dict), data['results']))
-    no_print_map(map(lambda station_dict: Instance_TempsDAO.upsert2(station_dict), data['results']))
-    no_print_map(map(lambda station_dict: Instance_StationFaitsDAO.upsert2(station_dict), data['results']))
+    fi.no_print_map(map(lambda station_dict: Instance_StationDAO.upsert2(station_dict), data['results']))
+    fi.no_print_map(map(lambda station_dict: Instance_CommuneDAO.upsert2(station_dict), data['results']))
+    fi.no_print_map(map(lambda station_dict: Instance_TempsDAO.upsert2(station_dict), data['results']))
+    fi.no_print_map(map(lambda station_dict: Instance_StationFaitsDAO.upsert2(station_dict), data['results']))
 
-    no_print_map2(map(lambda station_dict: Instance_StationDAO.upsert2(station_dict), data['results']))
-    no_print_map2(map(lambda station_dict: Instance_CommuneDAO.upsert2(station_dict), data['results']))
-    no_print_map2(map(lambda station_dict: Instance_TempsDAO.upsert2(station_dict), data['results']))
-    no_print_map2(map(lambda station_dict: Instance_StationFaitsDAO.upsert2(station_dict), data['results']))
+    fi.no_print_map2(map(lambda station_dict: Instance_StationDAO.upsert2(station_dict), data['results']))
+    fi.no_print_map2(map(lambda station_dict: Instance_CommuneDAO.upsert2(station_dict), data['results']))
+    fi.no_print_map2(map(lambda station_dict: Instance_TempsDAO.upsert2(station_dict), data['results']))
+    fi.no_print_map2(map(lambda station_dict: Instance_StationFaitsDAO.upsert2(station_dict), data['results']))
 
 
     #data a deux clés (total et results), results est une liste de dictionnaires dons les keys-values sont des infos sur la station
@@ -125,6 +127,15 @@ if __name__ == "__main__":
     list(map(lambda station_dict: Instance_StationFaitsDAO.upsert2(station_dict), data['results']))
 
 
+
+    # TEST SUR LE INGEST ET VRAIE BDD
+    fi.voir_ids_disponibles(BDD_PATH,9)
+    fi.compter_ids(BDD_PATH,"Station","id")
+    fi.compter_ids(BDD_PATH,"StationFaits")
+    fi.compter_ids(BDD_PATH,"Station")
+    fi.compter_ids(BDD_PATH,"Station")
+
+    
 
     dict_statio_test = results[0]
     # dict_statio_test['stationcode']
