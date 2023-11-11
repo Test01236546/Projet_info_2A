@@ -54,7 +54,7 @@ class Service ():
             et contenir les scripts SQL pour créer les tables correspondantes dans les bases de données locales.
         """
         
-        response = requests.get(self.url)
+        response = requests.get(self.url)       # mettre ça au début avant le init ?
         if response.status_code == 200:
             data = response.json()
         else:

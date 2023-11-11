@@ -5,6 +5,7 @@ import requests as r
 from pydantic import BaseModel
 import uvicorn
 from datetime import datetime
+import time
 # import Service.fonctionnalites as F
 from geopy.geocoders import Nominatim 
 
@@ -33,7 +34,7 @@ if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0")
 
 if __name__ == "__main__":
-    service = Service()
+    service = sv.Service()      # A quoi ça sert ?
     service.ingest()
 
 

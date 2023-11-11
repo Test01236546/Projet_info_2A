@@ -143,7 +143,7 @@ class StationDAO:
     def upsert2(self, dictionnaire):
 
         # Construction de la requête pour vérifier l'existence de l'élément
-        self.cur.execute("SELECT * FROM Station WHERE id_station=?", (dictionnaire['stationcode'],))
+        self.cur.execute("SELECT * FROM Station WHERE id=?", (dictionnaire['stationcode'],))
         existing_record = self.cur.fetchone()
         
         # Création d'une instance de Station

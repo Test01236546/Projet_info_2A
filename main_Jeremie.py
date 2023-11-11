@@ -111,6 +111,11 @@ if __name__ == "__main__":
     list(map(lambda station_dict: Instance_TempsDAO.upsert2(station_dict), data['results']))
     list(map(lambda station_dict: Instance_StationFaitsDAO.upsert2(station_dict), data['results']))
 
+    map(lambda station_dict: Instance_StationDAO.upsert2(station_dict), data['results'])
+    map(lambda station_dict: Instance_CommuneDAO.upsert2(station_dict), data['results'])
+    map(lambda station_dict: Instance_TempsDAO.upsert2(station_dict), data['results'])
+    map(lambda station_dict: Instance_StationFaitsDAO.upsert2(station_dict), data['results'])
+
     dict_statio_test = results[0]
     # dict_statio_test['stationcode']
     # Instance_Station
