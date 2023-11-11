@@ -141,11 +141,6 @@ class TempsDAO:
         self.conn.commit()
         print("Temps supprimé")
 
-    def close(self):
-        """
-        Ferme la connexion à la base de données.
-        """
-        self.conn.close()
 
     def upsert2(self, dictionnaire):
         # Traitement de la date
@@ -198,3 +193,8 @@ class TempsDAO:
         self.conn.commit()
         print(f"Temps pour l'identifiant {Temps_to_upsert.id_temps} mis à jour ou inséré")
 
+    def close(self):
+        """
+        Ferme la connexion à la base de données.
+        """
+        self.conn.close()
