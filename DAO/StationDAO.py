@@ -1,5 +1,5 @@
 import sqlite3
-from datetime import date
+from datetime import datetime
 import sys
 import Service.Station as st
 import json
@@ -139,13 +139,13 @@ class StationDAO:
         self.conn.commit()
         print(f"Station {id} supprimée")
 
-    def close(self):
-        """
-        Ferme la connexion à la base de données.
-        """
-        self.conn.close()
 
     def upsert2(self, dictionnaire):
+
+        # Construction de la requête pour vérifier l'existence de l'élément
+        self.cur.execute("SELECT * FROM Station WHERE id_station=?", (dictionnaire['stationcode'],))
+        existing_record = self.cur.fetchone()
+        
         # Création d'une instance de Station
         Station_to_upsert = st.Station(
             dictionnaire['stationcode'],
@@ -154,31 +154,33 @@ class StationDAO:
             json.dumps(dictionnaire['coordonnees_geo']),
             dictionnaire['code_insee_commune'],
             dictionnaire['is_renting'],
+            datetime.now(),
             dictionnaire['duedate'],
-            f"date_deb {dictionnaire['stationcode']}",
             f"borne_paiement {dictionnaire['stationcode']}",
             dictionnaire['capacity']
         )
 
-        # Tentative de mise à jour
-        self.cur.execute("""
-        UPDATE Station SET nom_station=?, capacite=?, coordonnees_station=?, id_commune=?,
-        en_fonctionnement=?, date_deb=?, date_fin=?, borne_paiement=?, nb_bornettes=? WHERE id=?
-        """, (
-            Station_to_upsert.nom_station,
-            Station_to_upsert.capacite,
-            Station_to_upsert.coordonnees_station,
-            Station_to_upsert.id_commune,
-            Station_to_upsert.en_fonctionnement,
-            Station_to_upsert.date_deb,
-            Station_to_upsert.date_fin,
-            Station_to_upsert.borne_paiement,
-            Station_to_upsert.nb_bornettes,
-            Station_to_upsert.id
-        ))
+        if existing_record :
+            # Si l'enregistrement existe, créer une instance de StationFaits avec les données existantes
+            former_Station = st.Station(*existing_record)
+            # Tentative de mise à jour
+            self.cur.execute("""
+            UPDATE Station SET nom_station=?, capacite=?, coordonnees_station=?, id_commune=?,
+            en_fonctionnement=?, date_deb=?, date_fin=?, borne_paiement=?, nb_bornettes=? WHERE id=?
+            """, (
+                Station_to_upsert.nom_station,
+                Station_to_upsert.capacite,
+                Station_to_upsert.coordonnees_station,
+                Station_to_upsert.id_commune,
+                Station_to_upsert.en_fonctionnement,
+                former_Station.date_fin,            # date debut du new = date fin ancien
+                Station_to_upsert.date_fin,
+                Station_to_upsert.borne_paiement,
+                Station_to_upsert.nb_bornettes,
+                Station_to_upsert.id
+            ))
 
-        # Vérification et insertion si nécessaire
-        if self.cur.rowcount == 0:
+        else :
             self.cur.execute("""
             INSERT INTO Station VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
             """, (
@@ -197,6 +199,11 @@ class StationDAO:
         self.conn.commit()
         print(f"Station {Station_to_upsert.id} mise à jour ou insérée")
 
+    def close(self):
+        """
+        Ferme la connexion à la base de données.
+        """
+        self.conn.close()
 
 # def update2(self, id, new_data):
 #     self.cur.execute("""

@@ -1,5 +1,6 @@
 import sqlite3
 import Service.StationFaits as stf
+from datetime import datetime
 
 class StationFaitsDAO:
     """
@@ -143,9 +144,9 @@ class StationFaitsDAO:
             dictionnaire['mechanical'],
             dictionnaire['ebike'],
             dictionnaire['is_returning'],
-            "frequence pas encore update",
-            dictionnaire['duedate'],
-            "date_fait_fin pas encore update "
+            0,
+            datetime.now(),
+            dictionnaire['duedate']
         )
 
         if existing_record:
@@ -156,7 +157,7 @@ class StationFaitsDAO:
 
 
 
-            # Tentative de mise à jour
+            # Mise à jour
             self.cur.execute(f"""
             UPDATE {self.TABLE_NAME} SET nb_bornettes=?, velos_dispos=?, meca_dispo=?, elec_dispo=?,
             retour_velo=?, frequence=?, date_fait_deb=?, date_fait_fin=? WHERE id_station=?
@@ -182,7 +183,7 @@ class StationFaitsDAO:
                 StationFaits_to_upsert.meca_dispo,
                 StationFaits_to_upsert.elec_dispo,
                 StationFaits_to_upsert.retour_velo,
-                0,
+                StationFaits_to_upsert.frequence,
                 StationFaits_to_upsert.date_fait_deb,
                 StationFaits_to_upsert.date_fait_fin
             ))
