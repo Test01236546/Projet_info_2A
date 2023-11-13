@@ -123,7 +123,7 @@ class Fonctionnalites():
         query = """
             SELECT nom_station
             FROM StationFaits
-            JOIN Station ON StationFaits.id_station = Station.id_station
+            JOIN Station ON StationFaits.id_station = Station.id
             WHERE date_fait_deb >= ? AND date_fait_fin <= ?
             GROUP BY StationFaits.id_station
             ORDER BY SUM(frequence)
@@ -157,18 +157,18 @@ class Fonctionnalites():
     
         # Requête SQL pour récupérer l'arrondissement le plus fréquenté
         query = """
-            SELECT id_commune_ou_arr, SUM(total_freq_par_station) as total_freq_par_com_ou_arr
+            SELECT id_commune, SUM(total_freq_par_station) as total_freq_par_com_ou_arr
             FROM (
-                SELECT Station.id_station, SUM(frequence) as total_freq_par_station
-                FROM StationFaits
-                JOIN Station ON StationFaits.id_station = Station.id_station
-                WHERE date_fait_deb >= ? AND date_fait_fin <= ?
-                GROUP BY Station.id_station
+            SELECT Station.id, SUM(frequence) as total_freq_par_station
+            FROM StationFaits
+            JOIN Station ON StationFaits.id_station = Station.id
+            WHERE date_fait_deb >= ? AND date_fait_fin <= ?
+            GROUP BY Station.id
             ) as StationFreq
-            JOIN CommuneOuArr ON StationFreq.id_station = CommuneOuArr.id_station
-            GROUP BY id_commune_ou_arr
+            JOIN Commune ON Station.id_commune = Commune.id_commune
+            GROUP BY id_commune
             ORDER BY total_freq_par_com_ou_arr DESC
-            LIMIT 1
+            LIMIT 1;        
         """
         cursor.execute(query, (date_debut, date_fin))
     
