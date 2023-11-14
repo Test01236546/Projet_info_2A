@@ -87,8 +87,9 @@ if __name__ == "__main__":
     data = response.json()
     # cles = list(data.keys())
     # print(cles)
-
+    len(data['results'])
     results = data['results']
+    results[0]
     # type(results)
     # results[54]
     # cles_results = list(results.keys()) 

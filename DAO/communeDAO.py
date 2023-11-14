@@ -118,7 +118,7 @@ class CommuneDAO:
         # Création d'une instance de Commune avec les données du dictionnaire
         Commune_to_upsert = cm.Commune(
             fi.codeInsee_to_code(dictionnaire['stationcode']),
-            fi.afficher_nom_commune_complete(dictionnaire['nom_arrondissement_communes'])
+            fi.afficher_nom_commune_complete(dictionnaire['stationcode'],dictionnaire['nom_arrondissement_communes'])
         )
 
         # Tentative de mise à jour
