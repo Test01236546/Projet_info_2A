@@ -69,12 +69,12 @@ def trouver_premiere_derniere_heure(db_path, table_name, time_column):
     # Requête pour trouver la première heure (la plus ancienne)
     query_premiere_heure = f"SELECT MIN({time_column}) FROM {table_name}"
     cursor.execute(query_premiere_heure)
-    premiere_heure = cursor.fetchone()[1]
+    premiere_heure = cursor.fetchone()[0]
 
     # Requête pour trouver la dernière heure (la plus récente)
     query_derniere_heure = f"SELECT MAX({time_column}) FROM {table_name}"
     cursor.execute(query_derniere_heure)
-    derniere_heure = cursor.fetchone()[1]
+    derniere_heure = cursor.fetchone()[0]
 
     # Fermer la connexion
     conn.close()

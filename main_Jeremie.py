@@ -147,7 +147,7 @@ if __name__ == "__main__":
 
     dict_statio_test = results[0]
 
-    fi.trouver_premiere_derniere_heure(BDD_PATH_TEST,"Temps","id_temps")
+    fi.trouver_premiere_derniere_heure(BDD_PATH,"Temps","date")
 
     # dict_statio_test['stationcode']
     # Instance_Station
