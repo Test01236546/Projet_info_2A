@@ -55,4 +55,9 @@ def compter_ids(db_path, table_name,primary_key):
     return nombre_ids
 
 def codeInsee_to_code(stationcode):  #renvoie 75xxx si 75 est le début de station code et deux premiers caractères de station code sinon
-    return stationcode[2:5] if stationcode[0:2] == "75" else stationcode[0:2]
+    if stationcode[0:2] == "75":
+        return stationcode[2:5]
+    else:
+        return stationcode[0:2]
+         
+
