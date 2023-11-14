@@ -55,10 +55,13 @@ def compter_ids(db_path, table_name,primary_key):
     return nombre_ids
 
 def codeInsee_to_code(stationcode):  #renvoie 75xxx si 75 est le début de station code et deux premiers caractères de station code sinon
-    if stationcode[0:2] == "75":
-        return stationcode[2:5]
+    if len(stationcode) == 5:
+        return stationcode[:2]  # Les deux premiers caractères
+    elif len(stationcode) == 4:
+        return stationcode[0]   # Seulement le premier caractère
     else:
-        return stationcode[0:2]
+        # Gérer d'autres cas si nécessaire
+        return None
          
 
 def trouver_premiere_derniere_heure(db_path, table_name, time_column):
