@@ -63,7 +63,7 @@ def codeInsee_to_code(stationcode):  #renvoie 75xxx si 75 est le début de stati
         # Gérer d'autres cas si nécessaire
         return None
          
-def afficher_nom_commune_complete(stationcode,nom_arrondissement_commune):#test
+def afficher_nom_commune_complete(stationcode,nom_arrondissement_commune):#testp
     if codeInsee_to_code(stationcode) < 21:
         return f"Paris arrondissement :  {codeInsee_to_code(stationcode)}"
     else :
