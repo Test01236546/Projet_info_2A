@@ -146,6 +146,9 @@ if __name__ == "__main__":
     
 
     dict_statio_test = results[0]
+
+    fi.trouver_premiere_derniere_heure(BDD_PATH_TEST,"Temps","id_temps")
+
     # dict_statio_test['stationcode']
     # Instance_Station
     # json.dumps(dict_statio_test['coordonnees_geo'])

@@ -61,3 +61,22 @@ def codeInsee_to_code(stationcode):  #renvoie 75xxx si 75 est le début de stati
         return stationcode[0:2]
          
 
+def trouver_premiere_derniere_heure(db_path, table_name, time_column):
+    # Ouvrir la connexion à la base de données
+    conn = sqlite3.connect(db_path)
+    cursor = conn.cursor()
+
+    # Requête pour trouver la première heure (la plus ancienne)
+    query_premiere_heure = f"SELECT MIN({time_column}) FROM {table_name}"
+    cursor.execute(query_premiere_heure)
+    premiere_heure = cursor.fetchone()[0]
+
+    # Requête pour trouver la dernière heure (la plus récente)
+    query_derniere_heure = f"SELECT MAX({time_column}) FROM {table_name}"
+    cursor.execute(query_derniere_heure)
+    derniere_heure = cursor.fetchone()[0]
+
+    # Fermer la connexion
+    conn.close()
+
+    return premiere_heure, derniere_heure
