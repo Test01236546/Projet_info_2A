@@ -136,6 +136,14 @@ if __name__ == "__main__":
     fi.compter_ids(BDD_PATH,"Station")
 
     
+    # TEST SUR LE INGEST ET TEST BDD
+    fi.voir_ids_disponibles(BDD_PATH_TEST,9)
+    fi.compter_ids(BDD_PATH_TEST,"Station","id")
+    fi.compter_ids(BDD_PATH_TEST,"StationFaits")
+    fi.compter_ids(BDD_PATH_TEST,"Station")
+    fi.compter_ids(BDD_PATH_TEST,"Station")
+
+    
 
     dict_statio_test = results[0]
     # dict_statio_test['stationcode']
@@ -144,7 +152,7 @@ if __name__ == "__main__":
     Instance_StationDAO.create2(dict_statio_test)
     dict_statio_test
     dict_statio_test['stationcode']
-    Instance_StationDAO.read('31104')
+    Instance_StationDAO.read('10016')
     Instance_StationDAO.delete('14106')
     
     Instance_CommuneDAO.read(None)
