@@ -1,5 +1,6 @@
 import sqlite3
 import Service.commune as cm
+import Service.fonctions_intermédiaires as fi
 
 class CommuneDAO:
     """
@@ -29,8 +30,8 @@ class CommuneDAO:
         self.conn.commit()
         print("Commune créée")
 
-    def create2(self,dict):
-        Commune_to_add = cm.Commune(dict['code_insee_commune'],dict['name'])
+    def create2(self,dictionnaire):
+        Commune_to_add = cm.Commune(fi.codeInsee_to_code(dictionnaire['stationcode']),dict['name'])
         self.cur.execute("""
         INSERT INTO Commune VALUES (?, ?)
         """, (Commune_to_add.id_commune, Commune_to_add.nom_commune))
@@ -85,7 +86,7 @@ class CommuneDAO:
             dictionnaire (dict): Un dictionnaire contenant les nouvelles données de la commune.
         """
         # Supposons que les clés du dictionnaire correspondent aux attributs de l'objet Commune
-        Commune_to_update = cm.Commune(dictionnaire['code_insee_commune'],dictionnaire['name'])
+        Commune_to_update = cm.Commune(fi.codeInsee_to_code(dictionnaire['stationcode']),dictionnaire['name'])
 
         # Mise à jour de l'enregistrement dans la base de données
         self.cur.execute("""
@@ -116,7 +117,7 @@ class CommuneDAO:
         """
         # Création d'une instance de Commune avec les données du dictionnaire
         Commune_to_upsert = cm.Commune(
-            dictionnaire['code_insee_commune'],
+            fi.codeInsee_to_code(dictionnaire['stationcode']),
             dictionnaire['nom_arrondissement_communes']
         )
 

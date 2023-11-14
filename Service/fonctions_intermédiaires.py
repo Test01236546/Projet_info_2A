@@ -1,6 +1,7 @@
 import time
 import sqlite3
 
+
 #Regarder la complexité de ces deux fonctions
 
 def no_print_map(map_ex):
@@ -52,3 +53,6 @@ def compter_ids(db_path, table_name,primary_key):
     conn.close()
 
     return nombre_ids
+
+def codeInsee_to_code(stationcode):  #renvoie 75xxx si 75 est le début de station code et deux premiers caractères de station code sinon
+    return stationcode[2:5] if stationcode[0:2] == "75" else stationcode[0:2]

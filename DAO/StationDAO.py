@@ -3,6 +3,7 @@ from datetime import datetime
 import sys
 import Service.Station as st
 import json
+import Service.fonctions_intermédiaires as fi
 
 class StationDAO:
     """
@@ -35,7 +36,7 @@ class StationDAO:
 
     def create2(self,dictionnaire):         #on pourrait prendre deux liste (nom attributs de StationFaits, nom clées du dictionnaire station et matcher)
         
-        Station_to_add=st.Station(dictionnaire['stationcode'],dictionnaire['name'],dictionnaire['capacity'],json.dumps(dictionnaire['coordonnees_geo']),dictionnaire['code_insee_commune'],dictionnaire['is_renting'],dictionnaire['duedate'],f"date_deb {dictionnaire['stationcode']}",f"borne_paiement {dictionnaire['stationcode']}",dictionnaire['capacity'])
+        Station_to_add=st.Station(dictionnaire['stationcode'],dictionnaire['name'],dictionnaire['capacity'],json.dumps(dictionnaire['coordonnees_geo']),fi.codeInsee_to_code(dictionnaire['stationcode']),dictionnaire['is_renting'],dictionnaire['duedate'],f"date_deb {dictionnaire['stationcode']}",f"borne_paiement {dictionnaire['stationcode']}",dictionnaire['capacity'])
         # return Station_to_add
         self.cur.execute("""
         INSERT INTO Station VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
@@ -77,7 +78,7 @@ class StationDAO:
             dictionnaire['name'],
             dictionnaire['capacity'],
             json.dumps(dictionnaire['coordonnees_geo']),
-            dictionnaire['code_insee_commune'],
+            fi.codeInsee_to_code(dictionnaire['stationcode']),
             dictionnaire['is_renting'],
             dictionnaire['duedate'],
             f"date_deb {dictionnaire['stationcode']}",
@@ -152,7 +153,7 @@ class StationDAO:
             dictionnaire['name'],
             dictionnaire['capacity'],
             json.dumps(dictionnaire['coordonnees_geo']),
-            dictionnaire['code_insee_commune'],
+            fi.codeInsee_to_code(dictionnaire['stationcode']),
             dictionnaire['is_renting'],
             datetime.now(),
             dictionnaire['duedate'],
