@@ -132,7 +132,7 @@ class Fonctionnalites():
         cursor.execute(query, (date_debut, date_fin))
     
         # Récupérer le résultat de la requête
-        nom_station = cursor.fetchone()[0]
+        nom_station = cursor.fetchone()
     
         # Fermer la connexion à la base de données
         conn.close()
@@ -159,16 +159,16 @@ class Fonctionnalites():
         query = """
             SELECT id_commune, SUM(total_freq_par_station) as total_freq_par_com_ou_arr
             FROM (
-            SELECT Station.id, SUM(frequence) as total_freq_par_station
+            SELECT Station.id, Commune.id_commune, SUM(frequence) as total_freq_par_station
             FROM StationFaits
             JOIN Station ON StationFaits.id_station = Station.id
+            JOIN Commune ON Station.id_Commune = Commune.id_commune
             WHERE date_fait_deb >= ? AND date_fait_fin <= ?
-            GROUP BY Station.id
+            GROUP BY Station.id, Commune.id_commune
             ) as StationFreq
-            JOIN Commune ON Station.id_commune = Commune.id_commune
             GROUP BY id_commune
             ORDER BY total_freq_par_com_ou_arr DESC
-            LIMIT 1;        
+            LIMIT 1;       
         """
         cursor.execute(query, (date_debut, date_fin))
     
@@ -179,3 +179,7 @@ class Fonctionnalites():
         conn.close()
     
         return arrondissement_plus_frequente
+    
+
+    def F01():
+        pass
