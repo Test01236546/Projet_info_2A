@@ -57,7 +57,7 @@ def compter_ids(db_path, table_name,primary_key):
 def codeInsee_to_code(stationcode):  #renvoie 75xxx si 75 est le début de station code et deux premiers caractères de station code sinon
     if len(stationcode) == 5:
         return stationcode[:2]  # Les deux premiers caractères
-    elif len(stationcode) == 4:
+    elif len(stationcode) == 4: #cas id_station est un arrondissement de paris de 1 à 9
         return stationcode[0]   # Seulement le premier caractère
     else:
         # Gérer d'autres cas si nécessaire
