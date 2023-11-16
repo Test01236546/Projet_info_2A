@@ -1,7 +1,7 @@
 import pytest
 import sqlite3
 
-from Service.Station import Station
+from Service.station import Station
 from DAO.StationDAO import StationDAO
 
 
@@ -36,3 +36,50 @@ class TestStationDAO:
         station_found = station_dao.read("1")
         assert station_found is None
 
+    
+
+    def station_data():
+        return {
+            'stationcode': '001',
+            'name': 'Test Station',
+            'capacity': 10,
+            'coordonnees_geo': {'latitude': 123.456, 'longitude': 789.012},
+            'is_renting': True,
+            'duedate': '2023-01-01'
+        }
+
+    def test_upsert2_insert(station_dao, station_data):
+        # Assurer que la station n'existe pas initialement
+        retrieved_station = station_dao.read(station_data['stationcode'])
+        assert retrieved_station is None
+
+        # Effectuer un upsert pour insérer une nouvelle station
+        station_dao.upsert2(station_data)
+
+        # Lecture de la station insérée depuis la base de données
+        retrieved_station = station_dao.read(station_data['stationcode'])
+
+        # Vérification que la station récupérée correspond aux données insérées
+        assert retrieved_station[0] == station_data['stationcode']
+        assert retrieved_station[1] == station_data['name']
+
+    def test_upsert2_update(station_dao, station_data):
+        # Création d'une nouvelle station
+        station_dao.create2(station_data)
+
+        # Maj des informations de la station
+        updated_data = {
+            'stationcode': '001',
+            'name': 'Updated Station',
+            'capacity': 15,
+            'coordonnees_geo': {'latitude': 111.222, 'longitude': 333.444},
+            'is_renting': False,
+            'duedate': '2023-02-01'
+        }
+        station_dao.upsert2(updated_data)
+
+        # lecture de la station maj depuis la base de données
+        retrieved_station = station_dao.read(updated_data['stationcode'])
+
+        # Vérification que la station récupérée correspond aux données maj
+        assert retrieved_station[1] == updated_data['name']
