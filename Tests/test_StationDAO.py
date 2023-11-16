@@ -83,3 +83,14 @@ class TestStationDAO:
 
         # Vérification que la station récupérée correspond aux données maj
         assert retrieved_station[1] == updated_data['name']
+    
+
+    def test_close(station_dao):
+        # Assurer que la connexion est ouverte avant de fermer
+        assert station_dao.conn is not None
+
+        # Utilisation de la méthode close pour fermer la connexion
+        station_dao.close()
+
+        # Assurer que la connexion est fermée après l'appel à close
+        assert station_dao.conn is None
