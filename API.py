@@ -3,10 +3,11 @@ from fastapi import FastAPI
 import requests as r 
 from pydantic import BaseModel
 from Service.Station import Station
+import DAO.StationDAO as SDAO
 import uvicorn
 from Service.Service import Service
 from datetime import datetime
-import Service.Fonctionnalites as F
+import Service.fonctionnalites as F
 from geopy.geocoders import Nominatim 
 
 app=FastAPI()
@@ -75,13 +76,17 @@ def get_closest_station(adresse):
 
 @app.get("/stations/least_frequented")
 def get_least_frequented_station(start_date: str, end_date: str):
-    return Station().get_least_frequented_station(start_date, end_date)
+    return F.Fonctionnalites().F2(start_date, end_date)
 
 @app.get("/stations/most_frequented_arrondissement")
 def get_most_frequented_arrondissement(start_date: str, end_date: str):
-    return Station().get_most_frequented_arrondissement(start_date, end_date)
+    return F.Fonctionnalites().F3(start_date, end_date)
 
 
+
+@app.get("/stations/update")
+def mettre_a_jour(id : str, nouvelles_informations : Station):
+    return F.Fonctionnalites().F03(id, nouvelles_informations)
 
 
 
