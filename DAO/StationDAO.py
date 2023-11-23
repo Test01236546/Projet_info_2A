@@ -4,8 +4,9 @@ import sys
 import Service.Station as st
 import json
 import Service.fonctions_intermédiaires as fi
+from DAO.AbstractDAO import AbstractDAO
 
-class StationDAO:
+class StationDAO(AbstractDAO):
     """
     Crée la classe StationDAO qui permet de mettre à jour la table Station dans la base de données
     """
@@ -18,6 +19,7 @@ class StationDAO:
         """
         self.conn = sqlite3.connect(path)
         self.cur = self.conn.cursor()
+        self.path = "BDD/BDD.sql"
 
     def create(self, station):
         """

@@ -64,32 +64,35 @@ class StationAPI():
 def get_stations():
     return "Working"
 
-@app.get("/stations")
+@app.get("/stations",description="Permet de récupérer l'ensemble des stations depuis l'API d'OpenData Paris")
 def get_stations():
     return F.Fonctionnalites().recup_stations()
 
 
-@app.get("/stations/closest")
+@app.get("/stations/closest", description="Permet de récupérer la station la plus proche de la position de l'utilisateur. Exemple d'adresse rentrée : 124 avenue jean jaurès clamart")
 def get_closest_station(adresse):
     return F.Fonctionnalites().F1(adresse)
 
 
-@app.get("/stations/least_frequented")
+@app.get("/stations/least_frequented", description="Permet de renvoyer la station la moins fréquentée sur une période de temps donnée. L'heure doit être rentrée sous la forme : AAAA-MM-DDTHH:NN:SS+00:00. Exemple : 2023-07-25T12:08:24+02:00 et 2023-11-14T12:02:55+01:00")
 def get_least_frequented_station(start_date: str, end_date: str):
     return F.Fonctionnalites().F2(start_date, end_date)
 
-@app.get("/stations/most_frequented_arrondissement")
+@app.get("/stations/most_frequented_arrondissement", description="Permet de renvoyer l'arrondissement le moins fréquenté sur une période de temps donnée. L'heure doit être rentrée sous la forme : AAAA-MM-DDTHH:NN:SS+00:00. Exemple : 2023-07-25T12:08:24+02:00 et 2023-11-14T12:02:55+01:00")
 def get_most_frequented_arrondissement(start_date: str, end_date: str):
     return F.Fonctionnalites().F3(start_date, end_date)
 
 
 
-@app.get("/stations/update")
+@app.get("/stations/updatestation",response_model=None, description="Permet de modifier les caractéristiques d'une station à partir de son id. Exemple d'entrées : id : 16107 changement :{\"stationcode\": \"16107\", \"name\": \"Benjamin Godard - Victor Hugo\", \"is_installed\": \"OUI\", \"capacity\": 35, \"numdocksavailable\": 14, \"numbikesavailable\": 21, \"mechanical\": 5, \"ebike\": 16, \"is_renting\": \"OUI\", \"is_returning\": \"OUI\", \"duedate\": \"2023-11-20T13:18:42+00:00\", \"coordonnees_geo\": {\"lon\": 2.275725, \"lat\": 48.865983}, \"nom_arrondissement_communes\": \"Paris\", \"code_insee_commune\": null}")
 def mettre_a_jour(id : str, nouvelles_informations : Station):
-    return F.Fonctionnalites().F03(id, nouvelles_informations)
+    F.Fonctionnalites().F03(id, nouvelles_informations)
+    return JSONResponse(content={"message": "Update successful"})
 
-
-
+@app.get("/stations/updatestationfait",response_model=None, description="Permet de modifier les caractéristiques non fixes d'une station à partir de son id. Exemple d'entrées : id : 16107 changement :{\"stationcode\": \"16107\", \"name\": \"Benjamin Godard - Victor Hugo\", \"is_installed\": \"OUI\", \"capacity\": 35, \"numdocksavailable\": 14, \"numbikesavailable\": 21, \"mechanical\": 5, \"ebike\": 16, \"is_renting\": \"OUI\", \"is_returning\": \"OUI\", \"duedate\": \"2023-11-20T13:18:42+00:00\", \"coordonnees_geo\": {\"lon\": 2.275725, \"lat\": 48.865983}, \"nom_arrondissement_communes\": \"Paris\", \"code_insee_commune\": null}")
+def mettre_a_jour(id : str, nouvelles_informations : Station):
+    F.Fonctionnalites().F03(id, nouvelles_informations)
+    return JSONResponse(content={"message": "Update successful"})
 
 def get_position_from_address(address):
     # Récupération des données de l'API

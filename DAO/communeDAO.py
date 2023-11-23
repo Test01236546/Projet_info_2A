@@ -1,8 +1,9 @@
 import sqlite3
 import Service.commune as cm
 import Service.fonctions_intermédiaires as fi
+from DAO.AbstractDAO import AbstractDAO
 
-class CommuneDAO:
+class CommuneDAO(AbstractDAO):
     """
     Crée la classe CommuneDAO qui permet de mettre à jour la table Commune dans la base de données
     """

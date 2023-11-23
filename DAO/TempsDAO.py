@@ -1,9 +1,10 @@
 
 import sqlite3
-import Service.Temps as tp
+import Service.temps as tp
 from datetime import datetime
+from DAO.AbstractDAO import AbstractDAO
 
-class TempsDAO:
+class TempsDAO(AbstractDAO):
     """
     Crée la classe TempsDAO qui permet de mettre à jour la table Temps dans la base de données
     """

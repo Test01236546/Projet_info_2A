@@ -1,8 +1,9 @@
 import sqlite3
 import Service.StationFaits as stf
 from datetime import datetime
+from DAO.AbstractDAO import AbstractDAO
 
-class StationFaitsDAO:
+class StationFaitsDAO(AbstractDAO):
     """
     Crée la classe StationFaitsDAO qui permet de mettre à jour la table StationFaits dans la base de données
     """
