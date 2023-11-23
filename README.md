@@ -2,7 +2,7 @@
 
 ## Objectif 🎯
 
-Bienvenue dans le projet Velib' Hunter 🚲🔪 ! L'objectif de ce projet, sous la houlette du tuteur Samuel GOUTIN, est d'explorer les données d'OpenData Paris pour rendre l'utilisation des Velib' plus pratique et aider la ville de Paris à mieux gérer son parc de vélos.
+Bienvenue dans l'application Velib' Hunter 🚲🔪 ! L'objectif de ce projet est d'explorer les données d'OpenData Paris pour rendre l'utilisation des Velib' plus pratique et aider la ville de Paris à mieux gérer son parc de vélos.
 
 ## Fonctionnalités Obligatoires 🧐
 
