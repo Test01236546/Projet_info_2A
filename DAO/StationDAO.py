@@ -155,7 +155,7 @@ class StationDAO(AbstractDAO):
             dictionnaire['name'],
             dictionnaire['capacity'],
             json.dumps(dictionnaire['coordonnees_geo']),
-            fi.codeInsee_to_code(dictionnaire['stationcode']),
+            fi.afficher_nom_commune_complete(dictionnaire['stationcode']),
             dictionnaire['is_renting'],
             datetime.now(),
             dictionnaire['duedate'],
