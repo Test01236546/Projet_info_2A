@@ -1,4 +1,6 @@
-class Station():
+from pydantic import BaseModel
+
+class Station(BaseModel):
     def __init__(self,id, nom_station, capacite, coordonnees_station, id_commune, en_fonctionnement, date_deb, date_fin, borne_paiement, nb_bornettes):
         """
         Initialise un objet Station pour effectuer différentes tâches.
