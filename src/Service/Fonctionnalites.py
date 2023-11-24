@@ -2,8 +2,8 @@ import requests as r
 from geopy.distance import geodesic
 import geopy
 import sqlite3 #pour F2 et F3
-import DAO.StationDAO as SDAO
-import DAO.StationFaitsDAO as SFDAO
+import src.DAO.StationDAO as SDAO
+import src.DAO.StationFaitsDAO as SFDAO
 
 class Fonctionnalites():
     def __init__(self):
