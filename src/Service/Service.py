@@ -1,6 +1,6 @@
 import requests
 import json
-from BDD.constantes import BDD_PATH
+from src.BDD.constantes import BDD_PATH
 
 # from Service import Station as st
 # from Service import commune as cm

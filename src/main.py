@@ -1,4 +1,4 @@
-from API import StationAPI, app 
+from src.API import StationAPI, app 
 from fastapi import FastAPI
 
 import requests as r 
@@ -13,8 +13,8 @@ from geopy.geocoders import Nominatim
 import src.Service.Service as sv 
 import src.Service.fonctions_intermédiaires as fi
 
-from BDD.constantes import BDD_PATH
-from BDD import classBDD as cBDD
+from src.BDD.constantes import BDD_PATH
+from src.BDD import classBDD as cBDD
 
 
 
