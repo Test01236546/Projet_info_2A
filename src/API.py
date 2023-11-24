@@ -2,15 +2,16 @@ from fastapi import FastAPI
 
 import requests as r 
 from pydantic import BaseModel
-from Service.Station import Station
-import DAO.StationDAO as SDAO
+from src.Service.Station import Station
+import src.DAO.StationDAO as SDAO
 import uvicorn
-from Service.Service import Service
+from src.Service.Service import Service
 from datetime import datetime
-import Service.fonctionnalites as F
+import src.Service.Fonctionnalites as F
 from geopy.geocoders import Nominatim 
 
-import WebSocket, Request
+from fastapi.responses import JSONResponse
+from fastapi import WebSocket , Request
 from fastapi.templating import Jinja2Templates
 from datetime import datetime
 import asyncio
@@ -109,7 +110,7 @@ def mettre_a_jour(id : str, nouvelles_informations : Station):
 def get_position_from_address(address):
     # Récupération des données de l'API
     url = "https://api-adresse.data.gouv.fr/search/?q={}".format(address)
-    response = requests.get(url)
+    response = r.get(url)
     if response.status_code == 200:
         data = response.json()
         if len(data["features"]) == 1:
