@@ -24,6 +24,7 @@ from src.BDD import classBDD as cBDD
 
 
 
+
 if __name__ == "__main__":
     BDD_PATH_TEST = "Test_Jeremie/test1.sql"
     db_manager = cBDD.BDD_Manager(BDD_PATH_TEST)
@@ -198,6 +199,7 @@ if __name__ == "__main__":
 #         time.sleep(60)
 
 
+fi.list_tables("C:/Users/jerem/OneDrive/Documents/GitHub/Projet_info_2A/Projet_info_2A-7/src/BDD/BDD.sql")
 
 
 

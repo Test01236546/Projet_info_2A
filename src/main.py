@@ -14,25 +14,25 @@ from geopy.geocoders import Nominatim
 
 
 import src.Service.Service as sv 
-import src.Service.fonctions_intermediaires as fi
+import src.Service.fonctions_intermédiaires as fi
 
 from src.BDD.constantes import BDD_PATH
 from src.BDD import classBDD as cBDD
 
 
-# if __name__ == "__main__":
-#     # Créer la BDD
-#     db_manager = cBDD.BDD_Manager(BDD_PATH)
-#     cBDD.BDD_Manager(BDD_PATH).create_stations_table()
-#     Instance_Service = sv.Service()
+if __name__ == "__main__":
+    # Créer la BDD
+    db_manager = cBDD.BDD_Manager(BDD_PATH)
+    cBDD.BDD_Manager(BDD_PATH).create_stations_table()
+    Instance_Service = sv.Service()
     
-#     fi.periodic(Instance_Service,1*60,60) #ingest pendant 1*60*60 secs avec des pauses de 60 secs
+    fi.periodic(Instance_Service,3*60,60) #ingest pendant 1*60*60 secs avec des pauses de 60 secs
 
-    # while True:
-    #     # Mettre à jour les bases de données
-    #     Instance_Service.ingest()
-    #     # Attendre 1 minute avant de se mettre à jour à nouveau
-    #     time.sleep(60)
+    while True:
+        # Mettre à jour les bases de données
+        Instance_Service.ingest()
+        # Attendre 1 minute avant de se mettre à jour à nouveau
+        time.sleep(60)
 
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0")
