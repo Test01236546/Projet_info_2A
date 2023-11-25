@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<body>
+<span id='message'>
+</span>
+<script>
+    var ws = new WebSocket("ws://localhost:8000/ws");
+    ws.addEventListener("open", (event) => {
+      ws.send("{{ adresse }}");
+    });
+    ws.onmessage = function(event) {
+        var message = document.getElementById('message')
+	message.textContent = event.data
+    };
+</script>
+</body>
+</html>
+

@@ -17,6 +17,7 @@ from datetime import datetime
 import asyncio
 
 app=FastAPI()
+templates = Jinja2Templates(directory="scripts")
 # Classe API
 class StationAPI():
     def __init__(self):
@@ -87,7 +88,7 @@ def get_most_frequented_arrondissement(start_date: str, end_date: str):
     return F.Fonctionnalites().F3(start_date, end_date)
 
 # Fonction Bonus F01
-templates = Jinja2Templates(directory="scripts")
+templates = Jinja2Templates(directory="src/scripts")
 @app.get("/nearestbike/{adresse}")  #endpoint de presentation
 async def get(request: Request, adresse: str):
     return templates.TemplateResponse("ws.html", {"request": request, "adresse": adresse})
