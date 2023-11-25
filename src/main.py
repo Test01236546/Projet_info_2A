@@ -1,3 +1,6 @@
+import sys
+sys.path.append('src')
+
 # from API import StationAPI, app 
 from fastapi import FastAPI
 
@@ -10,16 +13,14 @@ import time
 from geopy.geocoders import Nominatim 
 
 
-import Service.Service as sv 
-import Service.fonctions_intermédiaires as fi
+import src.Service.Service as sv 
+import src.Service.fonctions_intermédiaires as fi
 
-from BDD.constantes import BDD_PATH
-from BDD import classBDD as cBDD
-
+from src.BDD.constantes import BDD_PATH
+from src.BDD import classBDD as cBDD
 
 
 if __name__ == "__main__":
-    
     # Créer la BDD
     db_manager = cBDD.BDD_Manager(BDD_PATH)
     # BDD_Manager(BDD_PATH).create_stations_table()
