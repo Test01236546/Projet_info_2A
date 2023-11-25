@@ -32,7 +32,7 @@ class CommuneDAO(AbstractDAO):
         print("Commune créée")
 
     def create2(self,dictionnaire):
-        Commune_to_add = cm.Commune(fi.codeInsee_to_code(dictionnaire['stationcode']),dict['name'])
+        Commune_to_add = cm.Commune(fi.afficher_nom_commune_complete(dictionnaire['stationcode']),dict['name'])
         self.cur.execute("""
         INSERT INTO Commune VALUES (?, ?)
         """, (Commune_to_add.id_commune, Commune_to_add.nom_commune))
@@ -87,7 +87,7 @@ class CommuneDAO(AbstractDAO):
             dictionnaire (dict): Un dictionnaire contenant les nouvelles données de la commune.
         """
         # Supposons que les clés du dictionnaire correspondent aux attributs de l'objet Commune
-        Commune_to_update = cm.Commune(fi.codeInsee_to_code(dictionnaire['stationcode']),dictionnaire['name'])
+        Commune_to_update = cm.Commune(fi.afficher_nom_commune_complete(dictionnaire['stationcode']),dictionnaire['name'])
 
         # Mise à jour de l'enregistrement dans la base de données
         self.cur.execute("""

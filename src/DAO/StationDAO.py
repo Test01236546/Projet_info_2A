@@ -38,7 +38,7 @@ class StationDAO(AbstractDAO):
 
     def create2(self,dictionnaire):         #on pourrait prendre deux liste (nom attributs de StationFaits, nom clées du dictionnaire station et matcher)
         
-        Station_to_add=st.Station(dictionnaire['stationcode'],dictionnaire['name'],dictionnaire['capacity'],json.dumps(dictionnaire['coordonnees_geo']),fi.codeInsee_to_code(dictionnaire['stationcode']),dictionnaire['is_renting'],dictionnaire['duedate'],f"date_deb {dictionnaire['stationcode']}",f"borne_paiement {dictionnaire['stationcode']}",dictionnaire['capacity'])
+        Station_to_add=st.Station(dictionnaire['stationcode'],dictionnaire['name'],dictionnaire['capacity'],json.dumps(dictionnaire['coordonnees_geo']),fi.afficher_nom_commune_complete(dictionnaire['stationcode']),dictionnaire['is_renting'],dictionnaire['duedate'],f"date_deb {dictionnaire['stationcode']}",f"borne_paiement {dictionnaire['stationcode']}",dictionnaire['capacity'])
         # return Station_to_add
         self.cur.execute("""
         INSERT INTO Station VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
@@ -80,7 +80,7 @@ class StationDAO(AbstractDAO):
             dictionnaire['name'],
             dictionnaire['capacity'],
             json.dumps(dictionnaire['coordonnees_geo']),
-            fi.codeInsee_to_code(dictionnaire['stationcode']),
+            fi.afficher_nom_commune_complete(dictionnaire['stationcode']),
             dictionnaire['is_renting'],
             dictionnaire['duedate'],
             f"date_deb {dictionnaire['stationcode']}",
