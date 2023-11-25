@@ -68,14 +68,13 @@ def codeInsee_to_code(stationcode):  #renvoie 75xxx si 75 est le début de stati
         if stationcode[:2]=='75':
             return stationcode[2:]
         return stationcode
-    else:                    #cas id_station est un arrondissement de paris de 1 à 9
-        return stationcode[0]   # Seulement le premier caractère
+    else:                    #cas id_station est un arrondissement de paris de 1 à 9 longueur 
+        return '00'+stationcode[0]   # Seulement le premier caractère
     
          
 
 def afficher_nom_commune_complete(stationcode,nom_arrondissement_commune):#testp
-    L = ["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20"]
-    if codeInsee_to_code(stationcode) in L:
+    if len(codeInsee_to_code(stationcode)) == 3 :
         return f"Paris arrondissement :  {codeInsee_to_code(stationcode)}"
     else :
         return nom_arrondissement_commune
