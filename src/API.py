@@ -79,11 +79,11 @@ def get_stations():
 def get_closest_station(adresse):
     return F.Fonctionnalites().F1(adresse)
 
-@app.get("/stations/least_frequented", description="Permet de renvoyer la station la moins fréquentée sur une période de temps donnée. L'heure doit être rentrée sous la forme : AAAA-MM-DDTHH:NN:SS+00:00. Exemple : 2023-07-25T12:08:24+02:00 et 2023-11-14T12:02:55+01:00")
+@app.get("/stations/least_frequented", description="Permet de renvoyer la station la moins fréquentée sur une période de temps donnée. L'heure doit être rentrée sous la forme : AAAA-MM-DDTHH:NN:SS+00:00. Exemple : 2023-11-25T19:36:54+01:00 et 2023-11-25T19:37:54+01:00")
 def get_least_frequented_station(start_date: str, end_date: str):
     return F.Fonctionnalites().F2(start_date, end_date)
 
-@app.get("/stations/most_frequented_arrondissement", description="Permet de renvoyer l'arrondissement le moins fréquenté sur une période de temps donnée. L'heure doit être rentrée sous la forme : AAAA-MM-DDTHH:NN:SS+00:00. Exemple : 2023-07-25T12:08:24+02:00 et 2023-11-14T12:02:55+01:00")
+@app.get("/stations/most_frequented_arrondissement", description="Permet de renvoyer l'arrondissement le moins fréquenté sur une période de temps donnée. L'heure doit être rentrée sous la forme : AAAA-MM-DDTHH:NN:SS+00:00. Exemple : 2023-11-25T19:36:54+01:00 et 2023-11-25T19:37:54+01:00")
 def get_most_frequented_arrondissement(start_date: str, end_date: str):
     return F.Fonctionnalites().F3(start_date, end_date)
 
