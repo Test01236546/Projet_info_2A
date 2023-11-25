@@ -118,7 +118,7 @@ class Fonctionnalites():
             str: Le nom de la station Vélib' avec le moins de fréquence d'utilisation dans la plage de dates.
         """
         # Connexion à la base de données
-        conn = sqlite3.connect("BDD/BDD.sql")
+        conn = sqlite3.connect("src/BDD/BDD.sql")
         cursor = conn.cursor()
     
         # Requête SQL pour récupérer le nom de la station avec le moins de fréquence
@@ -154,7 +154,7 @@ class Fonctionnalites():
             str: L'arrondissement ou la commune la plus fréquentée par les utilisateurs de Vélib'.
         """
         # Connexion à la base de données
-        conn = sqlite3.connect("BDD/BDD.sql")
+        conn = sqlite3.connect("src/BDD/BDD.sql")
         cursor = conn.cursor()
     
         # Requête SQL pour récupérer l'arrondissement le plus fréquenté
@@ -203,3 +203,32 @@ class Fonctionnalites():
         }
 
         SDAO.StationDAO(path="BDD/BDD.sql").update(id, updated_station)
+
+    def F03_info_station(self,station_id):
+    # API endpoint for Velib station information
+        api_url = f'https://api.opendata.paris.fr/api/records/1.0/search/?dataset=velib-disponibilite-en-temps-reel&q={station_id}&facet=name&facet=is_installed&facet=is_renting&facet=is_returning&facet=nom_arrondissement_communes'
+
+        try:
+        # Make the API request
+            response = r.get(api_url)
+
+        # Check if the request was successful (status code 200)
+            if response.status_code == 200:
+            # Extract JSON data from the response
+                data = response.json()
+
+            # Check if records were found
+                if 'records' in data and len(data['records']) > 0:
+                # Return all information for the first station (first record)
+                    return data['records'][0]['fields']
+                else:
+                    print(f"No information found for the station with ID: {station_id}")
+                    return None
+            else:
+            # Print an error message if the request fails
+                print(f"Error in request: {response.status_code}")
+                return None
+        except Exception as e:
+        # Print an exception message if an unexpected error occurs
+            print(f"Error: {e}")
+            return None
