@@ -119,3 +119,25 @@ def list_tables(db_path):
 # db_path = 'your_database_file.db'  # Replace with your database file path
 # print(list_tables(db_path))
 # liste_tables("C:/Users/jerem/OneDrive/Documents/GitHub/Projet_info_2A/Projet_info_2A-7/src/BDD/BDD.sql")
+
+def get_frequencies(db_path):
+    """
+    Get the frequencies of all records in the StationFaits table.
+
+    Args:
+    db_path (str): Path to the SQLite database file.
+
+    Returns:
+    list: A list of frequencies.
+    """
+    conn = sqlite3.connect(db_path)
+    cursor = conn.cursor()
+
+    cursor.execute("SELECT frequence FROM StationFaits;")
+    frequencies = cursor.fetchall()
+
+    # Close the connection
+    conn.close()
+
+    # Extracting frequency values from the tuples
+    return [frequency[0] for frequency in frequencies]

@@ -18,7 +18,7 @@ from src.DAO import StationFaitsDAO as stfDAO
 
 from src.Service import fonctions_intermédiaires as fi
 
-from src.BDD.constantes import BDD_PATH
+from src.BDD.constantes import BDD_PATH, BDD_PATH_TEST
 
 from src.BDD import classBDD as cBDD
 
@@ -88,7 +88,7 @@ if __name__ == "__main__":
     data = response.json()
     # cles = list(data.keys())
     # print(cles)
-    len(data['results'])
+    # len(data['results'])
     results = data['results']
     results[0]
     # type(results)
@@ -200,9 +200,11 @@ if __name__ == "__main__":
 
 
 fi.list_tables("Test_Jeremie/test1.sql")
+fi.trouver_premiere_derniere_heure(BDD_PATH,"Temps","date")
 a = fi.trouver_premiere_derniere_heure(BDD_PATH,"Temps","date")
 a[0]
-
+fi.get_frequencies(BDD_PATH)
+fi.get_frequencies(BDD_PATH_TEST)
 
 
 

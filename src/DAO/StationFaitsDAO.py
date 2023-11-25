@@ -139,18 +139,6 @@ class StationFaitsDAO(AbstractDAO):
         # Construction de la requête pour vérifier l'existence de l'élément
         self.cur.execute("SELECT * FROM StationFaits WHERE id_station=?", (dictionnaire['stationcode'],))
         existing_record = self.cur.fetchone()
-        
-        StationFaits_to_upsert = stf.StationFaits(
-            dictionnaire['stationcode'],
-            dictionnaire['capacity'],
-            dictionnaire['numbikesavailable'],
-            dictionnaire['mechanical'],
-            dictionnaire['ebike'],
-            dictionnaire['is_returning'],
-            0,
-            fi.trouver_premiere_derniere_heure(BDD_PATH,"Temps","date"),
-            dictionnaire['duedate']
-        )
 
         if existing_record:
             # Si l'enregistrement existe, créer une instance de StationFaits avec les données existantes
@@ -158,25 +146,49 @@ class StationFaitsDAO(AbstractDAO):
 
                 # Création d'une instance de StationFaits
 
-
+            # un seul appel aurait été mieux (appeler le dictionnaire directement dans le UPDATE, mais on reste sur l'approche POO)
+            StationFaits_to_upsert_existing = stf.StationFaits(
+                dictionnaire['stationcode'],
+                dictionnaire['capacity'],
+                dictionnaire['numbikesavailable'],
+                dictionnaire['mechanical'],
+                dictionnaire['ebike'],
+                dictionnaire['is_returning'],
+                former_StationFaits.frequence,
+                former_StationFaits.date_fait_fin,
+                dictionnaire['duedate']
+            )
 
             # Mise à jour
             self.cur.execute(f"""
             UPDATE {self.TABLE_NAME} SET nb_bornettes=?, velos_dispos=?, meca_dispo=?, elec_dispo=?,
             retour_velo=?, frequence=?, date_fait_deb=?, date_fait_fin=? WHERE id_station=?
             """, (
-                StationFaits_to_upsert.nb_bornettes,
-                StationFaits_to_upsert.velos_dispos,
-                StationFaits_to_upsert.meca_dispo,
-                StationFaits_to_upsert.elec_dispo,
-                StationFaits_to_upsert.retour_velo,
-                StationFaits_to_upsert.calcul_frequence(former_StationFaits),
-                former_StationFaits.date_fait_fin,
-                StationFaits_to_upsert.date_fait_fin,
-                StationFaits_to_upsert.id_station
+                StationFaits_to_upsert_existing.nb_bornettes,
+                StationFaits_to_upsert_existing.velos_dispos,
+                StationFaits_to_upsert_existing.meca_dispo,
+                StationFaits_to_upsert_existing.elec_dispo,
+                StationFaits_to_upsert_existing.retour_velo,
+                StationFaits_to_upsert_existing.calcul_frequence(former_StationFaits),
+                StationFaits_to_upsert_existing.date_fait_deb,
+                StationFaits_to_upsert_existing.date_fait_fin,
+                StationFaits_to_upsert_existing.id_station
             ))
             
         else : 
+
+            StationFaits_to_upsert = stf.StationFaits(
+                dictionnaire['stationcode'],
+                dictionnaire['capacity'],
+                dictionnaire['numbikesavailable'],
+                dictionnaire['mechanical'],
+                dictionnaire['ebike'],
+                dictionnaire['is_returning'],
+                0,
+                fi.trouver_premiere_derniere_heure(BDD_PATH,"Temps","date")[0],
+                dictionnaire['duedate']
+            )
+        
             self.cur.execute(f"""
             INSERT INTO {self.TABLE_NAME} VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
             """, (
@@ -200,3 +212,75 @@ class StationFaitsDAO(AbstractDAO):
         """
 
         self.conn.close()
+
+
+
+# #avant modification
+# def upsert2(self, dictionnaire):
+
+#         # Construction de la requête pour vérifier l'existence de l'élément
+#         self.cur.execute("SELECT * FROM StationFaits WHERE id_station=?", (dictionnaire['stationcode'],))
+#         existing_record = self.cur.fetchone()
+        
+#         StationFaits_to_upsert = stf.StationFaits(
+#             dictionnaire['stationcode'],
+#             dictionnaire['capacity'],
+#             dictionnaire['numbikesavailable'],
+#             dictionnaire['mechanical'],
+#             dictionnaire['ebike'],
+#             dictionnaire['is_returning'],
+#             0,
+#             fi.trouver_premiere_derniere_heure(BDD_PATH,"Temps","date"),
+#             dictionnaire['duedate']
+#         )
+
+#         if existing_record:
+#             # Si l'enregistrement existe, créer une instance de StationFaits avec les données existantes
+#             former_StationFaits = stf.StationFaits(*existing_record)
+
+#                 # Création d'une instance de StationFaits
+
+
+
+#             # Mise à jour
+#             self.cur.execute(f"""
+#             UPDATE {self.TABLE_NAME} SET nb_bornettes=?, velos_dispos=?, meca_dispo=?, elec_dispo=?,
+#             retour_velo=?, frequence=?, date_fait_deb=?, date_fait_fin=? WHERE id_station=?
+#             """, (
+#                 StationFaits_to_upsert.nb_bornettes,
+#                 StationFaits_to_upsert.velos_dispos,
+#                 StationFaits_to_upsert.meca_dispo,
+#                 StationFaits_to_upsert.elec_dispo,
+#                 StationFaits_to_upsert.retour_velo,
+#                 StationFaits_to_upsert.calcul_frequence(former_StationFaits),
+#                 former_StationFaits.date_fait_fin,
+#                 StationFaits_to_upsert.date_fait_fin,
+#                 StationFaits_to_upsert.id_station
+#             ))
+            
+#         else : 
+#             self.cur.execute(f"""
+#             INSERT INTO {self.TABLE_NAME} VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+#             """, (
+#                 StationFaits_to_upsert.id_station,
+#                 StationFaits_to_upsert.nb_bornettes,
+#                 StationFaits_to_upsert.velos_dispos,
+#                 StationFaits_to_upsert.meca_dispo,
+#                 StationFaits_to_upsert.elec_dispo,
+#                 StationFaits_to_upsert.retour_velo,
+#                 StationFaits_to_upsert.frequence,
+#                 StationFaits_to_upsert.date_fait_deb,
+#                 StationFaits_to_upsert.date_fait_fin
+#             ))
+
+#         self.conn.commit()
+#         # print(f"StationFaits pour la station {StationFaits_to_upsert.id_station} mise à jour ou insérée")
+    
+#     def close(self):
+#         """
+#         Ferme la connexion à la base de données.
+#         """
+
+#         self.conn.close()
+
+
