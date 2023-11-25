@@ -86,16 +86,21 @@ def get_least_frequented_station(start_date: str, end_date: str):
 def get_most_frequented_arrondissement(start_date: str, end_date: str):
     return F.Fonctionnalites().F3(start_date, end_date)
 
+# Fonction Bonus F01
+templates = Jinja2Templates(directory="scripts")
+@app.get("/nearestbike/{adresse}")  #endpoint de presentation
+async def get(request: Request, adresse: str):
+    return templates.TemplateResponse("ws.html", {"request": request, "adresse": adresse})
 
-
-@app.websocket("/ws")
+@app.websocket("/ws")     #endpoint qui gère les connexions WebSocket et envoyer périodiquement des informations de la sttaion la plus proche à l'utilisateur à partir de l'adresse initiale qu'il a rentrée
 async def websocket_endpoint(websocket: WebSocket):
     await websocket.accept()
     adresse_en_cours = await websocket.receive_text()
     while True:
         station_bis = F.Fonctionnalites().F1(adresse_en_cours)
         await websocket.send_text(f"Last position was: {adresse_en_cours} ({datetime.now()}). Station info: {station_bis}")
-        await asyncio.sleep(2)
+        await asyncio.sleep(2)  #reactualise toutes les 2 secondes
+#Fin fonction Bonus F01
 
 @app.get("/stations/updatestation",response_model=None, description="Permet de modifier les caractéristiques d'une station à partir de son id. Exemple d'entrées : id : 16107 changement :{\"stationcode\": \"16107\", \"name\": \"Benjamin Godard - Victor Hugo\", \"is_installed\": \"OUI\", \"capacity\": 35, \"numdocksavailable\": 14, \"numbikesavailable\": 21, \"mechanical\": 5, \"ebike\": 16, \"is_renting\": \"OUI\", \"is_returning\": \"OUI\", \"duedate\": \"2023-11-20T13:18:42+00:00\", \"coordonnees_geo\": {\"lon\": 2.275725, \"lat\": 48.865983}, \"nom_arrondissement_communes\": \"Paris\", \"code_insee_commune\": null}")
 def mettre_a_jour(id : str, nouvelles_informations : Station):
