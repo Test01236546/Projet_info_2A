@@ -1,5 +1,5 @@
-import sys
-sys.path.append('C:/Users/jerem/OneDrive/Documents/GitHub/Projet_info_2A/Projet_info_2A-7')
+# import sys
+# sys.path.append('C:/Users/jerem/OneDrive/Documents/GitHub/Projet_info_2A/Projet_info_2A-7')
 
 # from API import StationAPI, app 
 from fastapi import FastAPI
