@@ -2,6 +2,8 @@ import sqlite3
 import src.Service.StationFaits as stf
 from datetime import datetime
 from src.DAO.AbstractDAO import AbstractDAO
+import src.Service.fonctions_intermédiaires as fi
+from src.BDD.constantes import BDD_PATH
 
 class StationFaitsDAO(AbstractDAO):
     """
@@ -146,7 +148,7 @@ class StationFaitsDAO(AbstractDAO):
             dictionnaire['ebike'],
             dictionnaire['is_returning'],
             0,
-            datetime.now(),
+            fi.trouver_premiere_derniere_heure(BDD_PATH,"Temps","date"),
             dictionnaire['duedate']
         )
 

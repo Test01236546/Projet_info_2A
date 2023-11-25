@@ -131,11 +131,11 @@ if __name__ == "__main__":
 
 
     # TEST SUR LE INGEST ET VRAIE BDD
-    fi.voir_ids_disponibles(BDD_PATH,9)
-    fi.compter_ids(BDD_PATH,"Station","id")
-    fi.compter_ids(BDD_PATH,"StationFaits")
-    fi.compter_ids(BDD_PATH,"Station")
-    fi.compter_ids(BDD_PATH,"Station")
+    fi.voir_ids_disponibles(BDD_PATH_TEST,9)
+    fi.compter_ids(BDD_PATH_TEST,"Station","id")
+    fi.compter_ids(BDD_PATH_TEST,"StationFaits")
+    fi.compter_ids(BDD_PATH_TEST,"Station")
+    fi.compter_ids(BDD_PATH_TEST,"Station")
 
     
     # TEST SUR LE INGEST ET TEST BDD
@@ -149,7 +149,7 @@ if __name__ == "__main__":
 
     dict_statio_test = results[0]
 
-    fi.trouver_premiere_derniere_heure(BDD_PATH,"Temps","date")
+    fi.trouver_premiere_derniere_heure(BDD_PATH_TEST,"Temps","date")
 
     # dict_statio_test['stationcode']
     # Instance_Station
@@ -199,8 +199,9 @@ if __name__ == "__main__":
 #         time.sleep(60)
 
 
-fi.list_tables("C:/Users/jerem/OneDrive/Documents/GitHub/Projet_info_2A/Projet_info_2A-7/src/BDD/BDD.sql")
-
+fi.list_tables("Test_Jeremie/test1.sql")
+a = fi.trouver_premiere_derniere_heure(BDD_PATH,"Temps","date")
+a[0]
 
 
 
