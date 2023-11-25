@@ -1,5 +1,5 @@
 import pytest
-from Service.commune import Commune
+from src.Service.commune import Commune
 
 
 @pytest.fixture

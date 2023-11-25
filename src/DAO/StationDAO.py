@@ -165,7 +165,7 @@ class StationDAO(AbstractDAO):
 
         if existing_record :
             # Si l'enregistrement existe, créer une instance de StationFaits avec les données existantes
-            print(existing_record)
+            # print(existing_record)
             former_Station = st.Station(id=existing_record[0],nom_station=existing_record[1],capacite=existing_record[2],coordonnees_station=existing_record[3],id_commune=existing_record[4],en_fonctionnement=existing_record[5],date_deb=existing_record[6],date_fin=existing_record[7],borne_paiement=existing_record[8],nb_bornettes=existing_record[9])
             # Tentative de mise à jour
             self.cur.execute("""

@@ -1,12 +1,12 @@
 import unittest
 import sqlite3
 from datetime import datetime
-from DAO.StationDAO import StationDAO
+from src.DAO.StationDAO import StationDAO
 import json
 
 class TestStationDAO(unittest.TestCase):
     def setUp(self):
-        self.conn = sqlite3.connect(':memory:')  # Utilisez une base de données en mémoire pour les tests
+        self.conn = sqlite3.connect('src.BDD.BDD.sql')  # Utilisez une base de données en mémoire pour les tests
         self.cur = self.conn.cursor()
         self.cur.execute("CREATE TABLE Station (id TEXT PRIMARY KEY, nom_station TEXT, capacite INTEGER, coordonnees_station TEXT, id_commune TEXT, en_fonctionnement TEXT, date_deb TEXT, date_fin TEXT, borne_paiement TEXT, nb_bornettes INTEGER)")
         self.conn.commit()
@@ -69,15 +69,15 @@ class TestStationDAO(unittest.TestCase):
         self.assertIsNotNone(new_station)
         self.assertEqual(new_station, ('75002', 'Station 2', 20, json.dumps([2.3522, 48.8566]), '75002', 'True', 'date_deb 75002', '2023-03-01', 'borne_paiement 75002', 20))  
 
-    def test_close(station_dao):
-        # Assurer que la connexion est ouverte avant de fermer
-        assert station_dao.conn is not None
+    def test_close(self):
+        # On s'assure que la connexion est ouverte avant de fermer
+        assert self.conn is not None
 
         # Utilisation de la méthode close pour fermer la connexion
-        station_dao.close()
+        self.conn.close()
 
-        # Assurer que la connexion est fermée après l'appel à close
-        assert station_dao.conn is None
+        # On s'assure que la connexion est fermée après l'appel à close
+        assert self.conn is None
 
 
 if __name__ == '__main__':

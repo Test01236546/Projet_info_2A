@@ -90,3 +90,32 @@ def trouver_premiere_derniere_heure(db_path, table_name, time_column):
     conn.close()
 
     return premiere_heure, derniere_heure
+
+import sqlite3
+
+def list_tables(db_path):
+    """
+    List all tables in the SQLite database.
+
+    Args:
+    db_path (str): Path to the SQLite database file.
+
+    Returns:
+    list: A list of table names.
+    """
+    conn = sqlite3.connect(db_path)
+    cursor = conn.cursor()
+
+    cursor.execute("SELECT name FROM sqlite_master WHERE type='table';")
+    tables = cursor.fetchall()
+
+    # Close the connection
+    conn.close()
+
+    # Extracting table names from the tuples
+    return [table[0] for table in tables]
+
+# Example usage
+# db_path = 'your_database_file.db'  # Replace with your database file path
+# print(list_tables(db_path))
+# liste_tables("C:/Users/jerem/OneDrive/Documents/GitHub/Projet_info_2A/Projet_info_2A-7/src/BDD/BDD.sql")

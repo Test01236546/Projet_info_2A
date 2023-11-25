@@ -1,7 +1,7 @@
 import pytest
 import time
 import sqlite3
-from Service.fonctions_intermédiaires import no_print_map, no_print_map2, periodic, voir_ids_disponibles, compter_ids, codeInsee_to_code, afficher_nom_commune_complete, trouver_premiere_derniere_heure
+from src.Service.fonctions_intermédiaires import no_print_map, no_print_map2, periodic, voir_ids_disponibles, compter_ids, codeInsee_to_code, afficher_nom_commune_complete, trouver_premiere_derniere_heure
 
 @pytest.fixture
 def temp_db_path(tmp_path):

@@ -1,10 +1,10 @@
 import unittest
 import sqlite3
-from DAO.communeDAO import CommuneDAO
+from src.DAO.communeDAO import CommuneDAO
 
 class TestCommuneDAO(unittest.TestCase):
     def setUp(self):
-        self.conn = sqlite3.connect(':memory:')  # Utilisez une base de données en mémoire pour les tests
+        self.conn = sqlite3.connect('src.BDD.BDD.sql')  
         self.cur = self.conn.cursor()
         self.cur.execute("CREATE TABLE Commune (id_commune TEXT PRIMARY KEY, nom_commune TEXT)")
         self.conn.commit()
@@ -16,7 +16,7 @@ class TestCommuneDAO(unittest.TestCase):
         dao = CommuneDAO(self.conn)
 
         # Création d'une commune pour le test
-        commune_data = {'stationcode': '75001', 'nom_arrondissement_communes': 'Paris 1er'}
+        commune_data = {'id_commune': '75001', 'nom_commune': 'Paris 1er'}
         dao.create2(commune_data)
 
         # Vérification de la création
@@ -34,11 +34,11 @@ class TestCommuneDAO(unittest.TestCase):
         dao = CommuneDAO(self.conn)
 
         # Création d'une commune pour le test
-        commune_data = {'stationcode': '75001', 'nom_arrondissement_communes': 'Paris 1er'}
+        commune_data = {'id_commune': '75001', 'nom_commune': 'Paris 1er'}
         dao.create2(commune_data)
 
         # Test de la méthode update
-        dao.update2({'stationcode': '75001', 'nom_arrondissement_communes': 'Paris Nouveau'})
+        dao.update2({'id_commune': '75001', 'nom_commune': 'Paris Nouveau'})
         updated_commune = dao.read('75001')
         self.assertIsNotNone(updated_commune)
         self.assertEqual(updated_commune, ('75001', 'Paris Nouveau'))
@@ -52,30 +52,30 @@ class TestCommuneDAO(unittest.TestCase):
         dao = CommuneDAO(self.conn)
 
         # Création d'une commune pour le test
-        commune_data = {'stationcode': '75001', 'nom_arrondissement_communes': 'Paris 1er'}
+        commune_data = {'id_commune': '75001', 'nom_commune': 'Paris 1er'}
         dao.upsert2(commune_data)
 
         # Test de la méthode upsert2 pour la mise à jour
-        dao.upsert2({'stationcode': '75001', 'nom_arrondissement_communes': 'Paris Nouveau'})
+        dao.upsert2({'id_commune': '75001', 'nom_commune': 'Paris Nouveau'})
         updated_commune = dao.read('75001')
         self.assertIsNotNone(updated_commune)
         self.assertEqual(updated_commune, ('75001', 'Paris Nouveau'))
 
         # Test de la méthode upsert2 pour l'insertion
-        dao.upsert2({'stationcode': '75002', 'nom_arrondissement_communes': 'Paris 2ème'})
+        dao.upsert2({'id_commune': '75002', 'nom_commune': 'Paris 2ème'})
         new_commune = dao.read('75002')
         self.assertIsNotNone(new_commune)
         self.assertEqual(new_commune, ('75002', 'Paris 2ème'))
 
-    def test_close(CommuneDAO):
-        # Assurer que la connexion est ouverte avant de fermer
-        assert CommuneDAO.conn is not None
+    def test_close(self):
+        # On s'assure que la connexion est ouverte avant de fermer
+        assert self.conn is not None
 
         # Utilisation de la méthode close pour fermer la connexion
-        CommuneDAO.close()
+        self.conn.close()
 
-        # Assurer que la connexion est fermée après l'appel à close
-        assert CommuneDAO.conn is None    
+        # On s'assure que la connexion est fermée après l'appel à close
+        assert self.conn is None    
 
 if __name__ == '__main__':
     unittest.main()

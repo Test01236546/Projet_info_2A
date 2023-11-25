@@ -1,6 +1,6 @@
 import pytest
 from unittest.mock import Mock
-from Service.Service import Service
+from src.Service.Service import Service
 
 @pytest.fixture
 def service_instance():
