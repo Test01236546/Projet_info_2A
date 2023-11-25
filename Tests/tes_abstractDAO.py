@@ -1,5 +1,5 @@
 import unittest
-from DAO.abstractDAO import AbstractDAO
+from src.DAO.AbstractDAO import AbstractDAO
 
 class TestAbstractDAO(unittest.TestCase):
     def test_create_not_implemented(self):
@@ -26,14 +26,14 @@ class TestAbstractDAO(unittest.TestCase):
         with self.assertRaises(NotImplementedError):
             dao.delete(None)
     
-    def test_close(AbstractDAO):
-        # Assurer que la connexion est ouverte avant de fermer
+    def test_close(self):
+        # On s'assure que la connexion est ouverte avant de fermer
         assert AbstractDAO.conn is not None
 
         # Utilisation de la méthode close pour fermer la connexion
         AbstractDAO.close()
 
-        # Assurer que la connexion est fermée après l'appel à close
+        # On s'assure que la connexion est fermée après l'appel à close
         assert AbstractDAO.conn is None
 
 if __name__ == '__main__':

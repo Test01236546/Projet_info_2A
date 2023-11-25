@@ -1,7 +1,7 @@
 import pytest
 from datetime import datetime, timedelta
 from unittest.mock import Mock
-from Service.StationFaits import StationFaits
+from src.Service.StationFaits import StationFaits
 import re
 
 @pytest.fixture

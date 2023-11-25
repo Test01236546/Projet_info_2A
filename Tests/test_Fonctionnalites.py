@@ -1,7 +1,7 @@
 import pytest
 import re
 from datetime import datetime, timedelta
-from Service.Fonctionnalites import Fonctionnalites
+from src.Service.Fonctionnalites import Fonctionnalites
 
 class TestFonctionnalites :
     

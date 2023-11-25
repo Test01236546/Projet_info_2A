@@ -1,6 +1,6 @@
 import pytest
 from datetime import datetime
-from Service.temps import Temps
+from src.Service.Temps import Temps
 
 @pytest.fixture
 def temps_instance():
