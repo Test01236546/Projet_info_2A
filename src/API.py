@@ -2,12 +2,12 @@ from fastapi import FastAPI
 
 import requests as r 
 from pydantic import BaseModel
-from src.Service.Station import Station
-import src.DAO.StationDAO as SDAO
+from Service.Station import Station
+import DAO.StationDAO as SDAO
 import uvicorn
-from src.Service.Service import Service
+from Service.Service import Service
 from datetime import datetime
-import src.Service.Fonctionnalites as F
+import Service.Fonctionnalites as F
 from geopy.geocoders import Nominatim 
 
 from fastapi.responses import JSONResponse
