@@ -60,9 +60,8 @@ class Service ():
         if response.status_code == 200:
             data = response.json()
         else:
-            print("Erreur lors de la requête à l'API Vélib.")
-            return
-        
+            raise Exception("Erreur lors de la requête à l'API Vélib.")
+
         # Instance_StationDAO = stDAO.StationDAO(BDD_PATH)
         # Instance_CommuneDAO = cmDAO.CommuneDAO(BDD_PATH)
         # Instance_TempsDAO = tpDAO.TempsDAO(BDD_PATH)
