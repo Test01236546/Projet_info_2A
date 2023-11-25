@@ -54,15 +54,25 @@ def compter_ids(db_path, table_name,primary_key):
 
     return nombre_ids
 
+# def codeInsee_to_code(stationcode):  #renvoie 75xxx si 75 est le début de station code et deux premiers caractères de station code sinon
+#     if len(stationcode) == 5:
+#         return stationcode[:2]  # Les deux premiers caractères
+#     elif len(stationcode) == 4: #cas id_station est un arrondissement de paris de 1 à 9
+#         return stationcode[0]   # Seulement le premier caractère
+#     else:
+#         # Gérer d'autres cas si nécessaire
+#         return None
+         
 def codeInsee_to_code(stationcode):  #renvoie 75xxx si 75 est le début de station code et deux premiers caractères de station code sinon
     if len(stationcode) == 5:
-        return stationcode[:2]  # Les deux premiers caractères
-    elif len(stationcode) == 4: #cas id_station est un arrondissement de paris de 1 à 9
+        if stationcode[:2]=='75':
+            return stationcode[2:]
+        return stationcode
+    else:                    #cas id_station est un arrondissement de paris de 1 à 9
         return stationcode[0]   # Seulement le premier caractère
-    else:
-        # Gérer d'autres cas si nécessaire
-        return None
+    
          
+
 def afficher_nom_commune_complete(stationcode,nom_arrondissement_commune):#testp
     L = ["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20"]
     if codeInsee_to_code(stationcode) in L:

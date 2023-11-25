@@ -205,8 +205,11 @@ a = fi.trouver_premiere_derniere_heure(BDD_PATH,"Temps","date")
 a[0]
 fi.get_frequencies(BDD_PATH)
 fi.get_frequencies(BDD_PATH_TEST)
-
-
+fi.codeInsee_to_code(results[0]['stationcode'])
+fi.codeInsee_to_code('16107')
+fi.codeInsee_to_code('75001')
+'75001'[:2]
+fi.codeInsee_to_code('1456')
 
 
         
