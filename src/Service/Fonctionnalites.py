@@ -183,7 +183,7 @@ class Fonctionnalites():
         return arrondissement_plus_frequente
     
 
-    def F03_modifstation(station_id, request):
+    def F03_modifstation(self, station_id, new_name):
             # Vérifier si la station existe
         existing_station = SDAO.StationDAO(path="BDD/BDD.sql").read(station_id)
         if not existing_station:
@@ -191,35 +191,15 @@ class Fonctionnalites():
 
     # Créer un objet Station avec les nouvelles données
         updated_station = {
-            "nom_station": request.nom_station,
-            "capacite": request.capacite,
-            "coordonnees_station": request.coordonnees_station,
-            "id_commune": request.id_commune,
-            "en_fonctionnement": request.en_fonctionnement,
-            "date_deb": request.date_deb,
-            "date_fin": request.date_fin,
-            "borne_paiement": request.borne_paiement,
-            "nb_bornettes": request.nb_bornettes
+            "nom_station": new_name,
+            "capacite": existing_station.capacite,
+            "coordonnees_station": existing_station.coordonnees_station,
+            "id_commune": existing_station.id_commune,
+            "en_fonctionnement": existing_station.en_fonctionnement,
+            "date_deb": existing_station.date_deb,
+            "date_fin": existing_station.date_fin,
+            "borne_paiement": existing_station.borne_paiement,
+            "nb_bornettes": existing_station.nb_bornettes
         }
 
-    def F03_modifstationfaits(station_id, request):
-            # Vérifier si la station existe
-        existing_station = SFDAO.StationFaitsDAO(path="BDD/BDD.sql").read(station_id)
-        if not existing_station:
-            raise HTTPException(status_code=404, detail="Station not found")
-
-    # Créer un objet Station avec les nouvelles données
-        updated_stationfaits = {
-            "id_station": request.id_station,
-            "nb_bornettes": request.nb_bornettes,
-            "velos_dispos": request.velos_dispo,
-            "meca_dispo": request.meca_dispo,
-            "elec_dispo": request.elec_dispo,
-            "retour_velo": request.retour_velo,
-            "frequence": request.frequence,
-            "date_fait_deb": request.date_fait_deb,
-            "date_fait_fin": request.nb_bornettes
-        }
-
-    # Mettre à jour la station dans la base de données
         SDAO.StationDAO(path="BDD/BDD.sql").update(id, updated_station)
