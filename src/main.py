@@ -1,5 +1,5 @@
-import sys
-sys.path.append('src')
+# import sys
+# sys.path.append('src')
 
 # from API import StationAPI, app 
 from fastapi import FastAPI
@@ -26,7 +26,7 @@ if __name__ == "__main__":
     # BDD_Manager(BDD_PATH).create_stations_table()
     Instance_Service = sv.Service()
     
-    fi.periodic(Instance_Service,0.3*60*60,60) #ingest pendant 1*60*60 secs avec des pauses de 60 secs
+    fi.periodic(Instance_Service,0.3*60,60) #ingest pendant 1*60*60 secs avec des pauses de 60 secs
 
     # while True:
     #     # Mettre à jour les bases de données
