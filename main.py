@@ -1,7 +1,7 @@
 import sys
-sys.path.append('C:/Users/jerem/OneDrive/Documents/GitHub/Projet_info_2A/Projet_info_2A-7')
+#sys.path.append('C:/Users/jerem/OneDrive/Documents/GitHub/Projet_info_2A/Projet_info_2A-7')
 
-# from API import StationAPI, app 
+from src.API import StationAPI, app 
 from fastapi import FastAPI
 
 import requests as r 
@@ -9,7 +9,7 @@ from pydantic import BaseModel
 import uvicorn
 from datetime import datetime
 import time
-# import Service.fonctionnalites as F
+import src.Service.Fonctionnalites as F
 from geopy.geocoders import Nominatim 
 
 
