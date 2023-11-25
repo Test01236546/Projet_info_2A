@@ -151,21 +151,22 @@ class StationDAO(AbstractDAO):
         
         # Création d'une instance de Station
         Station_to_upsert = st.Station(
-            dictionnaire['stationcode'],
-            dictionnaire['name'],
-            dictionnaire['capacity'],
-            json.dumps(dictionnaire['coordonnees_geo']),
-            fi.afficher_nom_commune_complete(dictionnaire['stationcode'],dictionnaire['nom_arrondissement_communes']),
-            dictionnaire['is_renting'],
-            datetime.now(),
-            dictionnaire['duedate'],
-            f"borne_paiement {dictionnaire['stationcode']}",
-            dictionnaire['capacity']
+            id=dictionnaire['stationcode'],
+            nom_station=dictionnaire['name'],
+            capacite=dictionnaire['capacity'],
+            coordonnees_station=json.dumps(dictionnaire['coordonnees_geo']),
+            id_commune=fi.afficher_nom_commune_complete(dictionnaire['stationcode'],dictionnaire['nom_arrondissement_communes']),
+            en_fonctionnement=dictionnaire['is_renting'],
+            date_deb=datetime.now(),
+            date_fin=dictionnaire['duedate'],
+            borne_paiement=f"borne_paiement {dictionnaire['stationcode']}",
+            nb_bornettes=dictionnaire['capacity']
         )
 
         if existing_record :
             # Si l'enregistrement existe, créer une instance de StationFaits avec les données existantes
-            former_Station = st.Station(*existing_record)
+            print(existing_record)
+            former_Station = st.Station(id=existing_record[0],nom_station=existing_record[1],capacite=existing_record[2],coordonnees_station=existing_record[3],id_commune=existing_record[4],en_fonctionnement=existing_record[5],date_deb=existing_record[6],date_fin=existing_record[7],borne_paiement=existing_record[8],nb_bornettes=existing_record[9])
             # Tentative de mise à jour
             self.cur.execute("""
             UPDATE Station SET nom_station=?, capacite=?, coordonnees_station=?, id_commune=?,

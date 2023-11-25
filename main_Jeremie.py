@@ -6,21 +6,21 @@
 import requests
 import json
 
-from Service import Station as st
-from Service import commune as cm
-from Service import Temps as tp
-from Service import StationFaits as stf
+from src.Service import Station as st
+from src.Service import commune as cm
+from src.Service import Temps as tp
+from src.Service import StationFaits as stf
 
-from DAO import StationDAO as stDAO
-from DAO import communeDAO as cmDAO
-from DAO import TempsDAO as tpDAO
-from DAO import StationFaitsDAO as stfDAO
+from src.DAO import StationDAO as stDAO
+from src.DAO import communeDAO as cmDAO
+from src.DAO import TempsDAO as tpDAO
+from src.DAO import StationFaitsDAO as stfDAO
 
-from Service import fonctions_intermédiaires as fi
+from src.Service import fonctions_intermédiaires as fi
 
-from BDD.constantes import BDD_PATH
+from src.BDD.constantes import BDD_PATH
 
-from BDD import classBDD as cBDD
+from src.BDD import classBDD as cBDD
 
 
 

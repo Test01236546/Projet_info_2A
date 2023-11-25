@@ -1,6 +1,7 @@
-
+#liste des modules à télécharger (il se peut que quelque uns ne soient pas renseignés, dans ce cas là le terminal python vous le renseignera)
 fastapi>=0.68.0,<0.69.0
 pydantic>=1.8.0,<2.0.0
 uvicorn>=0.15.0,<0.16.0
 requests
 geopy
+jinja2
