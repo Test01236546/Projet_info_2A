@@ -21,6 +21,7 @@ from src.Service import fonctions_intermédiaires as fi
 from src.BDD.constantes import BDD_PATH, BDD_PATH_TEST
 
 from src.BDD import classBDD as cBDD
+import sqlite3
 
 
 
@@ -199,6 +200,48 @@ if __name__ == "__main__":
 #         time.sleep(60)
 
 
+
+def F3(date_debut, date_fin,BDD):
+        """
+        Retourne l'arrondissement ou la commune la plus fréquentée par les utilisateurs de Vélib' dans une plage de dates donnée.
+
+        Args:
+            date_debut (str): La date de début de la plage.
+            date_fin (str): La date de fin de la plage.
+
+        Returns:
+            str: L'arrondissement ou la commune la plus fréquentée par les utilisateurs de Vélib'.
+        """
+        # Connexion à la base de données
+        conn = sqlite3.connect(BDD)
+        cursor = conn.cursor()
+    
+        # Requête SQL pour récupérer l'arrondissement le plus fréquenté
+        query = """
+            SELECT id_commune, SUM(total_freq_par_station) as total_freq_par_com_ou_arr
+            FROM (
+            SELECT Station.id, Commune.id_commune, SUM(frequence) as total_freq_par_station
+            FROM StationFaits
+            JOIN Station ON StationFaits.id_station = Station.id
+            JOIN Commune ON Station.id_Commune = Commune.id_commune
+            WHERE date_fait_deb >= ? AND date_fait_fin <= ?
+            GROUP BY Station.id, Commune.id_commune
+            ) as StationFreq
+            GROUP BY id_commune
+            ORDER BY total_freq_par_com_ou_arr DESC
+            LIMIT 1;       
+        """
+        cursor.execute(query, (date_debut, date_fin))
+    
+        # Récupérer le résultat de la requête
+        arrondissement_plus_frequente = cursor.fetchone()[0]
+    
+        # Fermer la connexion à la base de données
+        conn.close()
+    
+        return arrondissement_plus_frequente
+    
+
 fi.list_tables("Test_Jeremie/test1.sql")
 fi.trouver_premiere_derniere_heure(BDD_PATH,"Temps","date")
 a = fi.trouver_premiere_derniere_heure(BDD_PATH,"Temps","date")
@@ -211,5 +254,6 @@ fi.codeInsee_to_code('75001')
 '75001'[:2]
 fi.codeInsee_to_code('1456')
 
+F3(a[0],a[1],BDD_PATH_TEST)
 
         
