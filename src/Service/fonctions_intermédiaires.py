@@ -7,7 +7,6 @@ import sqlite3
 def no_print_map(map_ex):
         result = list(map_ex)
     
-# no_print_map(map_ex)
 
 def no_print_map2(map_ex):
         result = map_ex
@@ -54,15 +53,7 @@ def compter_ids(db_path, table_name,primary_key):
 
     return nombre_ids
 
-# def codeInsee_to_code(stationcode):  #renvoie 75xxx si 75 est le début de station code et deux premiers caractères de station code sinon
-#     if len(stationcode) == 5:
-#         return stationcode[:2]  # Les deux premiers caractères
-#     elif len(stationcode) == 4: #cas id_station est un arrondissement de paris de 1 à 9
-#         return stationcode[0]   # Seulement le premier caractère
-#     else:
-#         # Gérer d'autres cas si nécessaire
-#         return None
-         
+
 def codeInsee_to_code(stationcode):  #renvoie 75xxx si 75 est le début de station code et deux premiers caractères de station code sinon
     if len(stationcode) == 5:
         if stationcode[:2]=='75':
@@ -100,7 +91,6 @@ def trouver_premiere_derniere_heure(db_path, table_name, time_column):
 
     return premiere_heure, derniere_heure
 
-import sqlite3
 
 def list_tables(db_path):
     """
@@ -124,10 +114,6 @@ def list_tables(db_path):
     # Extracting table names from the tuples
     return [table[0] for table in tables]
 
-# Example usage
-# db_path = 'your_database_file.db'  # Replace with your database file path
-# print(list_tables(db_path))
-# liste_tables("C:/Users/jerem/OneDrive/Documents/GitHub/Projet_info_2A/Projet_info_2A-7/src/BDD/BDD.sql")
 
 def get_frequencies(db_path):
     """

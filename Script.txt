@@ -1,6 +1,0 @@
-DRIVER={SQL Server};SERVER=localhost;DATABASE=velib;UID=sa;PWD=password
-
-CREATE TABLE stations (id INT IDENTITY(1,1), name VARCHAR(255), arrondissement INT, date_update DATETIME)
-
-
-

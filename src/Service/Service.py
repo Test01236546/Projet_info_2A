@@ -1,11 +1,7 @@
 import requests
-import json
+#import json
 from src.BDD.constantes import BDD_PATH
 
-# from Service import Station as st
-# from Service import commune as cm
-# from Service import Temps as tp
-# from Service import StationFaits as stf
 
 from src.DAO import StationDAO as stDAO
 from src.DAO import communeDAO as cmDAO
@@ -14,7 +10,6 @@ from src.DAO import StationFaitsDAO as stfDAO
 
 from src.Service.fonctions_intermédiaires import no_print_map,no_print_map2
 
-# from BDD import classBDD as cBDD
 
 class Service ():
     """
@@ -33,10 +28,6 @@ class Service ():
         self.Instance_TempsDAO = tpDAO.TempsDAO(BDD_PATH)
         self.Instance_StationFaitsDAO = stfDAO.StationFaitsDAO(BDD_PATH)
         
-        #self.id_stationfaits=id_stationfaits
-        #self.id_station=id_station
-        #self.id_temps=id_temps
-        #self.connection = pyodbc.connect("DRIVER={SQL Server};SERVER=localhost;DATABASE=velib;UID=sa;PWD=password")
         pass
     
     def ingest(self):
@@ -62,11 +53,7 @@ class Service ():
         else:
             raise Exception("Erreur lors de la requête à l'API Vélib.")
 
-        # Instance_StationDAO = stDAO.StationDAO(BDD_PATH)
-        # Instance_CommuneDAO = cmDAO.CommuneDAO(BDD_PATH)
-        # Instance_TempsDAO = tpDAO.TempsDAO(BDD_PATH)
-        # Instance_StationFaitsDAO = stfDAO.StationFaitsDAO(BDD_PATH)
-
+        
         no_print_map2(map(lambda station_dict: self.Instance_StationDAO.upsert2(station_dict), data['results']))
         no_print_map2(map(lambda station_dict: self.Instance_CommuneDAO.upsert2(station_dict), data['results']))
         no_print_map2(map(lambda station_dict: self.Instance_TempsDAO.upsert2(station_dict), data['results']))
@@ -78,8 +65,5 @@ class Service ():
 
 
 
-#if __name__ == "__main__":
-#    service = Service()
-#    service.ingest()
 
 

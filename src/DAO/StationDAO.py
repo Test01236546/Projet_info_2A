@@ -1,6 +1,6 @@
 import sqlite3
 from datetime import datetime
-import sys
+#import sys
 import src.Service.Station as st
 import json
 import src.Service.fonctions_intermédiaires as fi
@@ -36,7 +36,7 @@ class StationDAO(AbstractDAO):
         self.conn.commit()
         print(f"Station créée : {station.id}")
 
-    def create2(self,dictionnaire):         #on pourrait prendre deux liste (nom attributs de StationFaits, nom clées du dictionnaire station et matcher)
+    def create2(self,dictionnaire):         
         
         Station_to_add=st.Station(dictionnaire['stationcode'],dictionnaire['name'],dictionnaire['capacity'],json.dumps(dictionnaire['coordonnees_geo']),fi.afficher_nom_commune_complete(dictionnaire['stationcode']),dictionnaire['is_renting'],dictionnaire['duedate'],f"date_deb {dictionnaire['stationcode']}",f"borne_paiement {dictionnaire['stationcode']}",dictionnaire['capacity'])
         # return Station_to_add
@@ -209,13 +209,3 @@ class StationDAO(AbstractDAO):
         """
         self.conn.close()
 
-# def update2(self, id, new_data):
-#     self.cur.execute("""
-#     UPDATE Station SET nom_station=?, capacite=?, coordonnees_station=?, 
-#     nom_commune=?, en_fonctionnement=?, date_deb=?, date_fin=?, 
-#     borne_paiement=?, nb_bornettes=? WHERE id=?
-#     """, (new_data['nom_station'], new_data['capacite'], new_data['coordonnees_station'], 
-#             new_data['nom_commune'], new_data['en_fonctionnement'], new_data['date_deb'], 
-#             new_data['date_fin'], new_data['borne_paiement'], new_data['nb_bornettes'], id))
-#     self.conn.commit()
-#     print("Station mise à jour")
