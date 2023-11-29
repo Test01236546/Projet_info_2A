@@ -26,13 +26,8 @@ if __name__ == "__main__":
     cBDD.BDD_Manager(BDD_PATH).create_stations_table()
     Instance_Service = sv.Service()
     
-    fi.periodic(Instance_Service,3*60,60) #ingest pendant 1*60*60 secs avec des pauses de 60 secs
+    fi.periodic(Instance_Service,2*60,60) #ingest pendant 1*60*60 secs avec des pauses de 60 secs
 
-    while True:
-        # Mettre à jour les bases de données
-        Instance_Service.ingest()
-        # Attendre 1 minute avant de se mettre à jour à nouveau
-        time.sleep(60)
 
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0")

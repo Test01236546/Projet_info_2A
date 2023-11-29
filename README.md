@@ -111,4 +111,4 @@ Lien utiles :
 
 ## Construire & run son Dockerfile
 construction : docker build -t my-fastapi-app .
-run : docker run -p 80:80 my-fastapi-app
+run : docker run -p 8000:8000 my-fastapi-app
