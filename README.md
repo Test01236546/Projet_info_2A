@@ -112,3 +112,15 @@ Lien utiles :
 ## Construire & run son Dockerfile
 construction : docker build -t my-fastapi-app .
 run : docker run -p 8000:8000 my-fastapi-app
+
+voir les images : docker images
+voir les images : docker image ls
+voir que les id des images : docker image ls -q
+
+running containers : docker ps
+
+remove container : docker container rm 
+remove all containers : docker container rm -f $(docker container ls -a -q) #le -a for stock container and -f for running containers
+
+remove images : docker image rm nom_image1 nom_image2
+remove all images : docker image rm $(docker image ls -q) 
