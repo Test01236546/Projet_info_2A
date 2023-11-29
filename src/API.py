@@ -43,29 +43,6 @@ class StationAPI():
             raise Exception("Erreur lors de la récupération des données de l'API Adresse")
 
 
-    def get_station_la_moins_frequentee(self, date_debut, date_fin):
-        # Récupération des données de la base de données
-        return dao.least_frequented_station
-        cursor = self.connection.cursor()
-        cursor.execute("SELECT name FROM stations WHERE date_update BETWEEN ? AND ? ORDER BY available_bikes DESC", (date_debut, date_fin))
-        data = cursor.fetchone()
-        cursor.close()
-
-        # Retour de la station la moins fréquentée
-        return data[0] if data is not None else None
-
-    def get_arrondissement_le_plus_frequente(self, date_debut, date_fin):
-        # Récupération des données de la base de données
-        return dao.most_frequented_arr()
-
-        cursor = self.connection.cursor()
-        cursor.execute("SELECT arrondissement, COUNT(*) AS nb_usagers FROM stations WHERE date_update BETWEEN ? AND ? GROUP BY arrondissement ORDER BY nb_usagers DESC", (date_debut, date_fin))
-        data = cursor.fetchone()
-        cursor.close()
-
-        # Retour de l'arrondissement le plus fréquenté
-        return data[0] if data is not None else None
-    
     
 @app.get("/")
 def get_stations():
