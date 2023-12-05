@@ -26,7 +26,7 @@ if __name__ == "__main__":
     cBDD.BDD_Manager(BDD_PATH).create_stations_table()
     Instance_Service = sv.Service()
     
-    fi.periodic(Instance_Service,2*60,60) #ingest pendant 1*60*60 secs avec des pauses de 60 secs
+    fi.periodic(Instance_Service,1*60*60,60) #ingest pendant 1*60*60 secs avec des pauses de 60 secs
 
 
 if __name__ == "__main__":
