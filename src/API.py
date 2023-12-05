@@ -56,11 +56,11 @@ def get_stations():
 def get_closest_station(adresse):
     return F.Fonctionnalites().F1(adresse)
 
-@app.get("/stations/least_frequented", description="Permet de renvoyer la station la moins fréquentée sur une période de temps donnée. L'heure doit être rentrée sous la forme : AAAA-MM-DDTHH:NN:SS+00:00. Exemple : 2023-11-25T19:36:54+01:00 et 2023-11-25T19:37:54+01:00")
+@app.get("/stations/least_frequented", description="Permet de renvoyer la station la moins fréquentée sur une période de temps donnée. L'heure doit être rentrée sous la forme : AAAA-MM-DDTHH:NN:SS+00:00. Exemple : 2023-12-05T20:05:28+01:00 et 2023-12-05T20:06:28+01:00")
 def get_least_frequented_station(start_date: str, end_date: str):
     return F.Fonctionnalites().F2(start_date, end_date)
 
-@app.get("/stations/most_frequented_arrondissement", description="Permet de renvoyer l'arrondissement le moins fréquenté sur une période de temps donnée. L'heure doit être rentrée sous la forme : AAAA-MM-DDTHH:NN:SS+00:00. Exemple : 2023-11-25T19:36:54+01:00 et 2023-11-25T19:37:54+01:00")
+@app.get("/stations/most_frequented_arrondissement", description="Permet de renvoyer l'arrondissement le moins fréquenté sur une période de temps donnée. L'heure doit être rentrée sous la forme : AAAA-MM-DDTHH:NN:SS+00:00. Exemple : 2023-12-05T20:05:28+01:00 et 2023-12-05T20:06:28+01:00")
 def get_most_frequented_arrondissement(start_date: str, end_date: str):
     return F.Fonctionnalites().F3(start_date, end_date)
 
@@ -81,7 +81,7 @@ async def websocket_endpoint(websocket: WebSocket):
 #Fin fonction Bonus F01
 
 @app.get("/stations/updatestation",response_model=None, description="Permet de modifier les caractéristiques d'une station à partir de son id. Exemple d'entrées : id : 16107 changement :{\"stationcode\": \"16107\", \"name\": \"Benjamin Godard - Victor Hugo\", \"is_installed\": \"OUI\", \"capacity\": 35, \"numdocksavailable\": 14, \"numbikesavailable\": 21, \"mechanical\": 5, \"ebike\": 16, \"is_renting\": \"OUI\", \"is_returning\": \"OUI\", \"duedate\": \"2023-11-20T13:18:42+00:00\", \"coordonnees_geo\": {\"lon\": 2.275725, \"lat\": 48.865983}, \"nom_arrondissement_communes\": \"Paris\", \"code_insee_commune\": null}")
-def mettre_a_jour(id : str, nouvelles_informations : str):
+def mettre_a_jour(id : str, nouvelles_informations : Station):
     F.Fonctionnalites().F03_modifstation(id, nouvelles_informations)
     return JSONResponse(content={"message": "Update successful"})
 

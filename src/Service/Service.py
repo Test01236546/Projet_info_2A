@@ -8,7 +8,7 @@ from src.DAO import communeDAO as cmDAO
 from src.DAO import TempsDAO as tpDAO
 from src.DAO import StationFaitsDAO as stfDAO
 
-from src.Service.fonctions_intermédiaires import no_print_map,no_print_map2
+from src.Service.fonctions_intermediaires import no_print_map,no_print_map2
 
 
 class Service ():

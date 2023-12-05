@@ -3,7 +3,7 @@ from datetime import datetime
 #import sys
 import src.Service.Station as st
 import json
-import src.Service.fonctions_intermédiaires as fi
+import src.Service.fonctions_intermediaires as fi
 from src.DAO.AbstractDAO import AbstractDAO
 
 class StationDAO(AbstractDAO):

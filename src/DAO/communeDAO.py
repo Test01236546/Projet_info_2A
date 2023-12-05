@@ -1,6 +1,6 @@
 import sqlite3
 import src.Service.commune as cm
-import src.Service.fonctions_intermédiaires as fi
+import src.Service.fonctions_intermediaires as fi
 from src.DAO.AbstractDAO import AbstractDAO
 
 class CommuneDAO(AbstractDAO):

@@ -2,7 +2,7 @@ import sqlite3
 import src.Service.StationFaits as stf
 #from datetime import datetime
 from src.DAO.AbstractDAO import AbstractDAO
-import src.Service.fonctions_intermédiaires as fi
+import src.Service.fonctions_intermediaires as fi
 from src.BDD.constantes import BDD_PATH
 
 class StationFaitsDAO(AbstractDAO):
