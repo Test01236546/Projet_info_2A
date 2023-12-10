@@ -80,8 +80,8 @@ async def websocket_endpoint(websocket: WebSocket):
         await asyncio.sleep(2)  #reactualise toutes les 2 secondes
 #Fin fonction Bonus F01
 
-@app.get("/stations/updatestation",response_model=None, description="Permet de modifier les caractéristiques d'une station à partir de son id. Exemple d'entrées : id : 16107 changement :{\"stationcode\": \"16107\", \"name\": \"Benjamin Godard - Victor Hugo\", \"is_installed\": \"OUI\", \"capacity\": 35, \"numdocksavailable\": 14, \"numbikesavailable\": 21, \"mechanical\": 5, \"ebike\": 16, \"is_renting\": \"OUI\", \"is_returning\": \"OUI\", \"duedate\": \"2023-11-20T13:18:42+00:00\", \"coordonnees_geo\": {\"lon\": 2.275725, \"lat\": 48.865983}, \"nom_arrondissement_communes\": \"Paris\", \"code_insee_commune\": null}")
-def mettre_a_jour(id : str, nouvelles_informations : Station):
+@app.get("/stations/updatestation",response_model=None, description="Permet de modifier le nom d'une station à partir de son id. Exemple d'entrées : id : 16107 changement : Victor Hugo")
+def mettre_a_jour(id : str, nouvelles_informations : str):
     F.Fonctionnalites().F03_modifstation(id, nouvelles_informations)
     return JSONResponse(content={"message": "Update successful"})
 
