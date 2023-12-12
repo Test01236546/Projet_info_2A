@@ -5,4 +5,4 @@ uvicorn #>=0.15.0,<0.16.0
 requests
 geopy
 jinja2
-sqlite3
+# sqlite3

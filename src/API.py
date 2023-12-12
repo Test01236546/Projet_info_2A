@@ -82,9 +82,17 @@ async def websocket_endpoint(websocket: WebSocket):
 
 @app.get("/stations/updatestation",response_model=None, description="Permet de modifier le nom d'une station à partir de son id. Exemple d'entrées : id : 16107 changement : Victor Hugo")
 def mettre_a_jour(id : str, nouvelles_informations : str):
-    F.Fonctionnalites().F03_modifstation(id, nouvelles_informations)
-    return JSONResponse(content={"message": "Update successful"})
+    return F.Fonctionnalites().F03_modifstation(id, nouvelles_informations) #enlever return et décommenter ligne suivante
+    # return JSONResponse(content={"message": "Update successful"})
 
+@app.get("/stations/delatestation",response_model=None, description="Permet de supprimer une station à partir de son id. Exemple d'entrées : id : 16107 ")
+def mettre_a_jour(id : str):
+    return F.Fonctionnalites().F03_sup_station(id) 
+
+@app.get("/stations/createstation",response_model=None, description="Permet de créer une station. Exemple d'entrées : id : 16107, nom_station: Benjamin Godard - Victor Hugo, coordonnees_station: {'lon': 2.275725, 'lat': 48.865983},capacite : 35,nb_bornettes: 35,numbikesavailable : 1,mechanical : 1,ebike :0,is_returning : OUI,is_renting : OUI,duedate : 2023-12-12T01:48:43+01:00,nom_arrondissement_communes : Paris")
+def mettre_a_jour(id : str, nom_station: str, coordonnees_station: str,capacite : int,nb_bornettes: int,numbikesavailable : int,mechanical : int,ebike :int,is_returning : str,is_renting : str,duedate : str,nom_arrondissement_communes : str):
+    return F.Fonctionnalites().F03_add_station(id=id,nom_station= nom_station, coordonnees_station=coordonnees_station,capacite=capacite ,nb_bornettes=nb_bornettes,numbikesavailable=numbikesavailable ,mechanical=mechanical ,ebike=ebike,is_returning=is_returning,is_renting=is_renting,duedate=duedate,nom_arrondissement_communes=nom_arrondissement_communes) 
+#id : 16107, nom_station: Benjamin Godard - Victor Hugo, coordonnees_station: {'lon': 2.275725, 'lat': 48.865983},capacite : 35,nb_bornettes: 35,numbikesavailable : 1,mechanical : 1,ebike :0,is_returning : OUI,is_renting : OUI,duedate : 2023-12-12T01:48:43+01:00,nom_arrondissement_communes : Paris
 
 def get_position_from_address(address):
     # Récupération des données de l'API

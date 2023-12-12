@@ -110,8 +110,8 @@ Lien utiles :
 - Tutoriel Docker envoyé par M. GOUTIN Samuel : https://fastapi.tiangolo.com/deployment/docker/
 
 ## Construire & run son Dockerfile
-construction : docker build -t my-fastapi-app .
-run : docker run -p 8000:8000 my-fastapi-app
+construction : docker build -t api_best_group_cctj .
+run : docker run -p 8000:8000 api_best_group_cctj
 
 voir les images : docker images
 voir les images : docker image ls
@@ -124,3 +124,23 @@ remove all containers : docker container rm -f $(docker container ls -a -q) #le 
 
 remove images : docker image rm nom_image1 nom_image2
 remove all images : docker image rm $(docker image ls -q) 
+
+stopper les running containers : docker stop $(docker ps -a -q)
+
+pull une image : docker pull [OPTIONS] NAME[:TAG|@DIGEST]
+docker login [OPTIONS] [SERVER]
+
+##test
+docker logout
+
+2- docker login --username=YOURUSERNAME Enter password when asked
+
+3- docker pull repositoryName"/"imageName[:tag]
+
+## test 2
+Publier son image sur Docker Hub :
+	1) donner un tag à son image : docker tag api_best_group_cctj jeremiecharlotte/api_best_group_cctj ##➜ docker tag ocr-docker-build:latest ocr/ocr-docker-build:latest
+	2) envoyer l'image sur docker hub : docker push jeremiecharlotte/api_best_group_cctj
+	3) chercher les repositories d'un utilisateur : docker search jeremiecharlotte #nom du compte 
+	3.v2) chercher le repository d'un utilisateur : docker search jeremiecharlotte/api_best_group_cctj
+	4) récupérer l'image : docker pull jeremiecharlotte/api_best_group_cctj

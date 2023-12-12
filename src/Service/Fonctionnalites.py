@@ -3,6 +3,10 @@ from geopy.distance import geodesic
 import geopy
 import sqlite3 #pour F2 et F3
 import src.DAO.StationDAO as SDAO
+import src.DAO.StationFaitsDAO as SFDAO
+import src.DAO.TempsDAO as TDAO
+import src.DAO.communeDAO as cDAO
+import src.Service.Station as st
 #import src.DAO.StationFaitsDAO as SFDAO
 
 class Fonctionnalites():
@@ -185,24 +189,61 @@ class Fonctionnalites():
 
     def F03_modifstation(self, station_id, new_name):
             # Vérifier si la station existe
-        existing_station = SDAO.StationDAO(path="BDD/BDD.sql").read(station_id)
-        if not existing_station:
-            raise HTTPException(status_code=404, detail="Station not found")
+        Instance_Station_DAO = SDAO.StationDAO(path="src/BDD/BDD.sql")
+        test = Instance_Station_DAO.read(station_id)
+        if not test:
+            raise ValueError #(status_code=404, detail="Station not found")
+        
+        ancien_nom = test[1]
+        new_station = st.Station(id=test[0],nom_station=new_name,capacite=test[2],coordonnees_station=test[3],id_commune=test[4],en_fonctionnement=test[5],date_deb=test[6],date_fin=test[7],borne_paiement=test[8],nb_bornettes=test[9])
 
-    # Créer un objet Station avec les nouvelles données
-        updated_station = {
-            "nom_station": new_name,
-            "capacite": existing_station.capacite,
-            "coordonnees_station": existing_station.coordonnees_station,
-            "id_commune": existing_station.id_commune,
-            "en_fonctionnement": existing_station.en_fonctionnement,
-            "date_deb": existing_station.date_deb,
-            "date_fin": existing_station.date_fin,
-            "borne_paiement": existing_station.borne_paiement,
-            "nb_bornettes": existing_station.nb_bornettes
-        }
+        Instance_Station_DAO.update(station_id,new_station)
+    # # Créer un objet Station avec les nouvelles données
+    #     updated_station = {
+    #         "nom_station": new_name,
+    #         "capacite": existing_station.capacite,
+    #         "coordonnees_station": existing_station.coordonnees_station,
+    #         "id_commune": existing_station.id_commune,
+    #         "en_fonctionnement": existing_station.en_fonctionnement,
+    #         "date_deb": existing_station.date_deb,
+    #         "date_fin": existing_station.date_fin,
+    #         "borne_paiement": existing_station.borne_paiement,
+    #         "nb_bornettes": existing_station.nb_bornettes
+    #     }
 
-        SDAO.StationDAO(path="BDD/BDD.sql").update(id, updated_station)
+    #     SDAO.StationDAO(path="src/BDD/BDD.sql").update(id, updated_station)
+        return f"la station {ancien_nom} devient {new_station.nom_station}"
+
+    def F03_sup_station(self,station_id):
+        Instance_Station_DAO = SDAO.StationDAO(path="src/BDD/BDD.sql")
+        Instance_Station_DAO.delete(station_id)
+        return f"La station {station_id} a été supprimée"
+    
+    def F03_add_station(self,id,nom_station,capacite,coordonnees_station,nb_bornettes,numbikesavailable,mechanical,ebike,is_returning,duedate,nom_arrondissement_communes,is_renting):
+        Instance_Station_DAO = SDAO.StationDAO(path="src/BDD/BDD.sql")
+        Instance_StationFaits_DAO = SFDAO.StationFaitsDAO("src/BDD/BDD.sql")
+        Instance_Temps_DAO = TDAO.TempsDAO("src/BDD/BDD.sql")
+        Instance_commune_DAO = cDAO.CommuneDAO("src/BDD/BDD.sql")
+
+        dictionnaire = {"stationcode":id,
+                        "name":nom_station,
+                        "capacity":capacite,
+                        "coordonnees_geo":coordonnees_station,
+                        "nb_bornettes":nb_bornettes,
+                        "numbikesavailable":numbikesavailable,
+                        "mechanical":mechanical,
+                        "ebike":ebike,
+                        "is_returning":is_returning,
+                        "duedate":duedate,
+                        "nom_arrondissement_communes":nom_arrondissement_communes,
+                        "is_renting":is_renting}
+        
+        Instance_Station_DAO.upsert2(dictionnaire)
+        Instance_StationFaits_DAO.upsert2(dictionnaire)
+        Instance_Temps_DAO.upsert2(dictionnaire)
+        Instance_commune_DAO.upsert2(dictionnaire)
+        return f"la station {nom_station} a été ajoutée "
+
 
     def F03_info_station(self,station_id):
     # API endpoint for Velib station information

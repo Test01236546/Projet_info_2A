@@ -40,4 +40,16 @@ class Station(BaseModel):
 
 
     
-
+#{'stationcode': '16107', 
+# 'name': 'Benjamin Godard - Victor Hugo',
+#  'is_installed': 'OUI', 'capacity': 35,
+#  'numdocksavailable': 34,
+#  'numbikesavailable': 1,
+#  'mechanical': 1,
+#  'ebike': 0,
+#  'is_renting': 'OUI',
+#  'is_returning': 'OUI',
+#  'duedate': '2023-12-12T01:48:43+01:00',
+#  'coordonnees_geo': {'lon': 2.275725, 'lat': 48.865983},
+#  'nom_arrondissement_communes': 'Paris',
+#  'code_insee_commune': None}
