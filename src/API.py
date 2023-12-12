@@ -80,6 +80,10 @@ async def websocket_endpoint(websocket: WebSocket):
         await asyncio.sleep(2)  #reactualise toutes les 2 secondes
 #Fin fonction Bonus F01
 
+@app.get("/stations/readstation",response_model=None, description="Permet de lire les infos d'une station à partir de son id. Exemple d'entrées : id : 16107 ou 43008 ")
+def mettre_a_jour(id : str):
+    return F.Fonctionnalites().F03_read_station(id) 
+
 @app.get("/stations/updatestation",response_model=None, description="Permet de modifier le nom d'une station à partir de son id. Exemple d'entrées : id : 16107 changement : Victor Hugo")
 def mettre_a_jour(id : str, nouvelles_informations : str):
     return F.Fonctionnalites().F03_modifstation(id, nouvelles_informations) #enlever return et décommenter ligne suivante

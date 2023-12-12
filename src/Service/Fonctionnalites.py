@@ -244,6 +244,9 @@ class Fonctionnalites():
         Instance_commune_DAO.upsert2(dictionnaire)
         return f"la station {nom_station} a été ajoutée "
 
+    def F03_read_station(self,id_to_read): #43008
+        Instance_Station_DAO = SDAO.StationDAO(path="src/BDD/BDD.sql")
+        return Instance_Station_DAO.read(id_to_read)
 
     def F03_info_station(self,station_id):
     # API endpoint for Velib station information
